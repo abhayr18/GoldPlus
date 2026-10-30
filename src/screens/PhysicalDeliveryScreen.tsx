@@ -581,7 +581,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
                     {ord.weight}g 24K Gold {ord.productType === 'coin' ? 'Coin' : 'Bar'}
                   </div>
                   <div style={{ fontSize: 12, color: COLORS.secondaryText, marginTop: 2 }}>
-                    Order ID: {ord.id} • {new Date(ord.createdAt).toLocaleDateString('en-IN')}
+                    Order ID: {ord.id} • {new Date(ord.createdAt).toLocaleDateString('en-AE')}
                   </div>
                 </div>
                 <span className={`status-badge ${ord.status}`}>
@@ -596,7 +596,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
                     <div className="timeline-dot completed" />
                     <div className="timeline-content">
                       <div className="timeline-title">Request Created</div>
-                      <div className="timeline-date">{new Date(ord.createdAt).toLocaleDateString('en-IN')}</div>
+                      <div className="timeline-date">{new Date(ord.createdAt).toLocaleDateString('en-AE')}</div>
                     </div>
                   </div>
 

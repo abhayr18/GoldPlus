@@ -1,6 +1,6 @@
 // ============================================
-// YASS Gold & YASS Bullion — Gold SIP / Auto-Save Screen
-// Gullak-Style Daily Micro-Savings & Auto-Debit
+// YASS Gold & YASS Bullion — Gold Auto-Save Screen
+// Daily Micro-Savings & Central Bank Aani Direct Debit
 // A product by YASS Group, Dubai
 // ============================================
 
@@ -52,7 +52,7 @@ export const SIPScreen: React.FC = () => {
     return Math.round((amount / DEMO_GOLD_RATE) * 10000) / 10000;
   }, [amount]);
 
-  // Projected 1-year accumulation (Gullak feature)
+  // Projected 1-year accumulation
   const yearlyAccumulation = useMemo(() => {
     let multiplier = 365;
     if (frequency === 'weekly') multiplier = 52;
@@ -100,7 +100,7 @@ export const SIPScreen: React.FC = () => {
   };
 
   // =============================================
-  // SETUP STATE (Gullak Micro-Savings Form)
+  // SETUP STATE (Micro-Savings Form)
   // =============================================
   const renderSetupState = () => (
     <div className="screen-container">
@@ -137,7 +137,7 @@ export const SIPScreen: React.FC = () => {
           </div>
         )}
 
-        {/* Gullak Frequency Selector */}
+        {/* Frequency Selector */}
         <div style={{ marginBottom: 16 }}>
           <label className="form-label">Auto-Save Frequency</label>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
@@ -227,7 +227,7 @@ export const SIPScreen: React.FC = () => {
           ))}
         </div>
 
-        {/* Gullak 1-Year Projected Accumulation Widget */}
+        {/* 1-Year Projected Accumulation Widget */}
         <div
           style={{
             background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',

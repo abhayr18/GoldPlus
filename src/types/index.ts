@@ -1,6 +1,5 @@
 // ============================================
 // YASS Gold & YASS Bullion — Production Fintech Type Definitions
-// Inspired by Gullak & SafeGold (Dubai Market Edition)
 // A product by YASS Group, Dubai
 // ============================================
 

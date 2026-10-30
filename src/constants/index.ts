@@ -1,49 +1,58 @@
 // ============================================
 // YASS Gold & YASS Bullion — Design Tokens & Brand Constants
 // A product by YASS Group, Dubai
-// Inspired by Gullak & SafeGold (Dubai Market Edition)
+// Dubai Multi Commodities Centre (DMCC) Accredited Platform
 // ============================================
 
 export const BRAND = {
-  parentCompany: 'YASS Group of Dubai',
+  parentCompany: 'YASS Group Dubai',
   name: 'YASS Gold',
   bullionBrand: 'YASS Bullion',
-  descriptor: 'Dubai Digital Gold & Physical Bullion',
+  descriptor: 'Dubai Digital Gold & Physical Bullion Depository',
   tagline: 'The Gold Standard of Dubai. Save & Invest with Confidence.',
-  heading: 'Dubai Digital Gold for a Brighter Future',
-  subheading: 'Trade, save, and redeem 24K 999.9 pure gold backed by physical bullion in Dubai vaults.',
+  heading: 'Dubai’s Premier Digital Gold & Bullion Depository',
+  subheading: 'Buy, save, earn yield, and redeem physical 24K 999.9 Dubai Good Delivery gold vaulted at Brink’s DMCC.',
   attribution: 'A product by YASS Group, Dubai',
-  headquarters: 'Almas Tower, JLT / Gold Souk, Dubai, United Arab Emirates',
+  headquarters: 'Almas Tower, JLT & Gold Souk, Deira, Dubai, UAE',
   certification: 'Dubai Good Delivery (DGD) & DMCC Accredited 999.9 Purity',
   currency: 'AED',
   currencySymbol: 'AED ',
 } as const;
 
 export const COLORS = {
-  primaryGold: '#F59E0B',
-  secondaryGold: '#FBBF24',
-  goldDark: '#D97706',
+  // Refined Executive Dubai Bullion Gold Palette (Figma Standard)
+  primaryGold: '#C59B27',
+  secondaryGold: '#D4AF37',
+  goldDark: '#A67C1E',
+  goldLight: '#FDF8EC',
   goldSurface: '#FEF3C7',
+  goldGradient: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)',
+  goldCardGradient: 'linear-gradient(135deg, #0B1220 0%, #162032 100%)',
+  
+  // Executive Neutrals
   darkCharcoal: '#0F172A',
-  deepNavy: '#0B1426',
-  navyGradient: 'linear-gradient(135deg, #0B1426 0%, #152238 100%)',
-  goldGradient: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+  deepNavy: '#0B1220',
+  navyGradient: 'linear-gradient(135deg, #0B1220 0%, #162032 100%)',
   ivoryBg: '#F8FAFC',
   cardBg: '#FFFFFF',
   mainText: '#0F172A',
   secondaryText: '#64748B',
-  positive: '#10B981',
+  mutedText: '#94A3B8',
+  
+  // Functional
+  positive: '#059669',
   positiveBg: '#ECFDF5',
-  negative: '#EF4444',
+  negative: '#DC2626',
   negativeBg: '#FEF2F2',
   border: '#E2E8F0',
-  goldGradientStart: '#F59E0B',
-  goldGradientEnd: '#D97706',
-  streakOrange: '#FF5722',
+  borderLight: '#F1F5F9',
+
+  // Accents
+  streakOrange: '#EA580C',
   streakBg: '#FFF7ED',
-  goldPlusPurple: '#7C3AED',
-  goldPlusBg: '#F3E8FF',
-  darkOverlay: 'rgba(11, 20, 38, 0.85)',
+  yieldPurple: '#6366F1',
+  yieldBg: '#EEF2FF',
+  darkOverlay: 'rgba(11, 18, 32, 0.75)',
 } as const;
 
 // Live Dubai Gold Souk & DMCC Market Rates (AED per gram)
@@ -68,17 +77,18 @@ export const DEMO_USER = {
   kycStatus: 'verified' as const,
   emiratesId: '784-1988-1234567-1',
   savingsStreakDays: 5,
-  freeGoldRewardsMg: 25, // 25 mg gold earned as streak rewards
+  freeGoldRewardsMg: 25,
 };
 
 export const DEMO_INITIAL_HOLDINGS = {
   totalGrams: 39.1209, // ~AED 12,460.00 at AED 318.50/g
   totalInvested: 11200,
   leasedGrams: 10.0000, // 10g actively leased earning 5.2% p.a.
-  yieldEarnedGrams: 0.1300, // ~AED 41.40 earned passively in extra gold
+  yieldEarnedGrams: 0.1300,
 };
 
-export const GULLAK_LEASE_PARTNERS = [
+// Institutional Jeweller Lease Partners in Dubai
+export const YASS_LEASE_PARTNERS = [
   {
     name: 'Damas Jewellery Dubai',
     rating: 'AAA Bank Guaranteed',
@@ -102,14 +112,15 @@ export const GULLAK_LEASE_PARTNERS = [
   },
 ];
 
-export const SAFE_GOLD_VAULT_AUDIT = {
+// Depository Custody & Independent Audit
+export const YASS_VAULT_AUDIT = {
   auditor: 'BDO Chartered Accountants (Dubai)',
   auditDate: '30 October 2026',
   vaultLocation: 'Brink’s Global Services, Almas Tower, JLT Dubai',
   secondaryVault: 'Transguard Vaults, Emirates Group HQ Dubai',
   totalPhysicalBarsKg: 2540.85,
   digitalGoldIssuedKg: 2540.85,
-  backingRatio: '100.0% Fully Physical Backed',
+  backingRatio: '100.0% Physical Bullion Custody',
   assayCertificateId: 'DMCC-DGD-2026-9999-AU',
 };
 
@@ -167,29 +178,5 @@ export const INITIAL_TRANSACTIONS = [
     paymentMethod: 'UAE Direct Debit',
     reference: 'TXN-YASS-20250412-003',
     meta: 'Monthly Gold Accumulator',
-  },
-  {
-    id: 'TXN-YASS-20250418-004',
-    type: 'lease' as const,
-    date: '2025-04-18T16:00:00',
-    goldGrams: 10.0000,
-    amount: 3185.00,
-    rate: 318.50,
-    status: 'completed' as const,
-    paymentMethod: 'Vault Lock',
-    reference: 'TXN-YASS-20250418-004',
-    meta: 'YASS Gold+ 5.2% Yield Lease',
-  },
-  {
-    id: 'TXN-YASS-20250420-005',
-    type: 'buy' as const,
-    date: '2025-04-20T11:45:00',
-    goldGrams: 15.6986,
-    amount: 5000.00,
-    rate: 318.50,
-    status: 'completed' as const,
-    paymentMethod: 'Apple Pay',
-    reference: 'TXN-YASS-20250420-005',
-    meta: '5-min Price Lock Purchase',
   },
 ];

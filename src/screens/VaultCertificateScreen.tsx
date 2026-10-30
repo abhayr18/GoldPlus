@@ -1,6 +1,6 @@
 // ============================================
 // YASS Gold & YASS Bullion — Vault Certificate & Audit Screen
-// Inspired by SafeGold physical custody transparency
+// Official DMCC & Dubai Good Delivery Physical Allocation
 // A product by YASS Group, Dubai
 // ============================================
 
@@ -17,7 +17,7 @@ import {
   FileCheck,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
-import { SAFE_GOLD_VAULT_AUDIT, COLORS } from '../constants';
+import { YASS_VAULT_AUDIT, COLORS } from '../constants';
 
 export const VaultCertificateScreen: React.FC = () => {
   const { state, navigate, back, showToast } = useApp();
@@ -55,8 +55,8 @@ export const VaultCertificateScreen: React.FC = () => {
         {/* Top Trust Notice */}
         <div
           style={{
-            background: 'linear-gradient(135deg, rgba(22, 134, 91, 0.1) 0%, rgba(232, 182, 63, 0.1) 100%)',
-            border: '1px solid rgba(22, 134, 91, 0.25)',
+            background: 'linear-gradient(135deg, rgba(5, 150, 105, 0.08) 0%, rgba(197, 155, 39, 0.08) 100%)',
+            border: '1px solid rgba(5, 150, 105, 0.25)',
             borderRadius: 14,
             padding: '14px 16px',
             marginBottom: 20,
@@ -70,7 +70,7 @@ export const VaultCertificateScreen: React.FC = () => {
               width: 38,
               height: 38,
               borderRadius: '50%',
-              background: '#16865B',
+              background: '#059669',
               color: '#FFF',
               display: 'flex',
               alignItems: 'center',
@@ -81,7 +81,7 @@ export const VaultCertificateScreen: React.FC = () => {
             <ShieldCheck size={22} />
           </div>
           <div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: '#16865B' }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: '#059669' }}>
               100% Physically Backed & Insured
             </div>
             <div style={{ fontSize: 12, color: COLORS.secondaryText, lineHeight: 1.4 }}>
@@ -91,14 +91,14 @@ export const VaultCertificateScreen: React.FC = () => {
         </div>
 
         {/* ================================================= */}
-        {/* PHYSICAL GOLD HOLDING CERTIFICATE (SafeGold Style) */}
+        {/* PHYSICAL GOLD HOLDING CERTIFICATE */}
         {/* ================================================= */}
         <div
           style={{
             background: '#FFFFFF',
             borderRadius: 16,
-            border: '2px solid #E8B63F',
-            boxShadow: '0 8px 30px rgba(232, 182, 63, 0.15)',
+            border: '1.5px solid #C59B27',
+            boxShadow: '0 8px 30px rgba(197, 155, 39, 0.12)',
             overflow: 'hidden',
             marginBottom: 24,
             position: 'relative',
@@ -107,11 +107,11 @@ export const VaultCertificateScreen: React.FC = () => {
           {/* Certificate Top Banner */}
           <div
             style={{
-              background: 'linear-gradient(135deg, #17232D 0%, #171A1D 100%)',
+              background: 'linear-gradient(135deg, #0B1220 0%, #162032 100%)',
               color: '#FFF',
               padding: '18px 20px',
               textAlign: 'center',
-              borderBottom: '2px solid #E8B63F',
+              borderBottom: '2px solid #C59B27',
             }}
           >
             <div
@@ -119,7 +119,7 @@ export const VaultCertificateScreen: React.FC = () => {
                 fontSize: 10,
                 letterSpacing: 2,
                 textTransform: 'uppercase',
-                color: COLORS.primaryGold,
+                color: '#D4AF37',
                 fontWeight: 700,
                 marginBottom: 4,
               }}
@@ -130,7 +130,7 @@ export const VaultCertificateScreen: React.FC = () => {
               CERTIFICATE OF PHYSICAL GOLD ALLOCATION
             </div>
             <div style={{ fontSize: 11, color: '#A0AEC0', marginTop: 3 }}>
-              Ref: {SAFE_GOLD_VAULT_AUDIT.assayCertificateId}
+              Ref: {YASS_VAULT_AUDIT.assayCertificateId}
             </div>
           </div>
 
@@ -273,11 +273,11 @@ export const VaultCertificateScreen: React.FC = () => {
             >
               <div>
                 <span style={{ color: '#2F855A', fontWeight: 600 }}>Statutory Auditor:</span>
-                <div style={{ fontWeight: 700, color: '#1C4532' }}>{SAFE_GOLD_VAULT_AUDIT.auditor}</div>
+                <div style={{ fontWeight: 700, color: '#1C4532' }}>{YASS_VAULT_AUDIT.auditor}</div>
               </div>
               <div>
                 <span style={{ color: '#2F855A', fontWeight: 600 }}>Backing Ratio:</span>
-                <div style={{ fontWeight: 700, color: '#1C4532' }}>{SAFE_GOLD_VAULT_AUDIT.backingRatio}</div>
+                <div style={{ fontWeight: 700, color: '#1C4532' }}>{YASS_VAULT_AUDIT.backingRatio}</div>
               </div>
             </div>
 
@@ -295,7 +295,7 @@ export const VaultCertificateScreen: React.FC = () => {
                   style={{
                     width: 54,
                     height: 54,
-                    background: '#F7F5EF',
+                    background: '#F8FAFC',
                     border: '1px solid #CBD5E0',
                     borderRadius: 6,
                     display: 'flex',
@@ -303,14 +303,14 @@ export const VaultCertificateScreen: React.FC = () => {
                     justifyContent: 'center',
                   }}
                 >
-                  <QrCode size={40} color="#17232D" />
+                  <QrCode size={40} color="#0B1220" />
                 </div>
                 <div>
                   <div style={{ fontSize: 11, fontWeight: 700, color: COLORS.darkCharcoal }}>
                     Scan to Verify Online
                   </div>
                   <div style={{ fontSize: 10, color: COLORS.secondaryText }}>
-                    dmcc.ae/verify-vault/{SAFE_GOLD_VAULT_AUDIT.assayCertificateId}
+                    dmcc.ae/verify-vault/{YASS_VAULT_AUDIT.assayCertificateId}
                   </div>
                 </div>
               </div>
@@ -318,7 +318,7 @@ export const VaultCertificateScreen: React.FC = () => {
               {/* Gold Official Stamp */}
               <div
                 style={{
-                  border: '2px solid #E8B63F',
+                  border: '2px solid #C59B27',
                   borderRadius: '50%',
                   width: 58,
                   height: 58,
@@ -326,7 +326,7 @@ export const VaultCertificateScreen: React.FC = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#9C6F19',
+                  color: '#A67C1E',
                   textAlign: 'center',
                   fontSize: 7,
                   fontWeight: 800,
@@ -394,7 +394,7 @@ export const VaultCertificateScreen: React.FC = () => {
         </div>
 
         {/* ================================================= */}
-        {/* SAFE-GOLD COMPLIANCE & PROOF PILLARS */}
+        {/* COMPLIANCE & PROOF PILLARS */}
         {/* ================================================= */}
         <div style={{ marginBottom: 20 }}>
           <div style={{ fontSize: 15, fontWeight: 700, color: COLORS.darkCharcoal, marginBottom: 12 }}>

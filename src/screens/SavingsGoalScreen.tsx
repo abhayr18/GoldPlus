@@ -1,6 +1,6 @@
 // ============================================
 // YASS Gold & YASS Bullion — Savings Goals Screen
-// Inspired by Gullak's goal-based gold accumulation
+// Goal-based 24K gold accumulation planner
 // A product by YASS Group, Dubai
 // ============================================
 
@@ -142,7 +142,7 @@ export const SavingsGoalScreen: React.FC = () => {
       </div>
 
       <div className="screen-content">
-        {/* Streak & Gamification Banner (Gullak Hallmark) */}
+        {/* Streak & Gamification Banner */}
         <div
           style={{
             background: 'linear-gradient(135deg, #17232D 0%, #171A1D 100%)',
@@ -403,7 +403,7 @@ export const SavingsGoalScreen: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: COLORS.primaryGold, marginBottom: 6 }}>
             <Sparkles size={18} />
             <span style={{ fontSize: 13, fontWeight: 700, color: COLORS.darkCharcoal }}>
-              Gullak Auto-SIP Planner
+              YASS Daily Auto-Save Planner
             </span>
           </div>
           <div style={{ fontSize: 12, color: COLORS.secondaryText, lineHeight: 1.5 }}>

@@ -103,11 +103,13 @@ const TransactionHistoryScreen: React.FC = () => {
                       <div className="txn-type">
                         {txn.type === 'buy' && 'Buy Gold'}
                         {txn.type === 'sell' && 'Sell Gold'}
-                        {txn.type === 'sip' && 'SIP Purchase'}
+                        {txn.type === 'sip' && 'Auto-Save Deposit'}
+                        {txn.type === 'lease' && 'YASS Gold+ Leased'}
+                        {txn.type === 'gift' && 'Gold Gift'}
                         {txn.type === 'redemption' && 'Physical Delivery'}
                       </div>
                       <div className="txn-date">
-                        {new Date(txn.date).toLocaleString('en-IN', {
+                        {new Date(txn.date).toLocaleString('en-AE', {
                           day: 'numeric',
                           month: 'short',
                           year: 'numeric',
@@ -180,7 +182,7 @@ const TransactionHistoryScreen: React.FC = () => {
             <div className="summary-row">
               <span className="label">Date & Time</span>
               <span className="value">
-                {new Date(activeTxn.date).toLocaleString('en-IN', {
+                {new Date(activeTxn.date).toLocaleString('en-AE', {
                   day: 'numeric',
                   month: 'short',
                   year: 'numeric',

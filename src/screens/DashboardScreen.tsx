@@ -1,7 +1,7 @@
 // ============================================
-// YASS Gold & YASS Bullion — Dashboard Screen
-// Mobile-First Gullak Theme (Dubai Market Edition)
+// YASS Gold & YASS Bullion — Executive Dashboard
 // A product by YASS Group, Dubai
+// DMCC Accredited Precious Metals Depository
 // ============================================
 
 import React, { useMemo } from 'react';
@@ -65,11 +65,11 @@ function txnLabel(type: Transaction['type']): string {
     case 'sell':
       return 'Gold Sold';
     case 'sip':
-      return 'Daily SIP Save';
+      return 'Auto-Save Deposit';
     case 'lease':
       return 'YASS Gold+ Leased';
     case 'gift':
-      return '24K Gift Sent';
+      return '24K Gold Gift';
     case 'redemption':
       return 'Minted Bullion Bar';
     default:
@@ -92,19 +92,19 @@ export const DashboardScreen: React.FC = () => {
     [state.holdings.transactions]
   );
 
-  // Gullak Quick Action Grid (Symmetrical 4x2)
+  // Executive Service Grid
   const quickActions = [
-    { label: 'Buy Gold', icon: ArrowDownCircle, screen: 'buy' as const, color: '#10B981', bg: '#ECFDF5' },
-    { label: 'Sell Gold', icon: ArrowUpCircle, screen: 'sell' as const, color: '#EF4444', bg: '#FEF2F2' },
-    { label: 'Daily SIP', icon: RefreshCw, screen: 'sip' as const, color: '#D97706', bg: '#FEF3C7' },
-    { label: 'Gold+ Yield', icon: Percent, screen: 'lease' as const, color: '#7C3AED', bg: '#F5F3FF', badge: '5.2%' },
+    { label: 'Buy Gold', icon: ArrowDownCircle, screen: 'buy' as const, color: '#059669', bg: '#ECFDF5' },
+    { label: 'Sell Gold', icon: ArrowUpCircle, screen: 'sell' as const, color: '#DC2626', bg: '#FEF2F2' },
+    { label: 'Auto-Save', icon: RefreshCw, screen: 'sip' as const, color: '#D97706', bg: '#FEF3C7' },
+    { label: 'Gold+ Yield', icon: Percent, screen: 'lease' as const, color: '#6366F1', bg: '#EEF2FF', badge: '5.2%' },
     { label: 'Goals', icon: Target, screen: 'goals' as const, color: '#0284C7', bg: '#F0F9FF' },
     { label: 'Gift Gold', icon: Gift, screen: 'gift' as const, color: '#EA580C', bg: '#FFF7ED' },
-    { label: 'Redeem Bar', icon: Award, screen: 'delivery' as const, color: '#B45309', bg: '#FFFBEB' },
-    { label: 'Vault Proof', icon: ShieldCheck, screen: 'vaultProof' as const, color: '#059669', bg: '#ECFDF5' },
+    { label: 'Minted Bar', icon: Award, screen: 'delivery' as const, color: '#B45309', bg: '#FFFBEB' },
+    { label: 'Vault Audit', icon: ShieldCheck, screen: 'vaultProof' as const, color: '#059669', bg: '#ECFDF5' },
   ];
 
-  // 1-Tap Daily Savings Streak action (Gullak Hallmark)
+  // 1-Tap Daily Savings Streak action
   const handleDailyStreakSave = () => {
     const newState = buyGold(state, 20, 'Aani Instant Pay');
     const updatedUser = {
@@ -116,12 +116,12 @@ export const DashboardScreen: React.FC = () => {
       ...newState,
       user: updatedUser,
     });
-    showToast('Saved AED 20! 6-Day Streak unlocked (+5mg free gold credited)', 'success');
+    showToast('Saved AED 20! 6-Day Streak unlocked (+5mg pure gold reward credited)', 'success');
   };
 
   return (
     <div className="screen-container">
-      {/* ── 1. Top App Bar (Gullak Mobile Style) ──────────────── */}
+      {/* ── 1. Top App Header ───────────────────────────────── */}
       <div
         style={{
           display: 'flex',
@@ -143,14 +143,14 @@ export const DashboardScreen: React.FC = () => {
               width: 38,
               height: 38,
               borderRadius: '50%',
-              background: '#0B1426',
-              color: '#F59E0B',
+              background: '#0B1220',
+              color: '#D4AF37',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               fontWeight: 800,
               fontSize: 13,
-              border: '2px solid #F59E0B',
+              border: '2px solid #C59B27',
               cursor: 'pointer',
               flexShrink: 0,
             }}
@@ -166,7 +166,7 @@ export const DashboardScreen: React.FC = () => {
                 style={{
                   background: '#ECFDF5',
                   color: '#059669',
-                  fontSize: 9,
+                  fontSize: 9.5,
                   fontWeight: 700,
                   padding: '1px 6px',
                   borderRadius: 10,
@@ -175,7 +175,7 @@ export const DashboardScreen: React.FC = () => {
                 UAE PASS
               </span>
             </div>
-            <div style={{ fontSize: 10, color: '#64748B', fontWeight: 500 }}>
+            <div style={{ fontSize: 10.5, color: '#64748B', fontWeight: 500 }}>
               YASS Bullion Dubai
             </div>
           </div>
@@ -185,8 +185,8 @@ export const DashboardScreen: React.FC = () => {
         <div
           onClick={() => navigate('goldPriceDetail')}
           style={{
-            background: '#FEF3C7',
-            border: '1px solid #FDE68A',
+            background: '#FDF8EC',
+            border: '1px solid #F4D681',
             borderRadius: 20,
             padding: '4px 10px',
             display: 'flex',
@@ -195,18 +195,15 @@ export const DashboardScreen: React.FC = () => {
             cursor: 'pointer',
           }}
         >
-          <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10B981' }} />
-          <span style={{ fontSize: 10, fontWeight: 700, color: '#92400E' }}>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#059669' }} />
+          <span style={{ fontSize: 10.5, fontWeight: 700, color: '#A67C1E' }}>
             24K AED {DUBAI_MARKET_RATES.rate24K.toFixed(2)}
           </span>
         </div>
       </div>
 
       <div className="screen-content" style={{ paddingTop: 14 }}>
-        {/* Demo banner */}
-        <div className="demo-banner">DUBAI FINTECH PROTOTYPE • GULLAK THEME</div>
-
-        {/* ── 2. Gullak Signature Hero Gold Wealth Card ────────────── */}
+        {/* ── 2. Executive Hero Gold Wealth Card ──────────────── */}
         <div
           className="card-navy"
           style={{
@@ -220,17 +217,17 @@ export const DashboardScreen: React.FC = () => {
           {/* Top Row: Label & Purity Badge */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span style={{ fontSize: 11, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.6, fontWeight: 600 }}>
-              Total Gold Wealth
+              Total Vaulted Wealth
             </span>
             <span
               style={{
-                background: 'rgba(245, 158, 11, 0.2)',
-                color: '#FBBF24',
+                background: 'rgba(212, 175, 55, 0.15)',
+                color: '#F4D681',
                 fontSize: 10,
                 fontWeight: 700,
                 padding: '2px 8px',
                 borderRadius: 10,
-                border: '1px solid rgba(245, 158, 11, 0.3)',
+                border: '1px solid rgba(212, 175, 55, 0.3)',
               }}
             >
               24K 999.9 DGD
@@ -244,11 +241,11 @@ export const DashboardScreen: React.FC = () => {
                 {formatCurrency(currentValue)}
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
-                <span style={{ fontSize: 15, fontWeight: 700, color: '#F59E0B' }}>
+                <span style={{ fontSize: 15, fontWeight: 700, color: '#F4D681' }}>
                   {formatGrams(state.holdings.totalGrams)} grams
                 </span>
                 <span style={{ color: '#94A3B8', fontSize: 12 }}>•</span>
-                <span style={{ fontSize: 12, color: '#10B981', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 2 }}>
+                <span style={{ fontSize: 12, color: '#34D399', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 2 }}>
                   <TrendingUp size={12} />
                   <span>+0.75% today</span>
                 </span>
@@ -265,8 +262,8 @@ export const DashboardScreen: React.FC = () => {
             <div
               onClick={() => navigate('lease')}
               style={{
-                background: 'rgba(124, 58, 237, 0.2)',
-                border: '1px solid rgba(124, 58, 237, 0.4)',
+                background: 'rgba(99, 102, 241, 0.15)',
+                border: '1px solid rgba(99, 102, 241, 0.35)',
                 borderRadius: 8,
                 padding: '6px 10px',
                 marginTop: 12,
@@ -277,15 +274,15 @@ export const DashboardScreen: React.FC = () => {
                 cursor: 'pointer',
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#DDD6FE' }}>
-                <Percent size={13} color="#C4B5FD" />
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#C7D2FE' }}>
+                <Percent size={13} color="#818CF8" />
                 <span><strong>{state.holdings.leasedGrams.toFixed(2)}g</strong> earning 5.2% p.a. yield</span>
               </div>
-              <ChevronRight size={14} color="#DDD6FE" />
+              <ChevronRight size={14} color="#C7D2FE" />
             </div>
           )}
 
-          {/* Dual Action Buttons (Side by Side) */}
+          {/* Dual Action Buttons */}
           <div
             style={{
               display: 'grid',
@@ -298,20 +295,11 @@ export const DashboardScreen: React.FC = () => {
           >
             <button
               onClick={() => navigate('buy')}
+              className="btn btn-primary"
               style={{
-                background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
-                color: '#0F172A',
-                border: 'none',
-                borderRadius: 12,
                 height: 42,
-                fontWeight: 700,
                 fontSize: 13,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
                 gap: 6,
-                boxShadow: '0 4px 12px rgba(245, 158, 11, 0.35)',
               }}
             >
               <Zap size={15} fill="#0F172A" />
@@ -341,7 +329,7 @@ export const DashboardScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* ── 3. Gullak Daily Savings Streak Card ─────────────────── */}
+        {/* ── 3. Daily Savings Streak Card ────────────────────── */}
         <div
           style={{
             background: '#FFF7ED',
@@ -358,25 +346,25 @@ export const DashboardScreen: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div
               style={{
-                width: 38,
-                height: 38,
+                width: 36,
+                height: 36,
                 borderRadius: '50%',
                 background: '#FFEDD5',
-                border: '2px solid #FB923C',
+                border: '1.5px solid #FB923C',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
               }}
             >
-              <Flame size={20} color="#EA580C" />
+              <Flame size={19} color="#EA580C" />
             </div>
             <div>
               <div style={{ fontSize: 13, fontWeight: 800, color: '#9A3412' }}>
-                {state.user?.savingsStreakDays || 5}-Day Savings Streak!
+                {state.user?.savingsStreakDays || 5}-Day Savings Streak
               </div>
               <div style={{ fontSize: 11, color: '#C2410C' }}>
-                Save AED 20 today to unlock +5mg free gold
+                Save AED 20 today to claim +5mg free gold
               </div>
             </div>
           </div>
@@ -387,23 +375,23 @@ export const DashboardScreen: React.FC = () => {
               background: '#EA580C',
               color: '#FFF',
               border: 'none',
-              padding: '8px 12px',
+              padding: '7px 12px',
               borderRadius: 8,
               fontSize: 11,
               fontWeight: 700,
               cursor: 'pointer',
               whiteSpace: 'nowrap',
-              boxShadow: '0 2px 6px rgba(234, 88, 12, 0.3)',
+              boxShadow: '0 2px 6px rgba(234, 88, 12, 0.25)',
             }}
           >
             Save AED 20
           </button>
         </div>
 
-        {/* ── 4. Gullak 8-Service Symmetrical Grid ─────────────────── */}
+        {/* ── 4. Symmetrical 8-Feature Grid ────────────────────── */}
         <div style={{ marginBottom: 16 }}>
           <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.darkCharcoal, marginBottom: 8, paddingLeft: 2 }}>
-            Services & FinTech Features
+            Depository Services
           </div>
 
           <div
@@ -431,8 +419,8 @@ export const DashboardScreen: React.FC = () => {
                     gap: 6,
                     cursor: 'pointer',
                     position: 'relative',
-                    boxShadow: '0 1px 3px rgba(15, 23, 42, 0.04)',
-                    transition: 'transform 0.15s',
+                    boxShadow: '0 1px 3px rgba(15, 23, 42, 0.03)',
+                    transition: 'border-color 0.15s',
                   }}
                 >
                   {action.badge && (
@@ -441,7 +429,7 @@ export const DashboardScreen: React.FC = () => {
                         position: 'absolute',
                         top: -5,
                         right: -3,
-                        background: '#7C3AED',
+                        background: '#6366F1',
                         color: '#FFF',
                         fontSize: 8,
                         fontWeight: 800,
@@ -483,12 +471,12 @@ export const DashboardScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* ── 5. Gullak Gold+ Leasing Hero Card ───────────────────── */}
+        {/* ── 5. YASS Gold+ Leasing Card ──────────────────────── */}
         <div
           onClick={() => navigate('lease')}
           style={{
-            background: 'linear-gradient(135deg, #2E1065 0%, #1E1B4B 100%)',
-            border: '1.5px solid #A855F7',
+            background: 'linear-gradient(135deg, #1E1B4B 0%, #0F172A 100%)',
+            border: '1.5px solid #6366F1',
             borderRadius: 14,
             padding: '14px 16px',
             color: '#FFF',
@@ -497,14 +485,14 @@ export const DashboardScreen: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            boxShadow: '0 4px 14px rgba(124, 58, 237, 0.25)',
+            boxShadow: '0 4px 14px rgba(99, 102, 241, 0.15)',
           }}
         >
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
               <span
                 style={{
-                  background: '#A855F7',
+                  background: '#6366F1',
                   color: '#FFF',
                   fontSize: 9,
                   fontWeight: 800,
@@ -514,18 +502,18 @@ export const DashboardScreen: React.FC = () => {
               >
                 YASS GOLD+
               </span>
-              <span style={{ fontSize: 13, fontWeight: 700, color: '#E9D5FF' }}>
+              <span style={{ fontSize: 13, fontWeight: 700, color: '#E0E7FF' }}>
                 Earn 5.2% Extra Gold Yield
               </span>
             </div>
-            <div style={{ fontSize: 11, color: '#D8B4FE', lineHeight: 1.4 }}>
+            <div style={{ fontSize: 11, color: '#C7D2FE', lineHeight: 1.4 }}>
               Lease to top Dubai jewellers (Damas, Joyalukkas) with 100% bank guarantees.
             </div>
           </div>
-          <ChevronRight size={18} color="#E9D5FF" />
+          <ChevronRight size={18} color="#C7D2FE" />
         </div>
 
-        {/* ── 6. Gullak Active Goal Progress Card ─────────────────── */}
+        {/* ── 6. Active Savings Goal Card ─────────────────────── */}
         {state.goals.length > 0 && (
           <div
             onClick={() => navigate('goals')}
@@ -543,7 +531,7 @@ export const DashboardScreen: React.FC = () => {
                   {state.goals[0].title}
                 </span>
               </div>
-              <span style={{ fontSize: 12, fontWeight: 700, color: '#F59E0B' }}>
+              <span style={{ fontSize: 12, fontWeight: 700, color: '#C59B27' }}>
                 {Math.round((state.goals[0].currentGrams / state.goals[0].targetGrams) * 100)}%
               </span>
             </div>
@@ -562,7 +550,7 @@ export const DashboardScreen: React.FC = () => {
                 style={{
                   width: `${Math.min(100, (state.goals[0].currentGrams / state.goals[0].targetGrams) * 100)}%`,
                   height: '100%',
-                  background: 'linear-gradient(90deg, #F59E0B, #FBBF24)',
+                  background: 'linear-gradient(90deg, #D4AF37, #F4D681)',
                   borderRadius: 4,
                 }}
               />
@@ -575,7 +563,7 @@ export const DashboardScreen: React.FC = () => {
           </div>
         )}
 
-        {/* ── 7. SafeGold Vault Security Card ──────────────────────── */}
+        {/* ── 7. Brink's DMCC Vault Security Card ─────────────── */}
         <div
           onClick={() => navigate('vaultProof')}
           className="card"
@@ -606,17 +594,17 @@ export const DashboardScreen: React.FC = () => {
             </div>
             <div>
               <div style={{ fontSize: 12, fontWeight: 700, color: '#0F172A' }}>
-                100% Vaulted at Brink's DMCC & Transguard
+                100% Physically Vaulted at Brink's DMCC
               </div>
               <div style={{ fontSize: 10.5, color: '#64748B' }}>
-                Independent physical audit by BDO Dubai • Verified 1:1
+                Quarterly physical custody audit by BDO Dubai • Verified 1:1
               </div>
             </div>
           </div>
           <ChevronRight size={16} color="#64748B" />
         </div>
 
-        {/* ── 8. Live Souk Chart Card ─────────────────────────────── */}
+        {/* ── 8. Live Souk Chart Card ─────────────────────────── */}
         <div
           className="card"
           style={{
@@ -628,13 +616,13 @@ export const DashboardScreen: React.FC = () => {
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <div style={{ fontSize: 11, color: '#64748B', textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: 600 }}>
+              <div style={{ fontSize: 10.5, color: '#64748B', textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: 600 }}>
                 Dubai Gold Souk Benchmark
               </div>
-              <div style={{ fontSize: 20, fontWeight: 800, color: '#0F172A', marginTop: 2 }}>
+              <div style={{ fontSize: 19, fontWeight: 800, color: '#0F172A', marginTop: 2 }}>
                 AED {DEMO_GOLD_RATE.toFixed(2)} /g
               </div>
-              <div style={{ fontSize: 11, color: '#10B981', display: 'flex', alignItems: 'center', gap: 4, marginTop: 4, fontWeight: 600 }}>
+              <div style={{ fontSize: 11, color: '#059669', display: 'flex', alignItems: 'center', gap: 4, marginTop: 4, fontWeight: 600 }}>
                 <TrendingUp size={12} />
                 <span>+0.75% today (24K 999.9 Fine)</span>
               </div>
@@ -643,9 +631,9 @@ export const DashboardScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* ── 9. Recent Activity List ──────────────────────────────── */}
+        {/* ── 9. Recent Activity List ──────────────────────────── */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-          <h3 style={{ fontSize: 14, fontWeight: 700, color: '#0F172A', margin: 0 }}>
+          <h3 style={{ fontSize: 13.5, fontWeight: 700, color: '#0F172A', margin: 0 }}>
             Recent Activity
           </h3>
           <button
@@ -653,7 +641,7 @@ export const DashboardScreen: React.FC = () => {
             style={{
               background: 'none',
               border: 'none',
-              color: '#D97706',
+              color: '#A67C1E',
               fontSize: 12,
               fontWeight: 700,
               cursor: 'pointer',

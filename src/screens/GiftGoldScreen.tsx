@@ -1,6 +1,6 @@
 // ============================================
-// YASS Gold — Gift Gold Screen (SafeGold-inspired)
-// Send 24K digital gold to family & friends with luxury greeting cards
+// YASS Gold & YASS Bullion — Gift 24K Gold Screen
+// Send certified 24K gold with luxury occasion cards
 // A product by YASS Group, Dubai
 // ============================================
 
@@ -85,7 +85,7 @@ const GiftGoldScreen: React.FC = () => {
           <div>
             <h2 className="screen-header-title">Gift 24K Gold</h2>
             <p style={{ fontSize: 13, color: COLORS.secondaryText, marginTop: 2 }}>
-              SafeGold-Style instant digital gold gifting
+              Instant pure gold gifting with luxury greeting cards
             </p>
           </div>
         </div>

@@ -1,6 +1,6 @@
 // ============================================
-// YASS Gold & YASS Bullion — Buy Gold Screen
-// Enhanced with SafeGold 5-min price lock & Karat selection
+// YASS Gold & YASS Bullion — Buy Digital Gold Screen
+// 5-Minute Dubai Souk Price Lock & Karat Selection
 // A product by YASS Group, Dubai
 // ============================================
 
@@ -37,7 +37,7 @@ export const BuyGoldScreen: React.FC = () => {
   const [selectedChip, setSelectedChip] = useState<number | null>(500);
   const [reference] = useState<string>(generateTransactionId());
 
-  // SafeGold 5-Minute Price Lock Timer
+  // 5-Minute Dubai Souk Price Lock Timer
   const [secondsRemaining, setSecondsRemaining] = useState<number>(298);
 
   useEffect(() => {
@@ -122,7 +122,7 @@ export const BuyGoldScreen: React.FC = () => {
       </div>
 
       <div className="screen-content" style={{ paddingBottom: 80 }}>
-        {/* SafeGold 5-Minute Price Lock Timer Banner */}
+        {/* 5-Minute Price Lock Timer Banner */}
         <div
           style={{
             background: '#FFF9E6',
@@ -303,7 +303,7 @@ export const BuyGoldScreen: React.FC = () => {
           </div>
         )}
 
-        {/* Gold Quote Card (Gullak & SafeGold style) */}
+        {/* Gold Quote Card */}
         <div
           className="card"
           style={{

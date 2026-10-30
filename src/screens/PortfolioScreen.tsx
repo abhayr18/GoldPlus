@@ -1,6 +1,6 @@
 // ============================================
 // YASS Gold & YASS Bullion — Portfolio Screen
-// High-Fidelity Fintech Portfolio (Gullak & SafeGold Edition)
+// Executive Precious Metals Portfolio
 // A product by YASS Group, Dubai
 // ============================================
 
@@ -125,7 +125,7 @@ export const PortfolioScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* SafeGold Vault Audit Banner */}
+        {/* DMCC Vault Audit Banner */}
         <div
           onClick={() => navigate('vaultProof')}
           style={{
@@ -223,7 +223,7 @@ export const PortfolioScreen: React.FC = () => {
                 </div>
               </div>
 
-              {/* Gullak Signature: Leased Gold Earning Extra Yield */}
+              {/* Leased Gold Earning Extra Yield */}
               <div
                 style={{
                   display: 'flex',

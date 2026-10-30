@@ -1,7 +1,7 @@
 // ============================================
 // YASS Gold & YASS Bullion — Main Application Router
 // A product by YASS Group, Dubai
-// Inspired by Gullak & SafeGold (Dubai Market Edition)
+// DMCC Accredited Platform
 // ============================================
 
 import React from 'react';

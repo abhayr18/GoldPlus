@@ -1,5 +1,5 @@
 // ============================================
-// YASS Gold — Gold Lease / "YASS Gold+" (Gullak-inspired)
+// YASS Gold & YASS Bullion — YASS Gold+ (Gold Lease)
 // Earn up to 5.5% extra gold p.a. on your vaulted bullion
 // A product by YASS Group, Dubai
 // ============================================
@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { ArrowLeft, Sparkles, ShieldCheck, Building2 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
 import { leaseGoldAction } from '../state/appState';
-import { GULLAK_LEASE_PARTNERS, DEMO_GOLD_RATE, COLORS } from '../constants';
+import { YASS_LEASE_PARTNERS, DEMO_GOLD_RATE, COLORS } from '../constants';
 
 const formatCurrency = (val: number): string =>
   'AED ' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -18,7 +18,7 @@ const formatGrams = (val: number): string =>
 
 const GoldLeaseScreen: React.FC = () => {
   const { state, setState, back, navigate, showToast } = useApp();
-  const [selectedPartner, setSelectedPartner] = useState(GULLAK_LEASE_PARTNERS[0]);
+  const [selectedPartner, setSelectedPartner] = useState(YASS_LEASE_PARTNERS[0]);
   const [leaseGramsStr, setLeaseGramsStr] = useState<string>('5');
   const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
 
@@ -66,7 +66,7 @@ const GoldLeaseScreen: React.FC = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
               <Sparkles size={20} color={COLORS.primaryGold} />
               <span style={{ fontSize: 12, fontWeight: 700, color: COLORS.secondaryGold, textTransform: 'uppercase', letterSpacing: 0.8 }}>
-                Gullak-Style Yield on Gold
+                YASS Gold+ Depository Yield
               </span>
             </div>
             <h3 style={{ fontSize: 22, fontWeight: 800, margin: '4px 0', color: '#fff' }}>
@@ -158,7 +158,7 @@ const GoldLeaseScreen: React.FC = () => {
               Select Institutional Jeweler Partner
             </h4>
 
-            {GULLAK_LEASE_PARTNERS.map((partner) => {
+            {YASS_LEASE_PARTNERS.map((partner) => {
               const isSelected = selectedPartner.name === partner.name;
               return (
                 <div

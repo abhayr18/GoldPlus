@@ -1,7 +1,6 @@
 // ============================================
 // YASS Gold & YASS Bullion — Application State Manager
 // Manages all demo state with localStorage persistence
-// Inspired by Gullak & SafeGold (Dubai Market Edition)
 // A product by YASS Group, Dubai
 // ============================================
 
