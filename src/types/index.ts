@@ -1,5 +1,6 @@
 // ============================================
-// YASS Gold & YASS Bullion — Type Definitions
+// YASS Gold & YASS Bullion — Production Fintech Type Definitions
+// Inspired by Gullak & SafeGold (Dubai Market Edition)
 // A product by YASS Group, Dubai
 // ============================================
 
@@ -12,17 +13,21 @@ export interface UserProfile {
   createdAt: string;
   kycStatus: 'pending' | 'verified' | 'rejected';
   emiratesId?: string;
+  savingsStreakDays: number;
+  freeGoldRewardsMg: number;
 }
 
 export interface GoldHolding {
   totalGrams: number;
   totalInvested: number;
+  leasedGrams: number;
+  yieldEarnedGrams: number;
   transactions: Transaction[];
 }
 
 export interface Transaction {
   id: string;
-  type: 'buy' | 'sell' | 'sip' | 'redemption';
+  type: 'buy' | 'sell' | 'sip' | 'redemption' | 'lease' | 'gift';
   date: string;
   goldGrams: number;
   amount: number;
@@ -30,13 +35,14 @@ export interface Transaction {
   status: 'completed' | 'pending' | 'failed' | 'processing';
   paymentMethod?: string;
   reference: string;
+  meta?: string;
 }
 
 export interface SIPRecord {
   id: string;
   nickname: string;
   amount: number;
-  frequency: 'weekly' | 'monthly' | 'quarterly';
+  frequency: 'daily' | 'weekly' | 'monthly' | 'quarterly';
   status: 'active' | 'paused' | 'cancelled';
   nextDate: string;
   startDate: string;
@@ -45,6 +51,41 @@ export interface SIPRecord {
   completedInstallments: number;
   totalGoldAccumulated: number;
   totalAmountInvested: number;
+}
+
+export interface GoldLease {
+  id: string;
+  grams: number;
+  annualYieldPercent: number; // e.g. 5.2%
+  startDate: string;
+  durationMonths: number;
+  accruedYieldGrams: number;
+  status: 'active' | 'completed';
+  jewelerPartner: string;
+  bankGuaranteeRef: string;
+}
+
+export interface GiftRecord {
+  id: string;
+  recipientName: string;
+  recipientMobile: string;
+  goldGrams: number;
+  amount: number;
+  occasion: string;
+  message?: string;
+  date: string;
+  status: 'sent' | 'claimed';
+  greetingCardTheme: string;
+}
+
+export interface SavingsGoal {
+  id: string;
+  title: string;
+  targetGrams: number;
+  currentGrams: number;
+  targetDate: string;
+  category: 'bullion' | 'wedding' | 'property' | 'hajj' | 'education' | 'custom';
+  monthlyContributionAED: number;
 }
 
 export interface DeliveryOrder {
@@ -61,6 +102,7 @@ export interface DeliveryOrder {
   createdAt: string;
   estimatedDelivery?: string;
   trackingId?: string;
+  courier?: string;
 }
 
 export interface DeliveryAddress {
@@ -102,24 +144,11 @@ export type Screen =
   | 'transactions'
   | 'delivery'
   | 'profile'
-  | 'buyReview'
-  | 'buySuccess'
-  | 'sellReview'
-  | 'sellSuccess'
-  | 'sipReview'
-  | 'sipSuccess'
-  | 'sipManage'
-  | 'deliveryAddress'
-  | 'deliveryReview'
-  | 'deliverySuccess'
-  | 'deliveryTracking'
-  | 'kyc'
-  | 'bankAccounts'
-  | 'notifications'
-  | 'helpSupport'
-  | 'aboutUs'
-  | 'terms'
-  | 'privacy'
+  | 'lease'
+  | 'gift'
+  | 'goals'
+  | 'vaultProof'
+  | 'soukPartners'
   | 'transactionDetail'
   | 'goldPriceDetail'
   | 'settings';

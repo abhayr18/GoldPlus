@@ -1,19 +1,35 @@
 // ============================================
 // YASS Gold & YASS Bullion — Application State Manager
 // Manages all demo state with localStorage persistence
+// Inspired by Gullak & SafeGold (Dubai Market Edition)
 // A product by YASS Group, Dubai
 // ============================================
 
-import type { UserProfile, GoldHolding, Transaction, SIPRecord, DeliveryOrder, BankAccount, NotificationPreferences, Screen } from '../types';
+import type {
+  UserProfile,
+  GoldHolding,
+  Transaction,
+  SIPRecord,
+  DeliveryOrder,
+  BankAccount,
+  NotificationPreferences,
+  Screen,
+  GoldLease,
+  GiftRecord,
+  SavingsGoal,
+} from '../types';
 import { DEMO_USER, DEMO_INITIAL_HOLDINGS, INITIAL_TRANSACTIONS, DEMO_GOLD_RATE } from '../constants';
 
-const STORAGE_KEY = 'yass_gold_state';
+const STORAGE_KEY = 'yass_gold_fintech_state_v2';
 
 export interface AppState {
   isLoggedIn: boolean;
   user: UserProfile | null;
   holdings: GoldHolding;
   sips: SIPRecord[];
+  leases: GoldLease[];
+  gifts: GiftRecord[];
+  goals: SavingsGoal[];
   deliveryOrders: DeliveryOrder[];
   bankAccounts: BankAccount[];
   notificationPrefs: NotificationPreferences;
@@ -26,26 +42,99 @@ export interface AppState {
 function getDefaultState(): AppState {
   return {
     isLoggedIn: false,
-    user: null,
+    user: {
+      fullName: DEMO_USER.fullName,
+      mobile: DEMO_USER.mobile,
+      countryCode: '+971',
+      email: DEMO_USER.email,
+      createdAt: new Date().toISOString(),
+      kycStatus: 'verified',
+      emiratesId: DEMO_USER.emiratesId,
+      savingsStreakDays: DEMO_USER.savingsStreakDays,
+      freeGoldRewardsMg: DEMO_USER.freeGoldRewardsMg,
+    },
     holdings: {
       totalGrams: DEMO_INITIAL_HOLDINGS.totalGrams,
       totalInvested: DEMO_INITIAL_HOLDINGS.totalInvested,
+      leasedGrams: DEMO_INITIAL_HOLDINGS.leasedGrams,
+      yieldEarnedGrams: DEMO_INITIAL_HOLDINGS.yieldEarnedGrams,
       transactions: [...INITIAL_TRANSACTIONS],
     },
     sips: [
       {
         id: 'SIP-YASS-001',
-        nickname: 'Dubai Gold Accumulator',
+        nickname: 'Daily Gold Micro-Savings',
+        amount: 25,
+        frequency: 'daily',
+        status: 'active',
+        nextDate: new Date(Date.now() + 86400000).toISOString().split('T')[0],
+        startDate: '2025-03-01',
+        paymentMethod: 'Aani Direct Debit',
+        totalInstallments: 60,
+        completedInstallments: 28,
+        totalGoldAccumulated: 2.1978,
+        totalAmountInvested: 700,
+      },
+      {
+        id: 'SIP-YASS-002',
+        nickname: 'Monthly Bullion Accumulator',
         amount: 1000,
         frequency: 'monthly',
         status: 'active',
         nextDate: getNextSIPDate(),
-        startDate: '2025-03-01',
-        paymentMethod: 'UAE Direct Debit',
+        startDate: '2025-02-01',
+        paymentMethod: 'Emirates NBD Auto-Debit',
         totalInstallments: 12,
-        completedInstallments: 3,
-        totalGoldAccumulated: 3.1446 * 3,
-        totalAmountInvested: 1000 * 3,
+        completedInstallments: 4,
+        totalGoldAccumulated: 12.5584,
+        totalAmountInvested: 4000,
+      },
+    ],
+    leases: [
+      {
+        id: 'LEASE-YASS-001',
+        grams: 10.0,
+        annualYieldPercent: 5.2,
+        startDate: '2025-03-15',
+        durationMonths: 6,
+        accruedYieldGrams: 0.13,
+        status: 'active',
+        jewelerPartner: 'Damas Jewellery Dubai',
+        bankGuaranteeRef: 'BG-ENBD-2025-9921',
+      },
+    ],
+    gifts: [
+      {
+        id: 'GIFT-YASS-001',
+        recipientName: 'Fatima Al Mansoori',
+        recipientMobile: '559876543',
+        goldGrams: 1.0,
+        amount: 318.5,
+        occasion: 'Eid Mubarak',
+        message: 'May this pure 24K gold bring prosperity and happiness!',
+        date: '2025-04-10T11:00:00',
+        status: 'claimed',
+        greetingCardTheme: 'eid',
+      },
+    ],
+    goals: [
+      {
+        id: 'GOAL-001',
+        title: '100g Dubai Good Delivery Ingot',
+        targetGrams: 100,
+        currentGrams: 39.1209,
+        targetDate: '2026-12-31',
+        category: 'bullion',
+        monthlyContributionAED: 1500,
+      },
+      {
+        id: 'GOAL-002',
+        title: 'Family Wedding Gold Set',
+        targetGrams: 50,
+        currentGrams: 15.0,
+        targetDate: '2027-06-30',
+        category: 'wedding',
+        monthlyContributionAED: 1000,
       },
     ],
     deliveryOrders: [],
@@ -134,7 +223,7 @@ export function generateDeliveryId(): string {
 export function buyGold(state: AppState, amount: number, paymentMethod: string): AppState {
   const rate = DEMO_GOLD_RATE;
   const grams = Math.round((amount / rate) * 10000) / 10000;
-  
+
   const transaction: Transaction = {
     id: generateTransactionId(),
     type: 'buy',
@@ -145,11 +234,17 @@ export function buyGold(state: AppState, amount: number, paymentMethod: string):
     status: 'completed',
     paymentMethod: paymentMethod,
     reference: generateTransactionId(),
+    meta: '5-Minute Price Lock Purchase',
   };
+
+  // Streak increment
+  const streak = (state.user?.savingsStreakDays || 0) + 1;
 
   return {
     ...state,
+    user: state.user ? { ...state.user, savingsStreakDays: streak } : null,
     holdings: {
+      ...state.holdings,
       totalGrams: Math.round((state.holdings.totalGrams + grams) * 10000) / 10000,
       totalInvested: state.holdings.totalInvested + amount,
       transactions: [transaction, ...state.holdings.transactions],
@@ -160,7 +255,7 @@ export function buyGold(state: AppState, amount: number, paymentMethod: string):
 export function sellGold(state: AppState, grams: number): AppState {
   const rate = DEMO_GOLD_RATE;
   const amount = Math.round(grams * rate * 100) / 100;
-  
+
   const transaction: Transaction = {
     id: generateTransactionId(),
     type: 'sell',
@@ -171,11 +266,13 @@ export function sellGold(state: AppState, grams: number): AppState {
     status: 'completed',
     paymentMethod: 'Emirates NBD Transfer',
     reference: generateTransactionId(),
+    meta: 'Instant Souk Price Withdrawal',
   };
 
   return {
     ...state,
     holdings: {
+      ...state.holdings,
       totalGrams: Math.round((state.holdings.totalGrams - grams) * 10000) / 10000,
       totalInvested: state.holdings.totalInvested,
       transactions: [transaction, ...state.holdings.transactions],
@@ -186,7 +283,7 @@ export function sellGold(state: AppState, grams: number): AppState {
 export function createSIP(
   state: AppState,
   amount: number,
-  frequency: 'weekly' | 'monthly' | 'quarterly',
+  frequency: 'daily' | 'weekly' | 'monthly' | 'quarterly',
   paymentMethod: string,
   nickname: string
 ): AppState {
@@ -220,6 +317,88 @@ export function updateSIPStatus(state: AppState, sipId: string, status: 'active'
   };
 }
 
+export function leaseGoldAction(state: AppState, grams: number, partner: string): AppState {
+  const newLease: GoldLease = {
+    id: `LEASE-YASS-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`,
+    grams,
+    annualYieldPercent: 5.2,
+    startDate: new Date().toISOString().split('T')[0],
+    durationMonths: 6,
+    accruedYieldGrams: 0,
+    status: 'active',
+    jewelerPartner: partner,
+    bankGuaranteeRef: `BG-ENBD-${Math.floor(Math.random() * 100000)}`,
+  };
+
+  const transaction: Transaction = {
+    id: generateTransactionId(),
+    type: 'lease',
+    date: new Date().toISOString(),
+    goldGrams: grams,
+    amount: Math.round(grams * DEMO_GOLD_RATE),
+    rate: DEMO_GOLD_RATE,
+    status: 'completed',
+    reference: newLease.id,
+    meta: `Leased to ${partner} (5.2% p.a. extra gold yield)`,
+  };
+
+  return {
+    ...state,
+    holdings: {
+      ...state.holdings,
+      leasedGrams: Math.round((state.holdings.leasedGrams + grams) * 10000) / 10000,
+      transactions: [transaction, ...state.holdings.transactions],
+    },
+    leases: [newLease, ...state.leases],
+  };
+}
+
+export function sendGiftAction(
+  state: AppState,
+  recipientName: string,
+  recipientMobile: string,
+  grams: number,
+  occasion: string,
+  message: string,
+  theme: string
+): AppState {
+  const amount = Math.round(grams * DEMO_GOLD_RATE * 100) / 100;
+  const gift: GiftRecord = {
+    id: `GIFT-YASS-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`,
+    recipientName,
+    recipientMobile,
+    goldGrams: grams,
+    amount,
+    occasion,
+    message,
+    date: new Date().toISOString(),
+    status: 'sent',
+    greetingCardTheme: theme,
+  };
+
+  const transaction: Transaction = {
+    id: generateTransactionId(),
+    type: 'gift',
+    date: new Date().toISOString(),
+    goldGrams: grams,
+    amount,
+    rate: DEMO_GOLD_RATE,
+    status: 'completed',
+    reference: gift.id,
+    meta: `Gifted to ${recipientName} (${occasion})`,
+  };
+
+  return {
+    ...state,
+    holdings: {
+      ...state.holdings,
+      totalGrams: Math.round((state.holdings.totalGrams - grams) * 10000) / 10000,
+      transactions: [transaction, ...state.holdings.transactions],
+    },
+    gifts: [gift, ...state.gifts],
+  };
+}
+
 export function createDeliveryOrder(
   state: AppState,
   productType: 'coin' | 'bar',
@@ -243,9 +422,9 @@ export function createDeliveryOrder(
     status: 'created',
     createdAt: new Date().toISOString(),
     estimatedDelivery: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    courier: 'Transguard Armoured Bullion Logistics',
   };
 
-  // Deduct gold from holdings
   const newGrams = Math.round((state.holdings.totalGrams - goldRequired) * 10000) / 10000;
 
   const transaction: Transaction = {
@@ -257,6 +436,7 @@ export function createDeliveryOrder(
     rate: DEMO_GOLD_RATE,
     status: 'completed',
     reference: order.id,
+    meta: `${weight}g 24K ${purity} Minted Bullion`,
   };
 
   return {
@@ -279,6 +459,8 @@ export function loginUser(state: AppState, fullName: string, mobile: string, ema
     createdAt: new Date().toISOString(),
     kycStatus: 'verified',
     emiratesId: DEMO_USER.emiratesId,
+    savingsStreakDays: 5,
+    freeGoldRewardsMg: 25,
   };
 
   return {

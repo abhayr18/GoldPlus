@@ -1,6 +1,7 @@
 // ============================================
 // YASS Gold & YASS Bullion — App Shell & Responsive Navigation
 // A product by YASS Group, Dubai
+// Inspired by Gullak & SafeGold (Dubai Market Edition)
 // ============================================
 
 import React from 'react';
@@ -14,6 +15,10 @@ import {
   Package,
   History,
   RotateCcw,
+  Percent,
+  Target,
+  Gift,
+  ShieldCheck,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
 import { BrandLogo } from '../components/BrandLogo';
@@ -67,19 +72,11 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           </button>
 
           <button
-            className={`sidebar-nav-item ${isCurrent('sip') ? 'active' : ''}`}
-            onClick={() => navigate('sip')}
-          >
-            <RefreshCw size={18} />
-            <span>Gold SIP</span>
-          </button>
-
-          <button
             className={`sidebar-nav-item ${isCurrent('buy') ? 'active' : ''}`}
             onClick={() => navigate('buy')}
           >
             <ArrowDownCircle size={18} />
-            <span>Buy Gold</span>
+            <span>Buy Gold (24K/22K)</span>
           </button>
 
           <button
@@ -88,6 +85,64 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           >
             <ArrowUpCircle size={18} />
             <span>Sell Gold</span>
+          </button>
+
+          <button
+            className={`sidebar-nav-item ${isCurrent('sip') ? 'active' : ''}`}
+            onClick={() => navigate('sip')}
+          >
+            <RefreshCw size={18} />
+            <span>Gold Auto-SIP</span>
+          </button>
+
+          {/* Gullak Signature: Gold Leasing */}
+          <button
+            className={`sidebar-nav-item ${isCurrent('lease') ? 'active' : ''}`}
+            onClick={() => navigate('lease')}
+            style={{ position: 'relative' }}
+          >
+            <Percent size={18} color={COLORS.primaryGold} />
+            <span style={{ fontWeight: isCurrent('lease') ? 700 : 500 }}>YASS Gold+ (Yield)</span>
+            <span
+              style={{
+                marginLeft: 'auto',
+                background: '#9333EA',
+                color: '#FFF',
+                fontSize: 9,
+                fontWeight: 800,
+                padding: '1px 6px',
+                borderRadius: 8,
+              }}
+            >
+              5.2%
+            </span>
+          </button>
+
+          {/* Gullak Signature: Savings Goals */}
+          <button
+            className={`sidebar-nav-item ${isCurrent('goals') ? 'active' : ''}`}
+            onClick={() => navigate('goals')}
+          >
+            <Target size={18} />
+            <span>Savings Goals</span>
+          </button>
+
+          {/* SafeGold Signature: Gifting */}
+          <button
+            className={`sidebar-nav-item ${isCurrent('gift') ? 'active' : ''}`}
+            onClick={() => navigate('gift')}
+          >
+            <Gift size={18} />
+            <span>Gift 24K Gold</span>
+          </button>
+
+          {/* SafeGold Signature: Physical Vault Audit */}
+          <button
+            className={`sidebar-nav-item ${isCurrent('vaultProof') ? 'active' : ''}`}
+            onClick={() => navigate('vaultProof')}
+          >
+            <ShieldCheck size={18} color="#16865B" />
+            <span>Vault Proof & Audit</span>
           </button>
 
           <button
@@ -111,7 +166,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
             onClick={() => navigate('profile')}
           >
             <User size={18} />
-            <span>Profile & Settings</span>
+            <span>Profile & UAE PASS</span>
           </button>
         </nav>
 
@@ -151,7 +206,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
         {children}
 
         {/* ============================================= */}
-        {/* MOBILE BOTTOM NAVIGATION */}
+        {/* MOBILE BOTTOM NAVIGATION (Gullak & SafeGold style) */}
         {/* ============================================= */}
         <nav className="bottom-nav">
           <button
@@ -163,19 +218,35 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           </button>
 
           <button
+            className={`bottom-nav-item ${isCurrent('lease') ? 'active' : ''}`}
+            onClick={() => navigate('lease')}
+          >
+            <Percent />
+            <span>Gold+</span>
+          </button>
+
+          <button
+            className={`bottom-nav-item ${isCurrent('goals') ? 'active' : ''}`}
+            onClick={() => navigate('goals')}
+          >
+            <Target />
+            <span>Goals</span>
+          </button>
+
+          <button
+            className={`bottom-nav-item ${isCurrent('vaultProof') ? 'active' : ''}`}
+            onClick={() => navigate('vaultProof')}
+          >
+            <ShieldCheck />
+            <span>Vault</span>
+          </button>
+
+          <button
             className={`bottom-nav-item ${isCurrent('portfolio') ? 'active' : ''}`}
             onClick={() => navigate('portfolio')}
           >
             <PieChart />
             <span>Portfolio</span>
-          </button>
-
-          <button
-            className={`bottom-nav-item ${isCurrent('sip') ? 'active' : ''}`}
-            onClick={() => navigate('sip')}
-          >
-            <RefreshCw />
-            <span>SIP</span>
           </button>
 
           <button
@@ -190,3 +261,5 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
     </div>
   );
 };
+
+export default AppShell;

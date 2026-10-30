@@ -1,6 +1,7 @@
 // ============================================
 // YASS Gold & YASS Bullion — Design Tokens & Brand Constants
 // A product by YASS Group, Dubai
+// Inspired by Gullak & SafeGold (Dubai Market Edition)
 // ============================================
 
 export const BRAND = {
@@ -35,8 +36,19 @@ export const COLORS = {
   darkOverlay: 'rgba(23, 26, 29, 0.85)',
 } as const;
 
-// Live Dubai Gold Souk / DMCC illustrative gold rate (AED per gram for 24K 999.9 Fine Gold)
-export const DEMO_GOLD_RATE = 318.50; // AED per gram
+// Live Dubai Gold Souk & DMCC Market Rates (AED per gram)
+export const DUBAI_MARKET_RATES = {
+  rate24K: 318.50,
+  rate22K: 295.20,
+  rate21K: 281.80,
+  rate18K: 241.50,
+  rateSilver999: 3.85,
+  dailyChange: '+0.75%',
+  marketStatus: 'Open',
+};
+
+// Illustrative gold rate — single source of truth for 24K 999.9
+export const DEMO_GOLD_RATE = DUBAI_MARKET_RATES.rate24K; // AED per gram
 
 export const DEMO_USER = {
   fullName: 'Tariq Al Mansoori',
@@ -45,11 +57,50 @@ export const DEMO_USER = {
   email: 'tariq.mansoori@yassgroup.ae',
   kycStatus: 'verified' as const,
   emiratesId: '784-1988-1234567-1',
+  savingsStreakDays: 5,
+  freeGoldRewardsMg: 25, // 25 mg gold earned as streak rewards
 };
 
 export const DEMO_INITIAL_HOLDINGS = {
   totalGrams: 39.1209, // ~AED 12,460.00 at AED 318.50/g
-  totalInvested: 11200, // AED 11,200
+  totalInvested: 11200,
+  leasedGrams: 10.0000, // 10g actively leased earning 5.2% p.a.
+  yieldEarnedGrams: 0.1300, // ~AED 41.40 earned passively in extra gold
+};
+
+export const GULLAK_LEASE_PARTNERS = [
+  {
+    name: 'Damas Jewellery Dubai',
+    rating: 'AAA Bank Guaranteed',
+    annualYield: '5.2% p.a.',
+    tenure: '6 Months',
+    insurance: '100% Insured by Dubai Insurance Co.',
+  },
+  {
+    name: 'Malabar Gold & Diamonds (UAE)',
+    rating: 'A+ Rated Institutional',
+    annualYield: '5.5% p.a.',
+    tenure: '12 Months',
+    insurance: '100% Backed by FAB Bank Guarantee',
+  },
+  {
+    name: 'Joyalukkas International',
+    rating: 'Tier-1 DGJG Member',
+    annualYield: '5.0% p.a.',
+    tenure: '3 Months',
+    insurance: '100% Bank Guaranteed',
+  },
+];
+
+export const SAFE_GOLD_VAULT_AUDIT = {
+  auditor: 'BDO Chartered Accountants (Dubai)',
+  auditDate: '30 October 2026',
+  vaultLocation: 'Brink’s Global Services, Almas Tower, JLT Dubai',
+  secondaryVault: 'Transguard Vaults, Emirates Group HQ Dubai',
+  totalPhysicalBarsKg: 2540.85,
+  digitalGoldIssuedKg: 2540.85,
+  backingRatio: '100.0% Fully Physical Backed',
+  assayCertificateId: 'DMCC-DGD-2026-9999-AU',
 };
 
 export const DELIVERY_PRODUCTS = {
@@ -81,6 +132,7 @@ export const INITIAL_TRANSACTIONS = [
     status: 'completed' as const,
     paymentMethod: 'Aani Instant Pay',
     reference: 'TXN-YASS-20250328-001',
+    meta: 'Direct Buy 24K 999.9',
   },
   {
     id: 'TXN-YASS-20250405-002',
@@ -92,6 +144,7 @@ export const INITIAL_TRANSACTIONS = [
     status: 'completed' as const,
     paymentMethod: 'Emirates NBD Transfer',
     reference: 'TXN-YASS-20250405-002',
+    meta: 'Instant Withdrawal',
   },
   {
     id: 'TXN-YASS-20250412-003',
@@ -103,9 +156,22 @@ export const INITIAL_TRANSACTIONS = [
     status: 'completed' as const,
     paymentMethod: 'UAE Direct Debit',
     reference: 'TXN-YASS-20250412-003',
+    meta: 'Monthly Gold Accumulator',
   },
   {
-    id: 'TXN-YASS-20250420-004',
+    id: 'TXN-YASS-20250418-004',
+    type: 'lease' as const,
+    date: '2025-04-18T16:00:00',
+    goldGrams: 10.0000,
+    amount: 3185.00,
+    rate: 318.50,
+    status: 'completed' as const,
+    paymentMethod: 'Vault Lock',
+    reference: 'TXN-YASS-20250418-004',
+    meta: 'YASS Gold+ 5.2% Yield Lease',
+  },
+  {
+    id: 'TXN-YASS-20250420-005',
     type: 'buy' as const,
     date: '2025-04-20T11:45:00',
     goldGrams: 15.6986,
@@ -113,17 +179,7 @@ export const INITIAL_TRANSACTIONS = [
     rate: 318.50,
     status: 'completed' as const,
     paymentMethod: 'Apple Pay',
-    reference: 'TXN-YASS-20250420-004',
-  },
-  {
-    id: 'TXN-YASS-20250512-005',
-    type: 'sip' as const,
-    date: '2025-05-12T09:00:00',
-    goldGrams: 3.1446,
-    amount: 1000.00,
-    rate: 318.00,
-    status: 'completed' as const,
-    paymentMethod: 'UAE Direct Debit',
-    reference: 'TXN-YASS-20250512-005',
+    reference: 'TXN-YASS-20250420-005',
+    meta: '5-min Price Lock Purchase',
   },
 ];

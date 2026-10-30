@@ -1,6 +1,7 @@
 // ============================================
 // YASS Gold & YASS Bullion — Main Application Router
 // A product by YASS Group, Dubai
+// Inspired by Gullak & SafeGold (Dubai Market Edition)
 // ============================================
 
 import React from 'react';
@@ -18,6 +19,10 @@ import TransactionHistoryScreen from './screens/TransactionHistoryScreen';
 import PhysicalDeliveryScreen from './screens/PhysicalDeliveryScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import GoldPriceDetailScreen from './screens/GoldPriceDetailScreen';
+import GoldLeaseScreen from './screens/GoldLeaseScreen';
+import GiftGoldScreen from './screens/GiftGoldScreen';
+import SavingsGoalScreen from './screens/SavingsGoalScreen';
+import VaultCertificateScreen from './screens/VaultCertificateScreen';
 
 const ScreenRouter: React.FC = () => {
   const { state } = useApp();
@@ -36,6 +41,14 @@ const ScreenRouter: React.FC = () => {
       return <SellGoldScreen />;
     case 'sip':
       return <SIPScreen />;
+    case 'lease':
+      return <GoldLeaseScreen />;
+    case 'gift':
+      return <GiftGoldScreen />;
+    case 'goals':
+      return <SavingsGoalScreen />;
+    case 'vaultProof':
+      return <VaultCertificateScreen />;
     case 'portfolio':
       return <PortfolioScreen />;
     case 'transactions':
@@ -44,6 +57,7 @@ const ScreenRouter: React.FC = () => {
     case 'delivery':
       return <PhysicalDeliveryScreen />;
     case 'profile':
+    case 'settings':
       return <ProfileScreen />;
     case 'goldPriceDetail':
       return <GoldPriceDetailScreen />;
