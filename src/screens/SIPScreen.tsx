@@ -1,17 +1,28 @@
 // ============================================
-// YASS Gold & YASS Bullion — Gold SIP Screen
+// YASS Gold & YASS Bullion — Gold SIP / Auto-Save Screen
+// Gullak-Style Daily Micro-Savings & Auto-Debit
 // A product by YASS Group, Dubai
 // ============================================
 
 import React, { useState, useMemo } from 'react';
-import { ArrowLeft, Check, Calendar, PlusCircle, Pause, Play, Trash2, ShieldCheck } from 'lucide-react';
+import {
+  ArrowLeft,
+  Check,
+  Calendar,
+  Pause,
+  Play,
+  Trash2,
+  ShieldCheck,
+  Sparkles,
+  Plus,
+} from 'lucide-react';
 import { useApp } from '../components/AppProvider';
 import { createSIP, updateSIPStatus } from '../state/appState';
-import { DEMO_GOLD_RATE, COLORS } from '../constants';
+import { DEMO_GOLD_RATE } from '../constants';
 import type { SIPRecord } from '../types';
 
 type FlowState = 'setup' | 'review' | 'success' | 'manage';
-type Frequency = 'weekly' | 'monthly' | 'quarterly';
+type Frequency = 'daily' | 'weekly' | 'monthly';
 
 const formatCurrency = (val: number): string =>
   'AED ' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -19,20 +30,18 @@ const formatCurrency = (val: number): string =>
 const formatGrams = (val: number): string =>
   val.toFixed(4) + ' g';
 
-const SIPScreen: React.FC = () => {
+export const SIPScreen: React.FC = () => {
   const { state, setState, navigate, back, showToast } = useApp();
 
-  // If user already has active SIPs, they might start on 'setup' or toggle to 'manage'
   const [flowState, setFlowState] = useState<FlowState>(
     state.sips.length > 0 ? 'manage' : 'setup'
   );
 
-  // Setup form states
-  const [frequency, setFrequency] = useState<Frequency>('monthly');
-  const [amountStr, setAmountStr] = useState<string>('1000');
-  const [nickname, setNickname] = useState<string>('Dubai Gold Accumulator');
-  const [paymentMethod] = useState<string>('UAE Direct Debit (Aani)');
-  const [selectedChip, setSelectedChip] = useState<number>(1000);
+  const [frequency, setFrequency] = useState<Frequency>('daily');
+  const [amountStr, setAmountStr] = useState<string>('25');
+  const [nickname, setNickname] = useState<string>('Daily Gold Micro-Savings');
+  const [paymentMethod] = useState<string>('UAE Direct Debit (Aani Pay)');
+  const [selectedChip, setSelectedChip] = useState<number>(25);
   const [cancelModalSipId, setCancelModalSipId] = useState<string | null>(null);
 
   const amount = parseFloat(amountStr) || 0;
@@ -43,25 +52,24 @@ const SIPScreen: React.FC = () => {
     return Math.round((amount / DEMO_GOLD_RATE) * 10000) / 10000;
   }, [amount]);
 
-  // Next installment date display
-  const nextDateFormatted = useMemo(() => {
-    const d = new Date();
-    d.setMonth(d.getMonth() + 1);
-    d.setDate(5);
-    return `5th of ${d.toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}`;
-  }, []);
+  // Projected 1-year accumulation (Gullak feature)
+  const yearlyAccumulation = useMemo(() => {
+    let multiplier = 365;
+    if (frequency === 'weekly') multiplier = 52;
+    if (frequency === 'monthly') multiplier = 12;
+    const totalAED = amount * multiplier;
+    const totalGrams = totalAED / DEMO_GOLD_RATE;
+    return { totalAED, totalGrams };
+  }, [amount, frequency]);
 
-  const isValid = amount >= 100;
+  const minAmount = frequency === 'daily' ? 10 : frequency === 'weekly' ? 50 : 100;
+  const isValid = amount >= minAmount;
+
+  const quickChips = frequency === 'daily' ? [10, 25, 50, 100] : [100, 250, 500, 1000];
 
   const handleChipClick = (val: number) => {
     setSelectedChip(val);
     setAmountStr(val.toString());
-  };
-
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    setAmountStr(val);
-    setSelectedChip(parseFloat(val) || 0);
   };
 
   const handleConfirmSIP = () => {
@@ -70,10 +78,10 @@ const SIPScreen: React.FC = () => {
       amount,
       frequency,
       paymentMethod,
-      nickname.trim() || `${frequency.charAt(0).toUpperCase() + frequency.slice(1)} Gold SIP`
+      nickname.trim() || `${frequency.charAt(0).toUpperCase() + frequency.slice(1)} Gold Auto-Save`
     );
     setState(newState);
-    showToast('Gold SIP created successfully!', 'success');
+    showToast(`Created ${frequency} Gold Auto-Save of AED ${amount}!`, 'success');
     setFlowState('success');
   };
 
@@ -81,22 +89,21 @@ const SIPScreen: React.FC = () => {
     const nextStatus = sip.status === 'active' ? 'paused' : 'active';
     const newState = updateSIPStatus(state, sip.id, nextStatus);
     setState(newState);
-    showToast(`SIP ${nextStatus === 'active' ? 'resumed' : 'paused'}`, 'info');
+    showToast(`Auto-Save ${nextStatus === 'active' ? 'resumed' : 'paused'}`, 'info');
   };
 
   const handleCancelSIP = (id: string) => {
     const newState = updateSIPStatus(state, id, 'cancelled');
     setState(newState);
     setCancelModalSipId(null);
-    showToast('SIP cancelled successfully', 'info');
+    showToast('Auto-Save plan cancelled', 'info');
   };
 
   // =============================================
-  // SETUP STATE
+  // SETUP STATE (Gullak Micro-Savings Form)
   // =============================================
   const renderSetupState = () => (
-    <div className="screen-content">
-      {/* Header */}
+    <div className="screen-container">
       <div className="screen-header">
         <button
           className="screen-header-back"
@@ -104,80 +111,88 @@ const SIPScreen: React.FC = () => {
             if (state.sips.length > 0) setFlowState('manage');
             else back();
           }}
-          aria-label="Back"
         >
           <ArrowLeft size={18} />
         </button>
-        <div>
-          <h2 className="screen-header-title">Start Gold SIP</h2>
-          <p style={{ fontSize: 13, color: COLORS.secondaryText, marginTop: 2 }}>
-            Invest regularly. Build more gold.
-          </p>
-        </div>
+        <span className="screen-header-title">Daily Gold Auto-Save</span>
+        <div style={{ width: 36 }} />
       </div>
 
-      <div style={{ padding: '0 4px', marginTop: 12 }}>
-        {/* Toggle to manage if SIPs exist */}
+      <div className="screen-content" style={{ paddingTop: 14 }}>
         {state.sips.length > 0 && (
-          <div style={{ marginBottom: 16, textAlign: 'right' }}>
+          <div style={{ marginBottom: 12, textAlign: 'right' }}>
             <button
               onClick={() => setFlowState('manage')}
               style={{
                 background: 'none',
                 border: 'none',
-                color: COLORS.primaryGold,
-                fontSize: 13,
-                fontWeight: 600,
+                color: '#D97706',
+                fontSize: 12,
+                fontWeight: 700,
                 cursor: 'pointer',
               }}
             >
-              ← View Active SIPs ({state.sips.length})
+              ← View Active Plans ({state.sips.length})
             </button>
           </div>
         )}
 
-        {/* Frequency selector */}
-        <label className="form-label" style={{ marginBottom: 8 }}>
-          Select Frequency
-        </label>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginBottom: 20 }}>
-          {(['weekly', 'monthly', 'quarterly'] as Frequency[]).map((freq) => {
-            const isSelected = frequency === freq;
-            return (
-              <div
-                key={freq}
-                onClick={() => setFrequency(freq)}
-                style={{
-                  padding: '14px 8px',
-                  borderRadius: 12,
-                  border: `1.5px solid ${isSelected ? COLORS.primaryGold : COLORS.border}`,
-                  background: isSelected ? 'rgba(232, 182, 63, 0.08)' : COLORS.cardBg,
-                  textAlign: 'center',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                }}
-              >
+        {/* Gullak Frequency Selector */}
+        <div style={{ marginBottom: 16 }}>
+          <label className="form-label">Auto-Save Frequency</label>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+            {[
+              { id: 'daily', label: 'Daily', badge: '🔥 Popular' },
+              { id: 'weekly', label: 'Weekly', badge: null },
+              { id: 'monthly', label: 'Monthly', badge: null },
+            ].map((item) => {
+              const isSelected = frequency === item.id;
+              return (
                 <div
+                  key={item.id}
+                  onClick={() => {
+                    setFrequency(item.id as Frequency);
+                    if (item.id === 'daily') setAmountStr('25');
+                    else if (item.id === 'weekly') setAmountStr('100');
+                    else setAmountStr('500');
+                  }}
                   style={{
-                    width: 16,
-                    height: 16,
-                    borderRadius: '50%',
-                    border: `2px solid ${isSelected ? COLORS.primaryGold : COLORS.border}`,
-                    margin: '0 auto 8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: isSelected ? COLORS.primaryGold : 'transparent',
+                    padding: '10px 6px',
+                    borderRadius: 12,
+                    border: isSelected ? '2px solid #F59E0B' : '1px solid #E2E8F0',
+                    background: isSelected ? '#FEF3C7' : '#FFFFFF',
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    transition: 'all 0.15s',
                   }}
                 >
-                  {isSelected && <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#fff' }} />}
+                  {item.badge && (
+                    <span
+                      style={{
+                        position: 'absolute',
+                        top: -6,
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        background: '#EA580C',
+                        color: '#FFF',
+                        fontSize: 8,
+                        fontWeight: 800,
+                        padding: '1px 5px',
+                        borderRadius: 6,
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
+                  <div style={{ fontSize: 13, fontWeight: 700, color: isSelected ? '#B45309' : '#0F172A' }}>
+                    {item.label}
+                  </div>
                 </div>
-                <div style={{ fontSize: 14, fontWeight: 600, textTransform: 'capitalize', color: COLORS.mainText }}>
-                  {freq}
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
         {/* Amount Input */}
@@ -188,107 +203,114 @@ const SIPScreen: React.FC = () => {
             <input
               type="number"
               value={amountStr}
-              onChange={handleAmountChange}
-              placeholder="e.g. 1000"
-              min={100}
+              onChange={(e) => {
+                setAmountStr(e.target.value);
+                setSelectedChip(parseFloat(e.target.value) || 0);
+              }}
+              placeholder={`Min AED ${minAmount}`}
+              min={minAmount}
             />
           </div>
         </div>
 
         {/* Quick Amount Chips */}
-        <div className="chip-row" style={{ marginBottom: 24 }}>
-          {[500, 1000, 2000, 5000, 10000].map((val) => (
+        <div className="chip-row" style={{ marginBottom: 16 }}>
+          {quickChips.map((val) => (
             <button
               key={val}
               type="button"
               className={`chip ${selectedChip === val ? 'active' : ''}`}
               onClick={() => handleChipClick(val)}
             >
-              AED {val.toLocaleString('en-US')}
+              AED {val}
             </button>
           ))}
         </div>
 
-        {/* SIP Schedule Card */}
-        <div className="card" style={{ marginBottom: 20 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 8,
-                background: 'rgba(232, 182, 63, 0.12)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: COLORS.primaryGold,
-              }}
-            >
-              <Calendar size={18} />
-            </div>
-            <div>
-              <div style={{ fontSize: 13, color: COLORS.secondaryText }}>First Installment Date</div>
-              <div style={{ fontSize: 15, fontWeight: 600, color: COLORS.mainText }}>{nextDateFormatted}</div>
-            </div>
+        {/* Gullak 1-Year Projected Accumulation Widget */}
+        <div
+          style={{
+            background: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
+            border: '1px solid #FDE68A',
+            borderRadius: 14,
+            padding: '14px 16px',
+            marginBottom: 16,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+            <Sparkles size={16} color="#D97706" />
+            <span style={{ fontSize: 12, fontWeight: 700, color: '#92400E' }}>
+              1-Year Wealth Projection
+            </span>
           </div>
+          <div style={{ fontSize: 20, fontWeight: 800, color: '#78350F' }}>
+            ~{yearlyAccumulation.totalGrams.toFixed(2)} grams{' '}
+            <span style={{ fontSize: 13, fontWeight: 600, color: '#92400E' }}>
+              (AED {yearlyAccumulation.totalAED.toLocaleString('en-US')})
+            </span>
+          </div>
+          <div style={{ fontSize: 11, color: '#B45309', marginTop: 2 }}>
+            Small daily discipline builds serious physical gold wealth with 0% fees.
+          </div>
+        </div>
 
-          <div className="divider" style={{ margin: '8px 0' }} />
-
+        {/* Plan Configuration Summary */}
+        <div className="card" style={{ marginBottom: 16 }}>
           <div className="summary-row">
-            <span className="label">SIP Nickname</span>
+            <span className="label">Plan Nickname</span>
             <input
               type="text"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              placeholder="e.g. Dream House Gold"
               style={{
                 textAlign: 'right',
                 border: 'none',
                 background: 'transparent',
-                fontWeight: 600,
-                color: COLORS.mainText,
+                fontWeight: 700,
+                color: '#0F172A',
                 outline: 'none',
                 fontFamily: 'inherit',
+                fontSize: 13,
               }}
             />
           </div>
           <div className="summary-row">
-            <span className="label">Payment Mode</span>
-            <span className="value">{paymentMethod}</span>
+            <span className="label">Debit Method</span>
+            <span className="value">Central Bank Aani Pay</span>
           </div>
           <div className="summary-row">
-            <span className="label">Estimated Gold / Installment</span>
-            <span className="value" style={{ color: COLORS.primaryGold }}>
+            <span className="label">Est. Gold / Debit</span>
+            <span className="value" style={{ color: '#D97706' }}>
               ~{formatGrams(estimatedGrams)}
             </span>
           </div>
         </div>
 
-        {/* Info notice */}
+        {/* Trust Guarantee */}
         <div
           style={{
             display: 'flex',
-            gap: 10,
-            padding: '12px 14px',
+            gap: 8,
+            padding: '10px 12px',
             borderRadius: 10,
-            background: 'rgba(22, 134, 91, 0.08)',
-            marginBottom: 24,
-            alignItems: 'flex-start',
+            background: '#ECFDF5',
+            border: '1px solid #BBF7D0',
+            marginBottom: 20,
+            alignItems: 'center',
           }}
         >
-          <ShieldCheck size={18} color={COLORS.positive} style={{ flexShrink: 0, marginTop: 2 }} />
-          <div style={{ fontSize: 12, color: COLORS.positive, lineHeight: 1.4 }}>
-            Zero lock-in. You can pause, modify or cancel your Gold SIP anytime with no penalty.
+          <ShieldCheck size={18} color="#059669" style={{ flexShrink: 0 }} />
+          <div style={{ fontSize: 11, color: '#047857', fontWeight: 600 }}>
+            Zero lock-in. Pause, skip, or cancel your auto-save plan anytime with 1 tap.
           </div>
         </div>
 
-        {/* Primary CTA */}
         <button
           className="btn btn-primary"
           disabled={!isValid}
           onClick={() => setFlowState('review')}
         >
-          Start SIP
+          Start {frequency.charAt(0).toUpperCase() + frequency.slice(1)} Auto-Save (AED {amount})
         </button>
       </div>
     </div>
@@ -298,68 +320,43 @@ const SIPScreen: React.FC = () => {
   // REVIEW STATE
   // =============================================
   const renderReviewState = () => (
-    <div className="screen-content">
+    <div className="screen-container">
       <div className="screen-header">
-        <button
-          className="screen-header-back"
-          onClick={() => setFlowState('setup')}
-          aria-label="Back"
-        >
+        <button className="screen-header-back" onClick={() => setFlowState('setup')}>
           <ArrowLeft size={18} />
         </button>
-        <h2 className="screen-header-title">Review Gold SIP</h2>
+        <span className="screen-header-title">Confirm Auto-Save</span>
+        <div style={{ width: 36 }} />
       </div>
 
-      <div style={{ padding: '0 4px', marginTop: 16 }}>
+      <div className="screen-content" style={{ paddingTop: 14 }}>
+        <div className="demo-banner">DUBAI FINANCIAL SIMULATION</div>
+
         <div className="card" style={{ marginBottom: 20 }}>
-          <div style={{ textAlign: 'center', padding: '12px 0 16px' }}>
-            <div style={{ fontSize: 13, color: COLORS.secondaryText }}>Recurring Amount</div>
-            <div style={{ fontSize: 32, fontWeight: 700, color: COLORS.mainText, marginTop: 4 }}>
-              {formatCurrency(amount)}
-              <span style={{ fontSize: 15, fontWeight: 500, color: COLORS.secondaryText }}>
-                {' '}/ {frequency}
-              </span>
-            </div>
-          </div>
-
-          <div className="divider" />
-
           <div className="summary-row">
             <span className="label">Plan Name</span>
-            <span className="value">{nickname || 'Gold SIP'}</span>
+            <span className="value">{nickname}</span>
+          </div>
+          <div className="summary-row">
+            <span className="label">Installment Amount</span>
+            <span className="value">{formatCurrency(amount)}</span>
           </div>
           <div className="summary-row">
             <span className="label">Frequency</span>
-            <span className="value" style={{ textTransform: 'capitalize' }}>
-              {frequency}
-            </span>
+            <span className="value" style={{ textTransform: 'capitalize' }}>{frequency}</span>
           </div>
           <div className="summary-row">
-            <span className="label">First Debit Date</span>
-            <span className="value">{nextDateFormatted}</span>
+            <span className="label">Estimated Gold / Debit</span>
+            <span className="value" style={{ color: '#D97706' }}>~{formatGrams(estimatedGrams)}</span>
           </div>
           <div className="summary-row">
-            <span className="label">Dubai Gold Rate</span>
-            <span className="value">AED {DEMO_GOLD_RATE.toFixed(2)}/g</span>
-          </div>
-          <div className="summary-row">
-            <span className="label">Est. Gold per cycle</span>
-            <span className="value" style={{ color: COLORS.primaryGold }}>
-              ~{formatGrams(estimatedGrams)}
-            </span>
-          </div>
-          <div className="summary-row">
-            <span className="label">Payment Mode</span>
+            <span className="label">Debit Gateway</span>
             <span className="value">{paymentMethod}</span>
           </div>
         </div>
 
-        <div className="demo-banner">
-          DEMO MODE — SIMULATED MANDATE, NO ACTUAL BANK DEBIT
-        </div>
-
         <button className="btn btn-primary" onClick={handleConfirmSIP}>
-          Confirm & Schedule SIP
+          Activate Auto-Save Mandate
         </button>
       </div>
     </div>
@@ -369,31 +366,35 @@ const SIPScreen: React.FC = () => {
   // SUCCESS STATE
   // =============================================
   const renderSuccessState = () => (
-    <div className="success-screen">
-      <div className="success-check">
+    <div className="screen-container" style={{ justifyContent: 'center', alignItems: 'center', padding: 24, textAlign: 'center' }}>
+      <div
+        style={{
+          width: 64,
+          height: 64,
+          borderRadius: '50%',
+          background: '#ECFDF5',
+          color: '#10B981',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: '0 auto 16px',
+        }}
+      >
         <Check size={36} strokeWidth={3} />
       </div>
 
-      <div className="success-title">SIP Started Successfully!</div>
-      <div className="success-desc">
-        Your automated gold savings plan is now active. Your first installment will be credited on schedule.
-      </div>
+      <h2 style={{ fontSize: 20, fontWeight: 800, color: '#0F172A', marginBottom: 6 }}>
+        Auto-Save Plan Active!
+      </h2>
+      <p style={{ fontSize: 13, color: '#64748B', marginBottom: 20 }}>
+        Your {frequency} debit of AED {amount} will automatically convert to 24K gold in your DMCC vault.
+      </p>
 
-      <div className="success-detail">
-        {formatCurrency(amount)} / {frequency}
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 280 }}>
-        <button
-          className="btn btn-primary"
-          onClick={() => setFlowState('manage')}
-        >
-          View Active SIPs
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 280 }}>
+        <button className="btn btn-primary" onClick={() => setFlowState('manage')}>
+          View Active Plans
         </button>
-        <button
-          className="btn btn-secondary"
-          onClick={() => navigate('dashboard')}
-        >
+        <button className="btn btn-secondary" onClick={() => navigate('dashboard')}>
           Back to Dashboard
         </button>
       </div>
@@ -401,157 +402,136 @@ const SIPScreen: React.FC = () => {
   );
 
   // =============================================
-  // MANAGE STATE (List existing SIPs)
+  // MANAGE STATE (List of active SIPs)
   // =============================================
   const renderManageState = () => (
-    <div className="screen-content">
+    <div className="screen-container">
       <div className="screen-header">
-        <button
-          className="screen-header-back"
-          onClick={() => navigate('dashboard')}
-          aria-label="Back"
-        >
+        <button className="screen-header-back" onClick={() => navigate('dashboard')}>
           <ArrowLeft size={18} />
         </button>
-        <h2 className="screen-header-title">My Gold SIPs</h2>
+        <span className="screen-header-title">My Auto-Save Plans</span>
+        <button
+          onClick={() => setFlowState('setup')}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: '#D97706',
+            fontWeight: 700,
+            fontSize: 12,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+          }}
+        >
+          <Plus size={16} />
+          <span>New</span>
+        </button>
       </div>
 
-      <div style={{ padding: '0 4px', marginTop: 12 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-          <span style={{ fontSize: 13, color: COLORS.secondaryText }}>
-            Active Plans ({state.sips.filter(s => s.status !== 'cancelled').length})
-          </span>
-          <button
-            onClick={() => setFlowState('setup')}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 6,
-              background: 'none',
-              border: 'none',
-              color: COLORS.primaryGold,
-              fontSize: 14,
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
-          >
-            <PlusCircle size={16} /> Start New SIP
-          </button>
-        </div>
-
-        {state.sips.length === 0 ? (
-          <div className="empty-state">
-            <div className="empty-state-icon">
-              <Calendar size={32} />
-            </div>
-            <div className="empty-state-title">No Active SIPs</div>
-            <div className="empty-state-desc">
-              Start a recurring daily, weekly or monthly SIP to build gold savings steadily.
-            </div>
-            <button
-              className="btn btn-primary"
-              style={{ marginTop: 20, maxWidth: 220 }}
-              onClick={() => setFlowState('setup')}
+      <div className="screen-content" style={{ paddingTop: 14 }}>
+        {state.sips.map((sip) => {
+          const isActive = sip.status === 'active';
+          return (
+            <div
+              key={sip.id}
+              className="card"
+              style={{
+                borderRadius: 14,
+                marginBottom: 12,
+                opacity: sip.status === 'cancelled' ? 0.6 : 1,
+              }}
             >
-              Start First SIP
-            </button>
-          </div>
-        ) : (
-          state.sips.map((sip) => (
-            <div key={sip.id} className="card" style={{ marginBottom: 14 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
                 <div>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: COLORS.mainText }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: '#0F172A' }}>
                     {sip.nickname}
                   </div>
-                  <div style={{ fontSize: 12, color: COLORS.secondaryText, marginTop: 2 }}>
-                    ID: {sip.id} • Started {sip.startDate}
+                  <div style={{ fontSize: 11, color: '#64748B', display: 'flex', alignItems: 'center', gap: 4, marginTop: 2 }}>
+                    <Calendar size={12} />
+                    <span>Next debit: {sip.nextDate}</span>
                   </div>
                 </div>
-                <span className={`status-badge ${sip.status}`}>
+
+                <span
+                  style={{
+                    background: isActive ? '#ECFDF5' : '#F1F5F9',
+                    color: isActive ? '#059669' : '#64748B',
+                    fontSize: 10,
+                    fontWeight: 700,
+                    padding: '2px 8px',
+                    borderRadius: 10,
+                    textTransform: 'uppercase',
+                  }}
+                >
                   {sip.status}
                 </span>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, margin: '14px 0' }}>
-                <div style={{ padding: 10, background: COLORS.ivoryBg, borderRadius: 8 }}>
-                  <div style={{ fontSize: 11, color: COLORS.secondaryText }}>Installment</div>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: COLORS.mainText }}>
-                    {formatCurrency(sip.amount)}
-                    <span style={{ fontSize: 11, fontWeight: 500, color: COLORS.secondaryText }}>
-                      /{sip.frequency}
-                    </span>
-                  </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, padding: '10px 0', borderTop: '1px solid #F1F5F9', borderBottom: '1px solid #F1F5F9' }}>
+                <div>
+                  <div style={{ fontSize: 10, color: '#64748B' }}>Installment</div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: '#0F172A' }}>{formatCurrency(sip.amount)}</div>
                 </div>
-
-                <div style={{ padding: 10, background: COLORS.ivoryBg, borderRadius: 8 }}>
-                  <div style={{ fontSize: 11, color: COLORS.secondaryText }}>Accumulated Gold</div>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: COLORS.primaryGold }}>
-                    {formatGrams(sip.totalGoldAccumulated)}
-                  </div>
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ fontSize: 10, color: '#64748B' }}>Gold Accumulated</div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: '#D97706' }}>{formatGrams(sip.totalGoldAccumulated)}</div>
                 </div>
               </div>
 
-              <div style={{ fontSize: 12, color: COLORS.secondaryText, marginBottom: 14 }}>
-                Next scheduled debit: <strong>{sip.nextDate}</strong>
-              </div>
-
-              {sip.status !== 'cancelled' ? (
-                <div style={{ display: 'flex', gap: 10 }}>
+              {sip.status !== 'cancelled' && (
+                <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
                   <button
-                    className="btn btn-secondary btn-sm"
-                    style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
                     onClick={() => handleToggleStatus(sip)}
+                    className="btn btn-secondary btn-sm"
+                    style={{ flex: 1 }}
                   >
-                    {sip.status === 'active' ? (
-                      <>
-                        <Pause size={14} /> Pause SIP
-                      </>
-                    ) : (
-                      <>
-                        <Play size={14} /> Resume SIP
-                      </>
-                    )}
+                    {isActive ? <Pause size={14} /> : <Play size={14} />}
+                    <span>{isActive ? 'Pause' : 'Resume'}</span>
                   </button>
 
                   <button
-                    className="btn btn-secondary btn-sm"
-                    style={{ color: COLORS.negative, borderColor: 'rgba(220, 53, 69, 0.3)' }}
                     onClick={() => setCancelModalSipId(sip.id)}
-                    title="Cancel SIP"
+                    className="btn btn-secondary btn-sm"
+                    style={{ color: '#EF4444' }}
                   >
                     <Trash2 size={14} />
+                    <span>Cancel</span>
                   </button>
-                </div>
-              ) : (
-                <div style={{ fontSize: 12, color: COLORS.negative, fontStyle: 'italic' }}>
-                  This SIP has been cancelled.
                 </div>
               )}
             </div>
-          ))
-        )}
+          );
+        })}
       </div>
 
-      {/* Cancel confirmation modal */}
+      {/* Cancel Confirmation Modal */}
       {cancelModalSipId && (
-        <div className="modal-overlay" onClick={() => setCancelModalSipId(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 8, color: COLORS.mainText }}>
-              Cancel Gold SIP?
-            </h3>
-            <p style={{ fontSize: 14, color: COLORS.secondaryText, marginBottom: 20 }}>
-              Are you sure you want to stop this automated savings plan? Your existing accumulated gold stays safe in your portfolio.
-            </p>
-            <div style={{ display: 'flex', gap: 12 }}>
-              <button
-                className="btn btn-secondary"
-                onClick={() => setCancelModalSipId(null)}
-              >
-                Keep SIP
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.6)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            padding: 20,
+          }}
+        >
+          <div style={{ background: '#FFF', borderRadius: 16, padding: 20, maxWidth: 360, width: '100%' }}>
+            <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>Cancel Auto-Save Plan?</div>
+            <div style={{ fontSize: 13, color: '#64748B', marginBottom: 16 }}>
+              Future debits will stop immediately. All gold accumulated so far remains 100% in your vault.
+            </div>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <button className="btn btn-secondary" onClick={() => setCancelModalSipId(null)}>
+                Keep Plan
               </button>
               <button
-                className="btn btn-danger"
+                className="btn btn-primary"
+                style={{ background: '#EF4444', color: '#FFF' }}
                 onClick={() => handleCancelSIP(cancelModalSipId)}
               >
                 Yes, Cancel
@@ -564,12 +544,12 @@ const SIPScreen: React.FC = () => {
   );
 
   return (
-    <div className="screen-container">
+    <>
       {flowState === 'setup' && renderSetupState()}
       {flowState === 'review' && renderReviewState()}
       {flowState === 'success' && renderSuccessState()}
       {flowState === 'manage' && renderManageState()}
-    </div>
+    </>
   );
 };
 

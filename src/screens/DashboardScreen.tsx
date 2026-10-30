@@ -1,7 +1,6 @@
 // ============================================
 // YASS Gold & YASS Bullion — Dashboard Screen
-// High-Fidelity Fintech UI (Dubai Market Edition)
-// Inspired by Gullak (Gold+, Daily Streaks) & SafeGold (Vault Custody, Gifting)
+// Mobile-First Gullak Theme (Dubai Market Edition)
 // A product by YASS Group, Dubai
 // ============================================
 
@@ -18,6 +17,7 @@ import {
   Percent,
   Target,
   Award,
+  Zap,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
 import { GoldBarIllustration, MiniLineChart } from '../components/BrandLogo';
@@ -38,13 +38,6 @@ function formatCurrency(value: number): string {
 
 function formatGrams(grams: number): string {
   return grams.toFixed(4);
-}
-
-function getGreeting(): string {
-  const hour = new Date().getHours();
-  if (hour < 12) return 'Good Morning';
-  if (hour < 17) return 'Good Afternoon';
-  return 'Good Evening';
 }
 
 function formatDate(dateStr: string): string {
@@ -72,13 +65,13 @@ function txnLabel(type: Transaction['type']): string {
     case 'sell':
       return 'Gold Sold';
     case 'sip':
-      return 'SIP Auto-Save';
+      return 'Daily SIP Save';
     case 'lease':
       return 'YASS Gold+ Leased';
     case 'gift':
-      return 'Gold Gift Sent';
+      return '24K Gift Sent';
     case 'redemption':
-      return 'Bullion Delivery';
+      return 'Minted Bullion Bar';
     default:
       return 'Transaction';
   }
@@ -99,19 +92,19 @@ export const DashboardScreen: React.FC = () => {
     [state.holdings.transactions]
   );
 
-  // Quick action items (Fintech features from Gullak & SafeGold)
+  // Gullak Quick Action Grid (Symmetrical 4x2)
   const quickActions = [
-    { label: 'Buy Gold', icon: ArrowDownCircle, screen: 'buy' as const, color: '#16865B' },
-    { label: 'Sell Gold', icon: ArrowUpCircle, screen: 'sell' as const, color: '#DC3545' },
-    { label: 'Gold SIP', icon: RefreshCw, screen: 'sip' as const, color: '#E8B63F' },
-    { label: 'YASS Gold+', icon: Percent, screen: 'lease' as const, color: '#9333EA', badge: '5.2%' },
-    { label: 'Goals', icon: Target, screen: 'goals' as const, color: '#0284C7' },
-    { label: 'Gift Gold', icon: Gift, screen: 'gift' as const, color: '#EA580C' },
-    { label: 'Redeem Bar', icon: Award, screen: 'delivery' as const, color: '#CA8A04' },
-    { label: 'Vault Proof', icon: ShieldCheck, screen: 'vaultProof' as const, color: '#16865B' },
+    { label: 'Buy Gold', icon: ArrowDownCircle, screen: 'buy' as const, color: '#10B981', bg: '#ECFDF5' },
+    { label: 'Sell Gold', icon: ArrowUpCircle, screen: 'sell' as const, color: '#EF4444', bg: '#FEF2F2' },
+    { label: 'Daily SIP', icon: RefreshCw, screen: 'sip' as const, color: '#D97706', bg: '#FEF3C7' },
+    { label: 'Gold+ Yield', icon: Percent, screen: 'lease' as const, color: '#7C3AED', bg: '#F5F3FF', badge: '5.2%' },
+    { label: 'Goals', icon: Target, screen: 'goals' as const, color: '#0284C7', bg: '#F0F9FF' },
+    { label: 'Gift Gold', icon: Gift, screen: 'gift' as const, color: '#EA580C', bg: '#FFF7ED' },
+    { label: 'Redeem Bar', icon: Award, screen: 'delivery' as const, color: '#B45309', bg: '#FFFBEB' },
+    { label: 'Vault Proof', icon: ShieldCheck, screen: 'vaultProof' as const, color: '#059669', bg: '#ECFDF5' },
   ];
 
-  // 1-Tap Quick Daily Save Streak Action (Gullak signature)
+  // 1-Tap Daily Savings Streak action (Gullak Hallmark)
   const handleDailyStreakSave = () => {
     const newState = buyGold(state, 20, 'Aani Instant Pay');
     const updatedUser = {
@@ -123,165 +116,194 @@ export const DashboardScreen: React.FC = () => {
       ...newState,
       user: updatedUser,
     });
-    showToast('Saved AED 20! Streak increased to 6 days (+5mg gold reward unlocked)', 'success');
+    showToast('Saved AED 20! 6-Day Streak unlocked (+5mg free gold credited)', 'success');
   };
 
   return (
-    <div className="screen-container" style={{ paddingBottom: 90 }}>
-      {/* ── 1. Live Dubai Souk Ticker ─────────────────────────── */}
+    <div className="screen-container">
+      {/* ── 1. Top App Bar (Gullak Mobile Style) ──────────────── */}
       <div
         style={{
-          background: '#17232D',
-          color: '#FFF',
-          padding: '7px 16px',
-          fontSize: 11,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          borderBottom: '1px solid rgba(232, 182, 63, 0.3)',
+          padding: '12px 16px',
+          background: '#FFFFFF',
+          borderBottom: '1px solid #E2E8F0',
+          position: 'sticky',
+          top: 0,
+          zIndex: 40,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ color: '#4ADE80', fontSize: 10 }}>●</span>
-          <span style={{ fontWeight: 600 }}>Dubai Gold Souk:</span>
-          <span style={{ color: COLORS.secondaryGold, fontWeight: 700 }}>Open</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span>
-            24K: <strong style={{ color: COLORS.primaryGold }}>AED {DUBAI_MARKET_RATES.rate24K.toFixed(2)}</strong>
-          </span>
-          <span>
-            22K: <strong>AED {DUBAI_MARKET_RATES.rate22K.toFixed(2)}</strong>
-          </span>
-          <span style={{ color: '#4ADE80', fontWeight: 600 }}>0% VAT</span>
-        </div>
-      </div>
-
-      <div className="screen-content" style={{ paddingTop: 14 }}>
-        {/* ── 2. Top Header with User Info ────────────────────────── */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: 16,
-          }}
-        >
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <h1 style={{ fontSize: 20, fontWeight: 800, color: COLORS.darkCharcoal, margin: 0 }}>
-                {getGreeting()}, {firstName}
-              </h1>
-              <span
-                style={{
-                  background: '#E6F4EA',
-                  color: '#137333',
-                  fontSize: 10,
-                  fontWeight: 700,
-                  padding: '2px 8px',
-                  borderRadius: 12,
-                }}
-              >
-                UAE PASS ✓
-              </span>
-            </div>
-            <p style={{ fontSize: 12, color: COLORS.secondaryText, margin: '2px 0 0 0' }}>
-              The Gold Standard of Dubai • Backed by YASS Group
-            </p>
-          </div>
-
+        {/* User Info */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <button
             onClick={() => navigate('profile')}
             style={{
-              width: 40,
-              height: 40,
+              width: 38,
+              height: 38,
               borderRadius: '50%',
-              background: COLORS.darkCharcoal,
-              color: COLORS.primaryGold,
+              background: '#0B1426',
+              color: '#F59E0B',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               fontWeight: 800,
               fontSize: 13,
-              border: '2px solid #E8B63F',
+              border: '2px solid #F59E0B',
               cursor: 'pointer',
+              flexShrink: 0,
             }}
           >
             {getInitials(userName)}
           </button>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ fontSize: 14, fontWeight: 700, color: '#0F172A' }}>
+                Hi, {firstName} 👋
+              </span>
+              <span
+                style={{
+                  background: '#ECFDF5',
+                  color: '#059669',
+                  fontSize: 9,
+                  fontWeight: 700,
+                  padding: '1px 6px',
+                  borderRadius: 10,
+                }}
+              >
+                UAE PASS
+              </span>
+            </div>
+            <div style={{ fontSize: 10, color: '#64748B', fontWeight: 500 }}>
+              YASS Bullion Dubai
+            </div>
+          </div>
         </div>
 
-        {/* ── 3. Main Gold Balance Hero Card ────────────────────── */}
+        {/* Live Souk Ticker Pill */}
         <div
-          className="card card-gold"
+          onClick={() => navigate('goldPriceDetail')}
           style={{
-            background: 'linear-gradient(135deg, #17232D 0%, #171A1D 100%)',
-            color: '#FFF',
-            borderRadius: 18,
-            padding: '20px',
-            marginBottom: 16,
-            border: '1px solid rgba(232, 182, 63, 0.4)',
-            boxShadow: '0 8px 24px rgba(23, 35, 45, 0.25)',
+            background: '#FEF3C7',
+            border: '1px solid #FDE68A',
+            borderRadius: 20,
+            padding: '4px 10px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 5,
+            cursor: 'pointer',
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+          <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10B981' }} />
+          <span style={{ fontSize: 10, fontWeight: 700, color: '#92400E' }}>
+            24K AED {DUBAI_MARKET_RATES.rate24K.toFixed(2)}
+          </span>
+        </div>
+      </div>
+
+      <div className="screen-content" style={{ paddingTop: 14 }}>
+        {/* Demo banner */}
+        <div className="demo-banner">DUBAI FINTECH PROTOTYPE • GULLAK THEME</div>
+
+        {/* ── 2. Gullak Signature Hero Gold Wealth Card ────────────── */}
+        <div
+          className="card-navy"
+          style={{
+            borderRadius: 18,
+            padding: '18px 20px',
+            marginBottom: 14,
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          {/* Top Row: Label & Purity Badge */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: 11, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.6, fontWeight: 600 }}>
+              Total Gold Wealth
+            </span>
+            <span
+              style={{
+                background: 'rgba(245, 158, 11, 0.2)',
+                color: '#FBBF24',
+                fontSize: 10,
+                fontWeight: 700,
+                padding: '2px 8px',
+                borderRadius: 10,
+                border: '1px solid rgba(245, 158, 11, 0.3)',
+              }}
+            >
+              24K 999.9 DGD
+            </span>
+          </div>
+
+          {/* Amount & Grams */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 8 }}>
             <div>
-              <div style={{ fontSize: 12, color: '#A0AEC0', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                Total Vault Gold Value
-              </div>
-              <div style={{ fontSize: 28, fontWeight: 800, color: '#FFF', marginTop: 4 }}>
+              <div style={{ fontSize: 28, fontWeight: 800, color: '#FFFFFF', letterSpacing: -0.5 }}>
                 {formatCurrency(currentValue)}
               </div>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 6 }}>
-                <span style={{ fontSize: 16, fontWeight: 700, color: COLORS.primaryGold }}>
-                  {formatGrams(state.holdings.totalGrams)} g
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
+                <span style={{ fontSize: 15, fontWeight: 700, color: '#F59E0B' }}>
+                  {formatGrams(state.holdings.totalGrams)} grams
                 </span>
-                <span
-                  style={{
-                    background: 'rgba(232, 182, 63, 0.2)',
-                    color: COLORS.primaryGold,
-                    padding: '2px 6px',
-                    borderRadius: 4,
-                    fontSize: 11,
-                    fontWeight: 700,
-                  }}
-                >
-                  24K 999.9 DGD
+                <span style={{ color: '#94A3B8', fontSize: 12 }}>•</span>
+                <span style={{ fontSize: 12, color: '#10B981', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <TrendingUp size={12} />
+                  <span>+0.75% today</span>
                 </span>
               </div>
-
-              {state.holdings.leasedGrams > 0 && (
-                <div style={{ fontSize: 11, color: '#38BDF8', marginTop: 6, display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <Percent size={12} />
-                  <span>{state.holdings.leasedGrams.toFixed(2)}g actively earning 5.2% p.a. yield</span>
-                </div>
-              )}
             </div>
 
-            <div style={{ width: 68, height: 68 }}>
-              <GoldBarIllustration size={68} />
+            <div style={{ width: 56, height: 56, flexShrink: 0 }}>
+              <GoldBarIllustration size={56} />
             </div>
           </div>
 
+          {/* Active Lease Tracker */}
+          {state.holdings.leasedGrams > 0 && (
+            <div
+              onClick={() => navigate('lease')}
+              style={{
+                background: 'rgba(124, 58, 237, 0.2)',
+                border: '1px solid rgba(124, 58, 237, 0.4)',
+                borderRadius: 8,
+                padding: '6px 10px',
+                marginTop: 12,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                fontSize: 11,
+                cursor: 'pointer',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, color: '#DDD6FE' }}>
+                <Percent size={13} color="#C4B5FD" />
+                <span><strong>{state.holdings.leasedGrams.toFixed(2)}g</strong> earning 5.2% p.a. yield</span>
+              </div>
+              <ChevronRight size={14} color="#DDD6FE" />
+            </div>
+          )}
+
+          {/* Dual Action Buttons (Side by Side) */}
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
+              gridTemplateColumns: '1.2fr 0.8fr',
               gap: 10,
-              marginTop: 18,
-              paddingTop: 16,
-              borderTop: '1px solid rgba(255, 255, 255, 0.12)',
+              marginTop: 16,
+              paddingTop: 14,
+              borderTop: '1px solid rgba(255, 255, 255, 0.1)',
             }}
           >
             <button
               onClick={() => navigate('buy')}
               style={{
-                background: 'linear-gradient(135deg, #E8B63F 0%, #F4D681 100%)',
-                color: '#171A1D',
+                background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+                color: '#0F172A',
                 border: 'none',
-                borderRadius: 10,
-                padding: '10px 14px',
+                borderRadius: 12,
+                height: 42,
                 fontWeight: 700,
                 fontSize: 13,
                 cursor: 'pointer',
@@ -289,10 +311,11 @@ export const DashboardScreen: React.FC = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: 6,
+                boxShadow: '0 4px 12px rgba(245, 158, 11, 0.35)',
               }}
             >
-              <ArrowDownCircle size={16} />
-              <span>Buy Gold</span>
+              <Zap size={15} fill="#0F172A" />
+              <span>Instant Buy</span>
             </button>
 
             <button
@@ -301,8 +324,8 @@ export const DashboardScreen: React.FC = () => {
                 background: 'rgba(255, 255, 255, 0.08)',
                 color: '#FFF',
                 border: '1px solid rgba(255, 255, 255, 0.2)',
-                borderRadius: 10,
-                padding: '10px 14px',
+                borderRadius: 12,
+                height: 42,
                 fontWeight: 600,
                 fontSize: 13,
                 cursor: 'pointer',
@@ -312,24 +335,24 @@ export const DashboardScreen: React.FC = () => {
                 gap: 6,
               }}
             >
-              <ArrowUpCircle size={16} />
+              <ArrowUpCircle size={15} />
               <span>Sell Gold</span>
             </button>
           </div>
         </div>
 
-        {/* ── 4. Gullak-Style Daily Savings Streak Banner ─────────── */}
+        {/* ── 3. Gullak Daily Savings Streak Card ─────────────────── */}
         <div
           style={{
-            background: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)',
+            background: '#FFF7ED',
             border: '1px solid #FED7AA',
             borderRadius: 14,
-            padding: '14px 16px',
-            marginBottom: 18,
+            padding: '12px 14px',
+            marginBottom: 14,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: 12,
+            gap: 10,
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -338,7 +361,7 @@ export const DashboardScreen: React.FC = () => {
                 width: 38,
                 height: 38,
                 borderRadius: '50%',
-                background: '#FFedd5',
+                background: '#FFEDD5',
                 border: '2px solid #FB923C',
                 display: 'flex',
                 alignItems: 'center',
@@ -370,23 +393,24 @@ export const DashboardScreen: React.FC = () => {
               fontWeight: 700,
               cursor: 'pointer',
               whiteSpace: 'nowrap',
+              boxShadow: '0 2px 6px rgba(234, 88, 12, 0.3)',
             }}
           >
             Save AED 20
           </button>
         </div>
 
-        {/* ── 5. Quick Actions 8-Grid (Fintech Super-App) ──────────── */}
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.darkCharcoal, marginBottom: 10 }}>
-            Features & Services
+        {/* ── 4. Gullak 8-Service Symmetrical Grid ─────────────────── */}
+        <div style={{ marginBottom: 16 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.darkCharcoal, marginBottom: 8, paddingLeft: 2 }}>
+            Services & FinTech Features
           </div>
 
           <div
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(4, 1fr)',
-              gap: 10,
+              gap: 8,
             }}
           >
             {quickActions.map((action) => {
@@ -396,10 +420,10 @@ export const DashboardScreen: React.FC = () => {
                   key={action.label}
                   onClick={() => navigate(action.screen)}
                   style={{
-                    background: '#FFF',
-                    border: '1px solid #E9E7E0',
+                    background: '#FFFFFF',
+                    border: '1px solid #E2E8F0',
                     borderRadius: 12,
-                    padding: '12px 6px',
+                    padding: '12px 4px 10px',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -407,21 +431,22 @@ export const DashboardScreen: React.FC = () => {
                     gap: 6,
                     cursor: 'pointer',
                     position: 'relative',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
+                    boxShadow: '0 1px 3px rgba(15, 23, 42, 0.04)',
+                    transition: 'transform 0.15s',
                   }}
                 >
                   {action.badge && (
                     <span
                       style={{
                         position: 'absolute',
-                        top: -6,
-                        right: -4,
-                        background: '#9333EA',
+                        top: -5,
+                        right: -3,
+                        background: '#7C3AED',
                         color: '#FFF',
-                        fontSize: 9,
+                        fontSize: 8,
                         fontWeight: 800,
                         padding: '1px 5px',
-                        borderRadius: 8,
+                        borderRadius: 6,
                       }}
                     >
                       {action.badge}
@@ -432,7 +457,7 @@ export const DashboardScreen: React.FC = () => {
                       width: 36,
                       height: 36,
                       borderRadius: 10,
-                      background: `${action.color}15`,
+                      background: action.bg,
                       color: action.color,
                       display: 'flex',
                       alignItems: 'center',
@@ -441,7 +466,15 @@ export const DashboardScreen: React.FC = () => {
                   >
                     <Icon size={18} />
                   </div>
-                  <span style={{ fontSize: 11, fontWeight: 600, color: COLORS.darkCharcoal, textAlign: 'center' }}>
+                  <span
+                    style={{
+                      fontSize: 10.5,
+                      fontWeight: 600,
+                      color: '#0F172A',
+                      textAlign: 'center',
+                      lineHeight: 1.2,
+                    }}
+                  >
                     {action.label}
                   </span>
                 </button>
@@ -450,29 +483,30 @@ export const DashboardScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* ── 6. Gullak Gold+ Leasing Hero Banner ─────────────────── */}
+        {/* ── 5. Gullak Gold+ Leasing Hero Card ───────────────────── */}
         <div
           onClick={() => navigate('lease')}
           style={{
-            background: 'linear-gradient(135deg, #2E1065 0%, #171A1D 100%)',
-            border: '1px solid #A855F7',
+            background: 'linear-gradient(135deg, #2E1065 0%, #1E1B4B 100%)',
+            border: '1.5px solid #A855F7',
             borderRadius: 14,
-            padding: '16px 18px',
+            padding: '14px 16px',
             color: '#FFF',
-            marginBottom: 16,
+            marginBottom: 14,
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
+            boxShadow: '0 4px 14px rgba(124, 58, 237, 0.25)',
           }}
         >
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
               <span
                 style={{
                   background: '#A855F7',
                   color: '#FFF',
-                  fontSize: 10,
+                  fontSize: 9,
                   fontWeight: 800,
                   padding: '2px 6px',
                   borderRadius: 4,
@@ -485,74 +519,123 @@ export const DashboardScreen: React.FC = () => {
               </span>
             </div>
             <div style={{ fontSize: 11, color: '#D8B4FE', lineHeight: 1.4 }}>
-              Lease to top Dubai jewelers (Damas, Joyalukkas) backed 100% by bank guarantees.
+              Lease to top Dubai jewellers (Damas, Joyalukkas) with 100% bank guarantees.
             </div>
           </div>
-          <ChevronRight size={20} color="#E9D5FF" />
+          <ChevronRight size={18} color="#E9D5FF" />
         </div>
+
+        {/* ── 6. Gullak Active Goal Progress Card ─────────────────── */}
+        {state.goals.length > 0 && (
+          <div
+            onClick={() => navigate('goals')}
+            className="card"
+            style={{
+              padding: '14px 16px',
+              marginBottom: 14,
+              cursor: 'pointer',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <Target size={16} color="#0284C7" />
+                <span style={{ fontSize: 12, fontWeight: 700, color: '#0F172A' }}>
+                  {state.goals[0].title}
+                </span>
+              </div>
+              <span style={{ fontSize: 12, fontWeight: 700, color: '#F59E0B' }}>
+                {Math.round((state.goals[0].currentGrams / state.goals[0].targetGrams) * 100)}%
+              </span>
+            </div>
+
+            <div
+              style={{
+                width: '100%',
+                height: 6,
+                background: '#E2E8F0',
+                borderRadius: 4,
+                overflow: 'hidden',
+                marginBottom: 6,
+              }}
+            >
+              <div
+                style={{
+                  width: `${Math.min(100, (state.goals[0].currentGrams / state.goals[0].targetGrams) * 100)}%`,
+                  height: '100%',
+                  background: 'linear-gradient(90deg, #F59E0B, #FBBF24)',
+                  borderRadius: 4,
+                }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#64748B' }}>
+              <span>{state.goals[0].currentGrams.toFixed(1)}g accumulated</span>
+              <span>Target: {state.goals[0].targetGrams}g</span>
+            </div>
+          </div>
+        )}
 
         {/* ── 7. SafeGold Vault Security Card ──────────────────────── */}
         <div
           onClick={() => navigate('vaultProof')}
+          className="card"
           style={{
-            background: '#FFF',
-            border: '1px solid #E9E7E0',
-            borderRadius: 14,
-            padding: '14px 16px',
-            marginBottom: 20,
+            padding: '12px 14px',
+            marginBottom: 14,
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div
               style={{
-                width: 36,
-                height: 36,
+                width: 34,
+                height: 34,
                 borderRadius: '50%',
-                background: '#E6F4EA',
-                color: '#137333',
+                background: '#ECFDF5',
+                color: '#059669',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                flexShrink: 0,
               }}
             >
-              <ShieldCheck size={20} />
+              <ShieldCheck size={18} />
             </div>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.darkCharcoal }}>
-                100% Physically Backed in Dubai Vaults
+              <div style={{ fontSize: 12, fontWeight: 700, color: '#0F172A' }}>
+                100% Vaulted at Brink's DMCC & Transguard
               </div>
-              <div style={{ fontSize: 11, color: COLORS.secondaryText }}>
-                Brink's DMCC & Transguard • Audited by BDO Dubai
+              <div style={{ fontSize: 10.5, color: '#64748B' }}>
+                Independent physical audit by BDO Dubai • Verified 1:1
               </div>
             </div>
           </div>
-          <ChevronRight size={18} color={COLORS.secondaryText} />
+          <ChevronRight size={16} color="#64748B" />
         </div>
 
-        {/* ── 8. Live Gold Price Chart Widget ─────────────────────── */}
+        {/* ── 8. Live Souk Chart Card ─────────────────────────────── */}
         <div
           className="card"
           style={{
-            padding: '16px',
-            marginBottom: 20,
+            padding: '14px 16px',
+            marginBottom: 14,
             cursor: 'pointer',
           }}
           onClick={() => navigate('goldPriceDetail')}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <div style={{ fontSize: 11, color: COLORS.secondaryText, textTransform: 'uppercase', letterSpacing: 0.5 }}>
+              <div style={{ fontSize: 11, color: '#64748B', textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: 600 }}>
                 Dubai Gold Souk Benchmark
               </div>
-              <div style={{ fontSize: 20, fontWeight: 800, color: COLORS.darkCharcoal, marginTop: 2 }}>
+              <div style={{ fontSize: 20, fontWeight: 800, color: '#0F172A', marginTop: 2 }}>
                 AED {DEMO_GOLD_RATE.toFixed(2)} /g
               </div>
-              <div style={{ fontSize: 12, color: '#16865B', display: 'flex', alignItems: 'center', gap: 4, marginTop: 4 }}>
-                <TrendingUp size={13} />
+              <div style={{ fontSize: 11, color: '#10B981', display: 'flex', alignItems: 'center', gap: 4, marginTop: 4, fontWeight: 600 }}>
+                <TrendingUp size={12} />
                 <span>+0.75% today (24K 999.9 Fine)</span>
               </div>
             </div>
@@ -560,9 +643,9 @@ export const DashboardScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* ── 9. Recent Activity ───────────────────────────────────── */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-          <h3 style={{ fontSize: 15, fontWeight: 700, color: COLORS.darkCharcoal, margin: 0 }}>
+        {/* ── 9. Recent Activity List ──────────────────────────────── */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+          <h3 style={{ fontSize: 14, fontWeight: 700, color: '#0F172A', margin: 0 }}>
             Recent Activity
           </h3>
           <button
@@ -570,9 +653,9 @@ export const DashboardScreen: React.FC = () => {
             style={{
               background: 'none',
               border: 'none',
-              color: COLORS.primaryGold,
+              color: '#D97706',
               fontSize: 12,
-              fontWeight: 600,
+              fontWeight: 700,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
@@ -580,7 +663,7 @@ export const DashboardScreen: React.FC = () => {
             }}
           >
             <span>View All</span>
-            <ChevronRight size={14} />
+            <ChevronRight size={13} />
           </button>
         </div>
 
@@ -618,9 +701,9 @@ const TransactionRow: React.FC<{ txn: Transaction; onClick?: () => void }> = ({ 
   const Icon = getIcon();
 
   return (
-    <div className="txn-row" onClick={onClick} style={{ cursor: 'pointer' }}>
+    <div className="txn-row" onClick={onClick}>
       <div className={`txn-icon ${txn.type}`}>
-        <Icon size={18} />
+        <Icon size={17} />
       </div>
 
       <div className="txn-details">

@@ -91,7 +91,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
   // CATALOG STATE
   // =============================================
   const renderCatalogState = () => (
-    <div className="screen-content">
+    <>
       {/* Header */}
       <div className="screen-header">
         <button
@@ -104,15 +104,11 @@ const PhysicalDeliveryScreen: React.FC = () => {
         >
           <ArrowLeft size={18} />
         </button>
-        <div>
-          <h2 className="screen-header-title">Physical Delivery</h2>
-          <p style={{ fontSize: 13, color: COLORS.secondaryText, marginTop: 2 }}>
-            Turn your digital gold into physical 24K bullion
-          </p>
-        </div>
+        <span className="screen-header-title">Physical Delivery</span>
+        <div style={{ width: 36 }} />
       </div>
 
-      <div style={{ padding: '0 4px', marginTop: 12 }}>
+      <div className="screen-content" style={{ paddingTop: 14 }}>
         {/* Toggle to view existing orders */}
         {state.deliveryOrders.length > 0 && (
           <div style={{ marginBottom: 14, textAlign: 'right' }}>
@@ -312,22 +308,23 @@ const PhysicalDeliveryScreen: React.FC = () => {
           Proceed to Delivery Address
         </button>
       </div>
-    </div>
+    </>
   );
 
   // =============================================
   // ADDRESS STATE
   // =============================================
   const renderAddressState = () => (
-    <div className="screen-content">
+    <>
       <div className="screen-header">
         <button className="screen-header-back" onClick={() => setFlowState('catalog')} aria-label="Back">
           <ArrowLeft size={18} />
         </button>
-        <h2 className="screen-header-title">Delivery Address</h2>
+        <span className="screen-header-title">Delivery Address</span>
+        <div style={{ width: 36 }} />
       </div>
 
-      <div style={{ padding: '0 4px', marginTop: 16 }}>
+      <div className="screen-content" style={{ paddingTop: 14 }}>
         <div className="form-group">
           <label className="form-label">Full Name</label>
           <input
@@ -411,22 +408,23 @@ const PhysicalDeliveryScreen: React.FC = () => {
           Review Order
         </button>
       </div>
-    </div>
+    </>
   );
 
   // =============================================
   // REVIEW STATE
   // =============================================
   const renderReviewState = () => (
-    <div className="screen-content">
+    <>
       <div className="screen-header">
         <button className="screen-header-back" onClick={() => setFlowState('address')} aria-label="Back">
           <ArrowLeft size={18} />
         </button>
-        <h2 className="screen-header-title">Review Delivery Order</h2>
+        <span className="screen-header-title">Review Delivery Order</span>
+        <div style={{ width: 36 }} />
       </div>
 
-      <div style={{ padding: '0 4px', marginTop: 16 }}>
+      <div className="screen-content" style={{ paddingTop: 14 }}>
         {/* Product card */}
         <div className="card" style={{ marginBottom: 16 }}>
           <div style={{ fontSize: 13, color: COLORS.secondaryText }}>Selected Bullion</div>
@@ -488,7 +486,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
           Confirm & Place Delivery Order
         </button>
       </div>
-    </div>
+    </>
   );
 
   // =============================================
@@ -524,15 +522,16 @@ const PhysicalDeliveryScreen: React.FC = () => {
   // ORDERS / TRACKING STATE
   // =============================================
   const renderOrdersState = () => (
-    <div className="screen-content">
+    <>
       <div className="screen-header">
         <button className="screen-header-back" onClick={() => navigate('dashboard')} aria-label="Back">
           <ArrowLeft size={18} />
         </button>
-        <h2 className="screen-header-title">Delivery Orders</h2>
+        <span className="screen-header-title">Delivery Orders</span>
+        <div style={{ width: 36 }} />
       </div>
 
-      <div style={{ padding: '0 4px', marginTop: 12 }}>
+      <div className="screen-content" style={{ paddingTop: 14 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <span style={{ fontSize: 13, color: COLORS.secondaryText }}>
             Redemptions ({state.deliveryOrders.length})
@@ -634,7 +633,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
           ))
         )}
       </div>
-    </div>
+    </>
   );
 
   return (

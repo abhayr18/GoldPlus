@@ -19,7 +19,7 @@ import { useApp } from '../components/AppProvider';
 import { COLORS } from '../constants';
 import type { Transaction } from '../types';
 
-type FilterType = 'all' | 'buy' | 'sell' | 'sip';
+type FilterType = 'all' | 'buy' | 'sell' | 'sip' | 'lease' | 'gift';
 
 const formatCurrency = (val: number): string =>
   'AED ' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -46,29 +46,29 @@ const TransactionHistoryScreen: React.FC = () => {
 
   return (
     <div className="screen-container">
-      <div className="screen-content">
-        {/* Header */}
-        <div className="screen-header">
-          <button className="screen-header-back" onClick={back} aria-label="Back">
-            <ArrowLeft size={18} />
-          </button>
-          <h2 className="screen-header-title">Transaction History</h2>
-        </div>
+      {/* Header */}
+      <div className="screen-header">
+        <button className="screen-header-back" onClick={back} aria-label="Back">
+          <ArrowLeft size={18} />
+        </button>
+        <span className="screen-header-title">Transaction History</span>
+        <div style={{ width: 36 }} />
+      </div>
 
-        <div style={{ padding: '0 4px', marginTop: 16 }}>
-          {/* Filter Pills */}
-          <div className="tab-bar">
-            {(['all', 'buy', 'sell', 'sip'] as FilterType[]).map((tab) => (
-              <button
-                key={tab}
-                className={`tab-item ${filter === tab ? 'active' : ''}`}
-                onClick={() => setFilter(tab)}
-                style={{ textTransform: 'capitalize' }}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
+      <div className="screen-content" style={{ paddingTop: 14 }}>
+        {/* Filter Pills */}
+        <div className="tab-bar">
+          {(['all', 'buy', 'sell', 'sip', 'lease', 'gift'] as FilterType[]).map((tab) => (
+            <button
+              key={tab}
+              className={`tab-item ${filter === tab ? 'active' : ''}`}
+              onClick={() => setFilter(tab)}
+              style={{ textTransform: 'capitalize', fontSize: 11 }}
+            >
+              {tab === 'lease' ? 'Gold+' : tab}
+            </button>
+          ))}
+        </div>
 
           {/* Transactions List */}
           <div className="card" style={{ marginTop: 12 }}>
@@ -130,7 +130,6 @@ const TransactionHistoryScreen: React.FC = () => {
             )}
           </div>
         </div>
-      </div>
 
       {/* Transaction Detail Modal */}
       {activeTxn && (

@@ -1,28 +1,25 @@
 // ============================================
-// YASS Gold & YASS Bullion — App Shell & Responsive Navigation
+// YASS Gold & YASS Bullion — Mobile-First App Shell
+// Modeled after Gullak's clean mobile design & SafeGold vaulting
 // A product by YASS Group, Dubai
-// Inspired by Gullak & SafeGold (Dubai Market Edition)
 // ============================================
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Home,
-  PieChart,
-  RefreshCw,
-  User,
-  ArrowDownCircle,
-  ArrowUpCircle,
-  Package,
-  History,
-  RotateCcw,
   Percent,
   Target,
-  Gift,
   ShieldCheck,
+  PieChart,
+  RotateCcw,
+  Wifi,
+  Battery,
+  Signal,
+  Maximize2,
+  Smartphone,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
-import { BrandLogo } from '../components/BrandLogo';
-import { BRAND, COLORS } from '../constants';
+import { BRAND } from '../constants';
 import type { Screen } from '../types';
 
 interface AppShellProps {
@@ -33,231 +30,161 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const { state, navigate, resetDemo, showToast } = useApp();
   const { currentScreen } = state;
 
-  // Onboarding screens don't show the persistent shell navigation
+  const [currentTime, setCurrentTime] = useState<string>('9:41');
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      setCurrentTime(`${hours % 12 || 12}:${minutes}`);
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
   const isAuthScreen = currentScreen === 'splash' || currentScreen === 'signup';
-
-  if (isAuthScreen) {
-    return <div className="app-shell">{children}</div>;
-  }
-
-  // Active mapping for sidebar and bottom nav
   const isCurrent = (screen: Screen) => currentScreen === screen;
 
+  // Toggle desktop container between mobile phone frame and full width
+  const toggleFrame = () => {
+    setIsFullscreen((prev) => !prev);
+  };
+
   return (
-    <div className="app-shell with-sidebar">
+    <div className="desktop-viewport-wrapper">
       {/* ============================================= */}
-      {/* DESKTOP SIDEBAR */}
+      {/* DESKTOP TOP BAR (Only visible on larger screens) */}
       {/* ============================================= */}
-      <aside className="sidebar">
-        <div className="sidebar-brand">
-          <BrandLogo size="md" light />
-          <div className="sidebar-brand-desc">{BRAND.descriptor}</div>
+      <header className="desktop-top-bar">
+        <div className="desktop-badge">
+          <span className="desktop-badge-dot" />
+          <span>{BRAND.name} • {BRAND.parentCompany} (Gullak Mobile UI)</span>
         </div>
 
-        <nav className="sidebar-nav">
-          <button
-            className={`sidebar-nav-item ${isCurrent('dashboard') ? 'active' : ''}`}
-            onClick={() => navigate('dashboard')}
-          >
-            <Home size={18} />
-            <span>Home</span>
-          </button>
-
-          <button
-            className={`sidebar-nav-item ${isCurrent('portfolio') ? 'active' : ''}`}
-            onClick={() => navigate('portfolio')}
-          >
-            <PieChart size={18} />
-            <span>My Portfolio</span>
-          </button>
-
-          <button
-            className={`sidebar-nav-item ${isCurrent('buy') ? 'active' : ''}`}
-            onClick={() => navigate('buy')}
-          >
-            <ArrowDownCircle size={18} />
-            <span>Buy Gold (24K/22K)</span>
-          </button>
-
-          <button
-            className={`sidebar-nav-item ${isCurrent('sell') ? 'active' : ''}`}
-            onClick={() => navigate('sell')}
-          >
-            <ArrowUpCircle size={18} />
-            <span>Sell Gold</span>
-          </button>
-
-          <button
-            className={`sidebar-nav-item ${isCurrent('sip') ? 'active' : ''}`}
-            onClick={() => navigate('sip')}
-          >
-            <RefreshCw size={18} />
-            <span>Gold Auto-SIP</span>
-          </button>
-
-          {/* Gullak Signature: Gold Leasing */}
-          <button
-            className={`sidebar-nav-item ${isCurrent('lease') ? 'active' : ''}`}
-            onClick={() => navigate('lease')}
-            style={{ position: 'relative' }}
-          >
-            <Percent size={18} color={COLORS.primaryGold} />
-            <span style={{ fontWeight: isCurrent('lease') ? 700 : 500 }}>YASS Gold+ (Yield)</span>
-            <span
-              style={{
-                marginLeft: 'auto',
-                background: '#9333EA',
-                color: '#FFF',
-                fontSize: 9,
-                fontWeight: 800,
-                padding: '1px 6px',
-                borderRadius: 8,
-              }}
-            >
-              5.2%
-            </span>
-          </button>
-
-          {/* Gullak Signature: Savings Goals */}
-          <button
-            className={`sidebar-nav-item ${isCurrent('goals') ? 'active' : ''}`}
-            onClick={() => navigate('goals')}
-          >
-            <Target size={18} />
-            <span>Savings Goals</span>
-          </button>
-
-          {/* SafeGold Signature: Gifting */}
-          <button
-            className={`sidebar-nav-item ${isCurrent('gift') ? 'active' : ''}`}
-            onClick={() => navigate('gift')}
-          >
-            <Gift size={18} />
-            <span>Gift 24K Gold</span>
-          </button>
-
-          {/* SafeGold Signature: Physical Vault Audit */}
-          <button
-            className={`sidebar-nav-item ${isCurrent('vaultProof') ? 'active' : ''}`}
-            onClick={() => navigate('vaultProof')}
-          >
-            <ShieldCheck size={18} color="#16865B" />
-            <span>Vault Proof & Audit</span>
-          </button>
-
-          <button
-            className={`sidebar-nav-item ${isCurrent('delivery') ? 'active' : ''}`}
-            onClick={() => navigate('delivery')}
-          >
-            <Package size={18} />
-            <span>Physical Delivery</span>
-          </button>
-
-          <button
-            className={`sidebar-nav-item ${isCurrent('transactions') ? 'active' : ''}`}
-            onClick={() => navigate('transactions')}
-          >
-            <History size={18} />
-            <span>Transaction History</span>
-          </button>
-
-          <button
-            className={`sidebar-nav-item ${isCurrent('profile') ? 'active' : ''}`}
-            onClick={() => navigate('profile')}
-          >
-            <User size={18} />
-            <span>Profile & UAE PASS</span>
-          </button>
-        </nav>
-
-        {/* Sidebar Footer */}
-        <div className="sidebar-footer">
+        <div className="desktop-actions">
           <button
             onClick={() => {
               resetDemo();
-              showToast('Demo data restored to initial state', 'info');
+              showToast('Demo state reset to initial', 'info');
               navigate('dashboard');
             }}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              background: 'none',
-              border: 'none',
-              color: COLORS.primaryGold,
-              fontSize: 12,
-              fontWeight: 600,
-              cursor: 'pointer',
-              marginBottom: 10,
-              padding: 0,
-            }}
+            className="desktop-btn-reset"
+            title="Reset demo data"
           >
-            <RotateCcw size={14} />
-            <span>Reset Demo Data</span>
+            <RotateCcw size={13} />
+            <span>Reset Demo</span>
           </button>
-          <div>{BRAND.attribution}</div>
+
+          <button
+            onClick={toggleFrame}
+            className="desktop-btn-reset"
+            title={isFullscreen ? 'Switch to Phone Mockup' : 'Switch to Full Viewport'}
+          >
+            {isFullscreen ? <Smartphone size={13} /> : <Maximize2 size={13} />}
+            <span>{isFullscreen ? 'Phone Frame' : 'Full Width'}</span>
+          </button>
         </div>
-      </aside>
+      </header>
 
       {/* ============================================= */}
-      {/* MAIN CONTENT WORKSPACE */}
+      {/* MOBILE DEVICE FRAME (Centered on desktop, full on phone) */}
       {/* ============================================= */}
-      <main className="main-content">
-        {children}
+      <div
+        className="mobile-device-frame"
+        style={
+          isFullscreen
+            ? {
+                maxWidth: '640px',
+                borderRadius: '24px',
+                boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+              }
+            : undefined
+        }
+      >
+        {/* iOS-Style Status Bar */}
+        <div className="phone-status-bar">
+          <span style={{ minWidth: 32 }}>{currentTime}</span>
+          <div className="phone-island" />
+          <div className="phone-status-icons">
+            <Signal size={12} strokeWidth={2.5} />
+            <Wifi size={12} strokeWidth={2.5} />
+            <Battery size={14} strokeWidth={2.5} />
+          </div>
+        </div>
+
+        {/* Scrollable Screen Canvas */}
+        <div className="phone-scroll-area">
+          {children}
+        </div>
 
         {/* ============================================= */}
-        {/* MOBILE BOTTOM NAVIGATION (Gullak & SafeGold style) */}
+        {/* GULLAK MOBILE BOTTOM NAVIGATION */}
         {/* ============================================= */}
-        <nav className="bottom-nav">
-          <button
-            className={`bottom-nav-item ${isCurrent('dashboard') ? 'active' : ''}`}
-            onClick={() => navigate('dashboard')}
-          >
-            <Home />
-            <span>Home</span>
-          </button>
+        {!isAuthScreen && (
+          <nav className="mobile-bottom-nav">
+            <button
+              className={`mobile-nav-tab ${isCurrent('dashboard') ? 'active' : ''}`}
+              onClick={() => navigate('dashboard')}
+            >
+              <div className="nav-icon-wrap">
+                <Home size={20} strokeWidth={isCurrent('dashboard') ? 2.5 : 2} />
+              </div>
+              <span>Home</span>
+            </button>
 
-          <button
-            className={`bottom-nav-item ${isCurrent('lease') ? 'active' : ''}`}
-            onClick={() => navigate('lease')}
-          >
-            <Percent />
-            <span>Gold+</span>
-          </button>
+            {/* Gullak Signature: Gold+ (5.2% Lease Yield) */}
+            <button
+              className={`mobile-nav-tab ${isCurrent('lease') ? 'active' : ''}`}
+              onClick={() => navigate('lease')}
+            >
+              <span className="nav-badge-pill">5.2%</span>
+              <div className="nav-icon-wrap">
+                <Percent size={20} strokeWidth={isCurrent('lease') ? 2.5 : 2} />
+              </div>
+              <span>Gold+</span>
+            </button>
 
-          <button
-            className={`bottom-nav-item ${isCurrent('goals') ? 'active' : ''}`}
-            onClick={() => navigate('goals')}
-          >
-            <Target />
-            <span>Goals</span>
-          </button>
+            {/* Gullak Signature: Daily Savings Goals */}
+            <button
+              className={`mobile-nav-tab ${isCurrent('goals') ? 'active' : ''}`}
+              onClick={() => navigate('goals')}
+            >
+              <div className="nav-icon-wrap">
+                <Target size={20} strokeWidth={isCurrent('goals') ? 2.5 : 2} />
+              </div>
+              <span>Goals</span>
+            </button>
 
-          <button
-            className={`bottom-nav-item ${isCurrent('vaultProof') ? 'active' : ''}`}
-            onClick={() => navigate('vaultProof')}
-          >
-            <ShieldCheck />
-            <span>Vault</span>
-          </button>
+            {/* SafeGold Signature: DMCC Vault Proof & Physical Delivery */}
+            <button
+              className={`mobile-nav-tab ${isCurrent('vaultProof') || isCurrent('delivery') ? 'active' : ''}`}
+              onClick={() => navigate('vaultProof')}
+            >
+              <div className="nav-icon-wrap">
+                <ShieldCheck size={20} strokeWidth={isCurrent('vaultProof') || isCurrent('delivery') ? 2.5 : 2} />
+              </div>
+              <span>Vault</span>
+            </button>
 
-          <button
-            className={`bottom-nav-item ${isCurrent('portfolio') ? 'active' : ''}`}
-            onClick={() => navigate('portfolio')}
-          >
-            <PieChart />
-            <span>Portfolio</span>
-          </button>
+            {/* Portfolio & History */}
+            <button
+              className={`mobile-nav-tab ${isCurrent('portfolio') || isCurrent('transactions') ? 'active' : ''}`}
+              onClick={() => navigate('portfolio')}
+            >
+              <div className="nav-icon-wrap">
+                <PieChart size={20} strokeWidth={isCurrent('portfolio') || isCurrent('transactions') ? 2.5 : 2} />
+              </div>
+              <span>Portfolio</span>
+            </button>
+          </nav>
+        )}
 
-          <button
-            className={`bottom-nav-item ${isCurrent('profile') ? 'active' : ''}`}
-            onClick={() => navigate('profile')}
-          >
-            <User />
-            <span>More</span>
-          </button>
-        </nav>
-      </main>
+        {/* iOS Home Indicator Bar */}
+        <div className="phone-home-indicator" />
+      </div>
     </div>
   );
 };

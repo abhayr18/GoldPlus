@@ -42,22 +42,17 @@ const GoldLeaseScreen: React.FC = () => {
 
   return (
     <div className="screen-container">
-      <div className="screen-content">
-        {/* Header */}
-        <div className="screen-header">
-          <button className="screen-header-back" onClick={back} aria-label="Back">
-            <ArrowLeft size={18} />
-          </button>
-          <div>
-            <h2 className="screen-header-title">YASS Gold+ (Gold Lease)</h2>
-            <p style={{ fontSize: 13, color: COLORS.secondaryText, marginTop: 2 }}>
-              Earn 5.2% p.a. extra gold on idle bullion
-            </p>
-          </div>
-        </div>
+      {/* Header */}
+      <div className="screen-header">
+        <button className="screen-header-back" onClick={back} aria-label="Back">
+          <ArrowLeft size={18} />
+        </button>
+        <span className="screen-header-title">YASS Gold+ (5.2% Yield)</span>
+        <div style={{ width: 36 }} />
+      </div>
 
-        <div style={{ padding: '0 4px', marginTop: 12 }}>
-          {/* Top Hero Banner */}
+      <div className="screen-content" style={{ paddingTop: 14 }}>
+        {/* Top Hero Banner */}
           <div
             style={{
               padding: '20px',
@@ -238,7 +233,6 @@ const GoldLeaseScreen: React.FC = () => {
           >
             Lease {formatGrams(leaseGrams)} for 5.2% Yield
           </button>
-        </div>
       </div>
 
       {/* Confirmation Modal */}
