@@ -17,9 +17,9 @@ import {
   ChevronRight,
   CheckCircle,
   X,
-  Building,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
+import { BrandLogo } from '../components/BrandLogo';
 import { BRAND, COLORS, DEMO_GOLD_RATE } from '../constants';
 import { logoutUser } from '../state/appState';
 
@@ -462,17 +462,17 @@ const ProfileScreen: React.FC = () => {
         <div className="modal-overlay" onClick={() => setSubView('none')}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-              <h3 style={{ fontSize: 18, fontWeight: 700, color: COLORS.mainText }}>About GoldPlus</h3>
+              <h3 style={{ fontSize: 18, fontWeight: 700, color: COLORS.mainText }}>About {BRAND.name}</h3>
               <button onClick={() => setSubView('none')} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
                 <X size={20} />
               </button>
             </div>
 
             <div style={{ textAlign: 'center', padding: '16px 0 20px' }}>
-              <div style={{ width: 56, height: 56, borderRadius: 12, background: COLORS.darkCharcoal, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
-                <Building size={28} color={COLORS.primaryGold} />
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 14 }}>
+                <BrandLogo variant="group" size="lg" />
               </div>
-              <h4 style={{ fontSize: 20, fontWeight: 700, color: COLORS.mainText }}>
+              <h4 style={{ fontSize: 20, fontWeight: 700, color: COLORS.mainText, marginTop: 8 }}>
                 {BRAND.name}
               </h4>
               <p style={{ fontSize: 13, color: COLORS.primaryGold, fontWeight: 600, marginTop: 2 }}>
