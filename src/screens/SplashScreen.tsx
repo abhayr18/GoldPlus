@@ -1,30 +1,28 @@
 // ============================================
-// YASS Gold & YASS Bullion — Executive Landing Page
-// A product by YASS Group, Dubai
-// DMCC Accredited Precious Metals Depository
+// OGold Wallet — Executive Landing Page & Onboarding
+// The Precious Metals & Lifestyle Super App (Dubai, UAE)
+// App Store ID: 6504926022
 // ============================================
 
 import React from 'react';
 import {
   ShieldCheck,
+  CreditCard,
   Percent,
-  Truck,
   ArrowRight,
-  Award,
+  Gift,
   Lock,
   ChevronRight,
-  Coins,
-  Building,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
 import { BrandLogo, GoldBarIllustration } from '../components/BrandLogo';
-import { BRAND, DUBAI_MARKET_RATES, COLORS } from '../constants';
+import { BRAND, DUBAI_MARKET_RATES } from '../constants';
 
 export const SplashScreen: React.FC = () => {
   const { navigate } = useApp();
 
   return (
-    <div className="screen-container" style={{ background: '#FFFFFF' }}>
+    <div className="screen-container" style={{ background: '#0A0D14' }}>
       {/* ── 1. Top Navigation Bar ────────────────────────────── */}
       <header
         style={{
@@ -32,20 +30,20 @@ export const SplashScreen: React.FC = () => {
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '14px 18px',
-          background: '#FFFFFF',
-          borderBottom: '1px solid #E2E8F0',
+          background: '#0A0D14',
+          borderBottom: '1px solid #1E293B',
           position: 'sticky',
           top: 0,
           zIndex: 40,
         }}
       >
-        <BrandLogo size="sm" variant="gold" />
+        <BrandLogo size="sm" />
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div
             style={{
-              background: '#FDF8EC',
-              border: '1px solid #F4D681',
+              background: '#161D2D',
+              border: '1px solid #1E293B',
               borderRadius: 20,
               padding: '4px 10px',
               display: 'flex',
@@ -53,29 +51,37 @@ export const SplashScreen: React.FC = () => {
               gap: 5,
             }}
           >
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#059669' }} />
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#A67C1E' }}>
-              24K AED {DUBAI_MARKET_RATES.rate24K.toFixed(2)}
+            <span
+              style={{
+                width: 6,
+                height: 6,
+                borderRadius: '50%',
+                background: '#10B981',
+                boxShadow: '0 0 6px #10B981',
+              }}
+            />
+            <span style={{ fontSize: 10.5, fontWeight: 700, color: '#FBBF24' }}>
+              AU AED {DUBAI_MARKET_RATES.rate24K.toFixed(1)}
             </span>
           </div>
 
           <button
-            onClick={() => navigate('signup')}
+            onClick={() => navigate('dashboard')}
             style={{
               background: 'none',
               border: 'none',
               fontSize: 12.5,
               fontWeight: 700,
-              color: '#0F172A',
+              color: '#FFFFFF',
               cursor: 'pointer',
             }}
           >
-            Sign In
+            Open App
           </button>
         </div>
       </header>
 
-      {/* ── 2. Hero Section with Gold Bullion Image ───────────── */}
+      {/* ── 2. Hero Section ─────────────────────────────────── */}
       <section style={{ padding: '24px 18px 20px', textAlign: 'center' }}>
         {/* Trust pill */}
         <div
@@ -83,16 +89,16 @@ export const SplashScreen: React.FC = () => {
             display: 'inline-flex',
             alignItems: 'center',
             gap: 6,
-            background: '#F8FAFC',
-            border: '1px solid #E2E8F0',
+            background: 'rgba(245, 158, 11, 0.1)',
+            border: '1px solid rgba(245, 158, 11, 0.3)',
             borderRadius: 20,
             padding: '5px 12px',
             marginBottom: 16,
           }}
         >
-          <ShieldCheck size={14} color="#059669" />
-          <span style={{ fontSize: 11, fontWeight: 700, color: '#0F172A', letterSpacing: 0.2 }}>
-            DMCC ACCREDITED • DUBAI GOOD DELIVERY (999.9)
+          <ShieldCheck size={14} color="#FBBF24" />
+          <span style={{ fontSize: 10.5, fontWeight: 800, color: '#FBBF24', letterSpacing: 0.5 }}>
+            DUBAI ECONOMIC DEPT LICENSED • SHARIAH COMPLIANT
           </span>
         </div>
 
@@ -100,381 +106,327 @@ export const SplashScreen: React.FC = () => {
         <h1
           style={{
             fontSize: 27,
-            fontWeight: 800,
+            fontWeight: 900,
+            color: '#FFFFFF',
             lineHeight: 1.25,
-            color: '#0F172A',
             letterSpacing: -0.5,
             marginBottom: 10,
           }}
         >
-          Dubai’s Gold Standard.
-          <br />
-          <span style={{ color: COLORS.primaryGold }}>Save, Earn & Trade 24K Bullion.</span>
+          Buy Gold & Silver.{' '}
+          <span
+            style={{
+              background: 'linear-gradient(135deg, #FBBF24 0%, #D97706 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
+            Spend Everywhere.
+          </span>
         </h1>
 
         <p
           style={{
-            fontSize: 13.5,
-            color: '#64748B',
+            fontSize: 13,
+            color: '#94A3B8',
             lineHeight: 1.5,
             maxWidth: 380,
             margin: '0 auto 20px',
           }}
         >
-          Trade pure 24K gold starting from just AED 10. Physically vaulted at Brink's DMCC with 0% UAE VAT and doorstep delivery.
+          The UAE’s premier digital precious metals super app. Buy 24K gold & .999 silver from AED 1, earn 4.8% APR Wakala yield, and spend gold globally with the OGold Mastercard.
         </p>
 
-        {/* Gold Bullion Hero Visual */}
-        <div
-          style={{
-            position: 'relative',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            margin: '0 auto 22px',
-            padding: '16px',
-            borderRadius: 24,
-            background: 'radial-gradient(circle, rgba(197, 155, 39, 0.12) 0%, rgba(255, 255, 255, 0) 70%)',
-          }}
-        >
-          <GoldBarIllustration size={130} />
-        </div>
-
-        {/* Action Buttons */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 360, margin: '0 auto' }}>
-          <button
-            className="btn btn-primary"
-            onClick={() => navigate('signup')}
-            style={{ height: 50, fontSize: 15 }}
+        {/* Official Bullion Hero Graphic */}
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20 }}>
+          <div
+            style={{
+              position: 'relative',
+              padding: '16px 20px',
+              borderRadius: 20,
+              background: 'linear-gradient(145deg, #1A2234 0%, #0F1624 100%)',
+              border: '1.5px solid rgba(245, 158, 11, 0.35)',
+              boxShadow: '0 16px 40px rgba(0, 0, 0, 0.7), 0 0 24px rgba(245, 158, 11, 0.2)',
+            }}
           >
-            <span>Start Saving in 24K Gold</span>
-            <ArrowRight size={17} />
-          </button>
-
-          <button
-            className="btn btn-secondary"
-            onClick={() => navigate('dashboard')}
-            style={{ height: 46, fontSize: 13.5 }}
-          >
-            <span>Explore Live Souk Rates</span>
-          </button>
-        </div>
-
-        <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 12 }}>
-          Instant setup with <strong>UAE PASS</strong> • No paperwork required
-        </div>
-      </section>
-
-      {/* ── 3. Live Souk Benchmark Rates Card ─────────────────── */}
-      <section style={{ padding: '0 18px 24px' }}>
-        <div
-          style={{
-            background: '#0B1220',
-            color: '#FFFFFF',
-            borderRadius: 18,
-            padding: '18px 20px',
-            border: '1px solid rgba(197, 155, 39, 0.3)',
-          }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-            <div>
-              <div style={{ fontSize: 10.5, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.6, fontWeight: 700 }}>
-                Dubai Gold Souk & DMCC Benchmark
-              </div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: '#FFFFFF', marginTop: 2 }}>
-                Live Market Rates (AED/gram)
-              </div>
-            </div>
-            <span
+            <GoldBarIllustration size={110} />
+            <div
               style={{
-                background: 'rgba(5, 150, 105, 0.2)',
-                color: '#34D399',
-                padding: '2px 8px',
-                borderRadius: 12,
+                position: 'absolute',
+                bottom: 10,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                background: 'rgba(10, 13, 20, 0.85)',
+                border: '1px solid rgba(245, 158, 11, 0.4)',
+                borderRadius: 20,
+                padding: '3px 12px',
                 fontSize: 10,
-                fontWeight: 700,
+                fontWeight: 800,
+                color: '#FBBF24',
+                whiteSpace: 'nowrap',
               }}
             >
-              Souk Open
-            </span>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, textAlign: 'center' }}>
-            <div style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '10px 6px', borderRadius: 10 }}>
-              <div style={{ fontSize: 10.5, color: '#94A3B8' }}>24K 999.9</div>
-              <div style={{ fontSize: 15, fontWeight: 800, color: '#F4D681', marginTop: 2 }}>
-                AED {DUBAI_MARKET_RATES.rate24K.toFixed(2)}
-              </div>
-            </div>
-
-            <div style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '10px 6px', borderRadius: 10 }}>
-              <div style={{ fontSize: 10.5, color: '#94A3B8' }}>22K 916</div>
-              <div style={{ fontSize: 15, fontWeight: 800, color: '#FFFFFF', marginTop: 2 }}>
-                AED {DUBAI_MARKET_RATES.rate22K.toFixed(2)}
-              </div>
-            </div>
-
-            <div style={{ background: 'rgba(255, 255, 255, 0.05)', padding: '10px 6px', borderRadius: 10 }}>
-              <div style={{ fontSize: 10.5, color: '#94A3B8' }}>18K 750</div>
-              <div style={{ fontSize: 15, fontWeight: 800, color: '#FFFFFF', marginTop: 2 }}>
-                AED {DUBAI_MARKET_RATES.rate18K.toFixed(2)}
-              </div>
-            </div>
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginTop: 14,
-              paddingTop: 12,
-              borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-              fontSize: 11,
-              color: '#34D399',
-            }}
-          >
-            <span>✓ 0% UAE VAT on 24K Bullion</span>
-            <span>✓ Guaranteed Buyback Rate</span>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 4. Key Platform Features (Figma Clean Cards) ─────── */}
-      <section style={{ padding: '0 18px 24px' }}>
-        <h2 style={{ fontSize: 18, fontWeight: 800, color: '#0F172A', marginBottom: 14 }}>
-          Why Invest with YASS Gold
-        </h2>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          {/* Feature 1: Yield */}
-          <div
-            onClick={() => navigate('signup')}
-            style={{
-              background: '#FFFFFF',
-              border: '1.5px solid #E2E8F0',
-              borderRadius: 16,
-              padding: '16px',
-              display: 'flex',
-              gap: 14,
-              cursor: 'pointer',
-              transition: 'border-color 0.15s',
-            }}
-          >
-            <div
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: 12,
-                background: '#EEF2FF',
-                color: '#6366F1',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}
-            >
-              <Percent size={22} />
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: 14, fontWeight: 700, color: '#0F172A' }}>
-                  YASS Gold+ (5.2% Yield)
-                </span>
-                <span
-                  style={{
-                    background: '#EEF2FF',
-                    color: '#4F46E5',
-                    fontSize: 9.5,
-                    fontWeight: 800,
-                    padding: '2px 6px',
-                    borderRadius: 6,
-                  }}
-                >
-                  UNIQUE
-                </span>
-              </div>
-              <p style={{ fontSize: 12, color: '#64748B', lineHeight: 1.45, marginTop: 4 }}>
-                Lease your vaulted gold to vetted institutional Dubai jewellers (Damas, Joyalukkas) with 100% bank guarantees.
-              </p>
-            </div>
-          </div>
-
-          {/* Feature 2: Micro-Savings */}
-          <div
-            onClick={() => navigate('signup')}
-            style={{
-              background: '#FFFFFF',
-              border: '1.5px solid #E2E8F0',
-              borderRadius: 16,
-              padding: '16px',
-              display: 'flex',
-              gap: 14,
-              cursor: 'pointer',
-            }}
-          >
-            <div
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: 12,
-                background: '#ECFDF5',
-                color: '#059669',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}
-            >
-              <Coins size={22} />
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 14, fontWeight: 700, color: '#0F172A' }}>
-                Daily Micro-Savings from AED 10
-              </div>
-              <p style={{ fontSize: 12, color: '#64748B', lineHeight: 1.45, marginTop: 4 }}>
-                Automate small daily savings with Central Bank of UAE Aani Pay. Accumulate pure gold gram-by-gram with zero fees.
-              </p>
-            </div>
-          </div>
-
-          {/* Feature 3: Vaulting */}
-          <div
-            onClick={() => navigate('signup')}
-            style={{
-              background: '#FFFFFF',
-              border: '1.5px solid #E2E8F0',
-              borderRadius: 16,
-              padding: '16px',
-              display: 'flex',
-              gap: 14,
-              cursor: 'pointer',
-            }}
-          >
-            <div
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: 12,
-                background: '#FEF3C7',
-                color: '#D97706',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}
-            >
-              <ShieldCheck size={22} />
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 14, fontWeight: 700, color: '#0F172A' }}>
-                100% Vaulted in Brink’s DMCC
-              </div>
-              <p style={{ fontSize: 12, color: '#64748B', lineHeight: 1.45, marginTop: 4 }}>
-                Your gold is physically held at Brink's Global Services (Almas Tower, JLT) & Transguard. Audited by BDO Dubai.
-              </p>
-            </div>
-          </div>
-
-          {/* Feature 4: Physical Delivery */}
-          <div
-            onClick={() => navigate('signup')}
-            style={{
-              background: '#FFFFFF',
-              border: '1.5px solid #E2E8F0',
-              borderRadius: 16,
-              padding: '16px',
-              display: 'flex',
-              gap: 14,
-              cursor: 'pointer',
-            }}
-          >
-            <div
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: 12,
-                background: '#F1F5F9',
-                color: '#0F172A',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}
-            >
-              <Truck size={22} />
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 14, fontWeight: 700, color: '#0F172A' }}>
-                Physical Coins & Bars Delivery
-              </div>
-              <p style={{ fontSize: 12, color: '#64748B', lineHeight: 1.45, marginTop: 4 }}>
-                Convert your digital balance into 1g to 100g 24K minted gold bullion delivered in tamper-proof assay certicards.
-              </p>
+              100% Insured by Dubai National Insurance (DNI)
             </div>
           </div>
         </div>
-      </section>
 
-      {/* ── 5. Trust & Accreditation Grid ────────────────────── */}
-      <section style={{ padding: '0 18px 28px', background: '#F8FAFC' }}>
-        <div style={{ paddingTop: 20, textAlign: 'center', marginBottom: 16 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: 0.8 }}>
-            Institutional Trust & Regulation
+        {/* Live Spot Prices Grid (AU & AG) */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 10,
+            marginBottom: 20,
+          }}
+        >
+          {/* 24K Gold Card */}
+          <div
+            style={{
+              background: '#161D2D',
+              border: '1px solid rgba(245, 158, 11, 0.3)',
+              borderRadius: 14,
+              padding: '12px 14px',
+              textAlign: 'left',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#FBBF24' }}>24K GOLD</span>
+              <span style={{ fontSize: 10, fontWeight: 700, color: '#10B981' }}>+0.75%</span>
+            </div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: '#FFFFFF', marginTop: 4 }}>
+              AED {DUBAI_MARKET_RATES.rate24K.toFixed(2)}
+            </div>
+            <div style={{ fontSize: 10, color: '#94A3B8', marginTop: 2 }}>
+              Per gram • 999.9 Fine
+            </div>
+          </div>
+
+          {/* .999 Silver Card */}
+          <div
+            style={{
+              background: '#161D2D',
+              border: '1px solid rgba(148, 163, 184, 0.3)',
+              borderRadius: 14,
+              padding: '12px 14px',
+              textAlign: 'left',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: 11, fontWeight: 800, color: '#E2E8F0' }}>.999 SILVER</span>
+              <span style={{ fontSize: 10, fontWeight: 700, color: '#10B981' }}>+1.20%</span>
+            </div>
+            <div style={{ fontSize: 18, fontWeight: 800, color: '#FFFFFF', marginTop: 4 }}>
+              AED {DUBAI_MARKET_RATES.rateSilver999.toFixed(2)}
+            </div>
+            <div style={{ fontSize: 10, color: '#94A3B8', marginTop: 2 }}>
+              Per gram • Pure Bullion
+            </div>
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          <div style={{ background: '#FFFFFF', padding: '14px', borderRadius: 12, border: '1px solid #E2E8F0' }}>
-            <Award size={20} color={COLORS.primaryGold} style={{ marginBottom: 6 }} />
-            <div style={{ fontSize: 12.5, fontWeight: 700, color: '#0F172A' }}>DMCC Accredited</div>
-            <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>Licensed Dubai Bullion Entity</div>
-          </div>
-
-          <div style={{ background: '#FFFFFF', padding: '14px', borderRadius: 12, border: '1px solid #E2E8F0' }}>
-            <ShieldCheck size={20} color="#059669" style={{ marginBottom: 6 }} />
-            <div style={{ fontSize: 12.5, fontWeight: 700, color: '#0F172A' }}>BDO Audited</div>
-            <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>Quarterly 1:1 Physical Audit</div>
-          </div>
-
-          <div style={{ background: '#FFFFFF', padding: '14px', borderRadius: 12, border: '1px solid #E2E8F0' }}>
-            <Building size={20} color="#0F172A" style={{ marginBottom: 6 }} />
-            <div style={{ fontSize: 12.5, fontWeight: 700, color: '#0F172A' }}>Brink's & Transguard</div>
-            <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>Almas Tower, JLT Vaults</div>
-          </div>
-
-          <div style={{ background: '#FFFFFF', padding: '14px', borderRadius: 12, border: '1px solid #E2E8F0' }}>
-            <Lock size={20} color="#6366F1" style={{ marginBottom: 6 }} />
-            <div style={{ fontSize: 12.5, fontWeight: 700, color: '#0F172A' }}>Lloyd’s Insured</div>
-            <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>100% Comprehensive Policy</div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 6. Bottom Sticky Action Section ──────────────────── */}
-      <section
-        style={{
-          padding: '16px 18px 24px',
-          background: '#FFFFFF',
-          borderTop: '1px solid #E2E8F0',
-          position: 'sticky',
-          bottom: 0,
-          boxShadow: '0 -4px 16px rgba(0,0,0,0.04)',
-        }}
-      >
+        {/* Primary CTA */}
         <button
           className="btn btn-primary"
-          onClick={() => navigate('signup')}
-          style={{ height: 48, fontSize: 14.5 }}
+          onClick={() => navigate('dashboard')}
+          style={{
+            height: 48,
+            fontSize: 14.5,
+            fontWeight: 800,
+            marginBottom: 8,
+          }}
         >
-          <span>Get Started with YASS Gold</span>
-          <ChevronRight size={18} />
+          <span>Open OGold Wallet</span>
+          <ArrowRight size={17} />
         </button>
 
-        <div style={{ textAlign: 'center', marginTop: 8 }}>
-          <span style={{ fontSize: 11, color: '#94A3B8' }}>{BRAND.attribution}</span>
+        <div style={{ fontSize: 11, color: '#64748B' }}>
+          Free instant account setup with UAE PASS • 0% VAT on investment metals
         </div>
       </section>
+
+      {/* ── 3. The 4 Super App Value Pillars ──────────────────── */}
+      <section style={{ padding: '0 18px 24px' }}>
+        <div style={{ fontSize: 12, fontWeight: 800, color: '#FBBF24', textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 12 }}>
+          Why OGold Wallet
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {/* Card Feature */}
+          <div
+            className="card"
+            onClick={() => navigate('card')}
+            style={{ cursor: 'pointer', padding: '14px 16px' }}
+          >
+            <div style={{ display: 'flex', gap: 12 }}>
+              <div
+                style={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 10,
+                  background: 'rgba(245, 158, 11, 0.15)',
+                  color: '#FBBF24',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >
+                <CreditCard size={20} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h3 style={{ fontSize: 13.5, fontWeight: 800, color: '#FFFFFF' }}>
+                    OGold Platinum Mastercard
+                  </h3>
+                  <ChevronRight size={16} color="#64748B" />
+                </div>
+                <p style={{ fontSize: 11.5, color: '#94A3B8', lineHeight: 1.4, marginTop: 3 }}>
+                  Spend your gold anywhere Mastercard is accepted. Instant auto-conversion with zero liquidation lag, plus Apple Pay integration.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Wakala Yield */}
+          <div
+            className="card"
+            onClick={() => navigate('lease')}
+            style={{ cursor: 'pointer', padding: '14px 16px' }}
+          >
+            <div style={{ display: 'flex', gap: 12 }}>
+              <div
+                style={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 10,
+                  background: 'rgba(139, 92, 246, 0.15)',
+                  color: '#A78BFA',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >
+                <Percent size={20} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h3 style={{ fontSize: 13.5, fontWeight: 800, color: '#FFFFFF' }}>
+                    OGold Earn: 4.8% APR Wakala Yield
+                  </h3>
+                  <ChevronRight size={16} color="#64748B" />
+                </div>
+                <p style={{ fontSize: 11.5, color: '#94A3B8', lineHeight: 1.4, marginTop: 3 }}>
+                  Put idle precious metals to work in Shariah-compliant profit-share pools. Earn passive yield paid directly in physical grams every month.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* DNI Insured Vaulting */}
+          <div
+            className="card"
+            onClick={() => navigate('vaultProof')}
+            style={{ cursor: 'pointer', padding: '14px 16px' }}
+          >
+            <div style={{ display: 'flex', gap: 12 }}>
+              <div
+                style={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 10,
+                  background: 'rgba(16, 185, 129, 0.15)',
+                  color: '#10B981',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >
+                <Lock size={20} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h3 style={{ fontSize: 13.5, fontWeight: 800, color: '#FFFFFF' }}>
+                    100% Physically Backed & DNI Insured
+                  </h3>
+                  <ChevronRight size={16} color="#64748B" />
+                </div>
+                <p style={{ fontSize: 11.5, color: '#94A3B8', lineHeight: 1.4, marginTop: 3 }}>
+                  Every gram is physically vaulted at Brink's DMCC in Dubai, independently audited quarterly by BDO, and insured by Dubai National Insurance.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Bullion Delivery & Rewards */}
+          <div
+            className="card"
+            onClick={() => navigate('rewards')}
+            style={{ cursor: 'pointer', padding: '14px 16px' }}
+          >
+            <div style={{ display: 'flex', gap: 12 }}>
+              <div
+                style={{
+                  width: 42,
+                  height: 42,
+                  borderRadius: 10,
+                  background: 'rgba(249, 115, 22, 0.15)',
+                  color: '#FB923C',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >
+                <Gift size={20} />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h3 style={{ fontSize: 13.5, fontWeight: 800, color: '#FFFFFF' }}>
+                    Daily Spin & Win + Travel eSIMs
+                  </h3>
+                  <ChevronRight size={16} color="#64748B" />
+                </div>
+                <p style={{ fontSize: 11.5, color: '#94A3B8', lineHeight: 1.4, marginTop: 3 }}>
+                  Spin the wheel daily to claim bonus gold & silver. Plus, spend precious metals on global eSIMs and gift cards.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. Institutional Trust Footer ───────────────────── */}
+      <footer
+        style={{
+          borderTop: '1px solid #1E293B',
+          padding: '24px 18px 40px',
+          background: '#0E131F',
+          textAlign: 'center',
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginBottom: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11, color: '#94A3B8' }}>
+            <ShieldCheck size={14} color="#10B981" />
+            <span>DNI Insured</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11, color: '#94A3B8' }}>
+            <ShieldCheck size={14} color="#FBBF24" />
+            <span>Shariah Certified</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 5, fontSize: 11, color: '#94A3B8' }}>
+            <ShieldCheck size={14} color="#38BDF8" />
+            <span>BDO Audited</span>
+          </div>
+        </div>
+
+        <p style={{ fontSize: 11, color: '#64748B', lineHeight: 1.5, maxWidth: 380, margin: '0 auto' }}>
+          {BRAND.attribution}<br />
+          Licensed by Dubai Department of Economy and Tourism (DED) for Precious Metals Trading.
+        </p>
+      </footer>
     </div>
   );
 };

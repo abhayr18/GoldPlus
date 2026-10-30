@@ -475,8 +475,8 @@ export const SIPScreen: React.FC = () => {
                   <div style={{ fontSize: 14, fontWeight: 700, color: '#0F172A' }}>{formatCurrency(sip.amount)}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 10, color: '#64748B' }}>Gold Accumulated</div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: '#D97706' }}>{formatGrams(sip.totalGoldAccumulated)}</div>
+                  <div style={{ fontSize: 10, color: '#64748B' }}>Metal Accumulated</div>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: '#D97706' }}>{formatGrams(sip.totalGoldAccumulated || sip.totalAccumulatedGrams || 0)}</div>
                 </div>
               </div>
 

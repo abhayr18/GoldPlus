@@ -1,16 +1,16 @@
 // ============================================
-// YASS Gold & YASS Bullion — Executive App Shell
-// A product by YASS Group, Dubai
-// Clean, authentic mobile-first layout
+// OGold Wallet — App Shell with 5 Core Super App Tabs
+// Home/Wallet, OGold Card, Earn, Rewards, Profile
+// App Store: id6504926022
 // ============================================
 
 import React from 'react';
 import {
-  Home,
-  Percent,
-  Target,
-  ShieldCheck,
-  PieChart,
+  Wallet,
+  CreditCard,
+  TrendingUp,
+  Gift,
+  User,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
 import type { Screen } from '../types';
@@ -34,48 +34,54 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           {children}
         </main>
 
-        {/* Clean, authentic bottom navigation */}
+        {/* 5 OGold Super App Tabs */}
         {!isAuthScreen && (
           <nav className="app-bottom-nav">
+            {/* 1. Wallet / Home */}
             <button
-              className={`nav-tab-item ${isCurrent('dashboard') ? 'active' : ''}`}
+              className={`nav-tab-item ${isCurrent('dashboard') || isCurrent('buy') || isCurrent('sell') ? 'active' : ''}`}
               onClick={() => navigate('dashboard')}
             >
-              <Home size={19} className="nav-icon" strokeWidth={isCurrent('dashboard') ? 2.2 : 1.75} />
-              <span>Home</span>
+              <Wallet size={19} className="nav-icon" strokeWidth={isCurrent('dashboard') ? 2.4 : 1.8} />
+              <span>Wallet</span>
             </button>
 
+            {/* 2. OGold Mastercard */}
             <button
-              className={`nav-tab-item ${isCurrent('lease') ? 'active' : ''}`}
+              className={`nav-tab-item ${isCurrent('card') ? 'active' : ''}`}
+              onClick={() => navigate('card')}
+            >
+              <CreditCard size={19} className="nav-icon" strokeWidth={isCurrent('card') ? 2.4 : 1.8} />
+              <span>Card</span>
+            </button>
+
+            {/* 3. Earn (Wakala & SIP) */}
+            <button
+              className={`nav-tab-item ${isCurrent('lease') || isCurrent('sip') ? 'active' : ''}`}
               onClick={() => navigate('lease')}
             >
-              <span className="nav-badge">5.2%</span>
-              <Percent size={19} className="nav-icon" strokeWidth={isCurrent('lease') ? 2.2 : 1.75} />
-              <span>Gold+</span>
+              <span className="nav-badge">4.8%</span>
+              <TrendingUp size={19} className="nav-icon" strokeWidth={isCurrent('lease') ? 2.4 : 1.8} />
+              <span>Earn</span>
             </button>
 
+            {/* 4. Rewards & Lifestyle */}
             <button
-              className={`nav-tab-item ${isCurrent('goals') ? 'active' : ''}`}
-              onClick={() => navigate('goals')}
+              className={`nav-tab-item ${isCurrent('rewards') ? 'active' : ''}`}
+              onClick={() => navigate('rewards')}
             >
-              <Target size={19} className="nav-icon" strokeWidth={isCurrent('goals') ? 2.2 : 1.75} />
-              <span>Goals</span>
+              {state.user?.spinsAvailable ? <span className="nav-badge">SPIN</span> : null}
+              <Gift size={19} className="nav-icon" strokeWidth={isCurrent('rewards') ? 2.4 : 1.8} />
+              <span>Rewards</span>
             </button>
 
+            {/* 5. Profile */}
             <button
-              className={`nav-tab-item ${isCurrent('vaultProof') || isCurrent('delivery') ? 'active' : ''}`}
-              onClick={() => navigate('vaultProof')}
+              className={`nav-tab-item ${isCurrent('profile') || isCurrent('portfolio') || isCurrent('vaultProof') ? 'active' : ''}`}
+              onClick={() => navigate('profile')}
             >
-              <ShieldCheck size={19} className="nav-icon" strokeWidth={isCurrent('vaultProof') || isCurrent('delivery') ? 2.2 : 1.75} />
-              <span>Vault</span>
-            </button>
-
-            <button
-              className={`nav-tab-item ${isCurrent('portfolio') || isCurrent('transactions') ? 'active' : ''}`}
-              onClick={() => navigate('portfolio')}
-            >
-              <PieChart size={19} className="nav-icon" strokeWidth={isCurrent('portfolio') || isCurrent('transactions') ? 2.2 : 1.75} />
-              <span>Portfolio</span>
+              <User size={19} className="nav-icon" strokeWidth={isCurrent('profile') ? 2.4 : 1.8} />
+              <span>Profile</span>
             </button>
           </nav>
         )}

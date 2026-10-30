@@ -1,7 +1,7 @@
 // ============================================
-// YASS Gold & YASS Bullion — Main Application Router
-// A product by YASS Group, Dubai
-// DMCC Accredited Platform
+// OGold Wallet — Main Application Router
+// The Precious Metals & Lifestyle Super App (Dubai, UAE)
+// App Store ID: 6504926022
 // ============================================
 
 import React from 'react';
@@ -11,6 +11,8 @@ import { AppShell } from './layouts/AppShell';
 import SplashScreen from './screens/SplashScreen';
 import SignupScreen from './screens/SignupScreen';
 import DashboardScreen from './screens/DashboardScreen';
+import CardScreen from './screens/CardScreen';
+import RewardsScreen from './screens/RewardsScreen';
 import BuyGoldScreen from './screens/BuyGoldScreen';
 import SellGoldScreen from './screens/SellGoldScreen';
 import SIPScreen from './screens/SIPScreen';
@@ -35,14 +37,19 @@ const ScreenRouter: React.FC = () => {
       return <SignupScreen />;
     case 'dashboard':
       return <DashboardScreen />;
+    case 'card':
+      return <CardScreen />;
+    case 'rewards':
+      return <RewardsScreen />;
+    case 'earn':
+    case 'lease':
+      return <GoldLeaseScreen />;
     case 'buy':
       return <BuyGoldScreen />;
     case 'sell':
       return <SellGoldScreen />;
     case 'sip':
       return <SIPScreen />;
-    case 'lease':
-      return <GoldLeaseScreen />;
     case 'gift':
       return <GiftGoldScreen />;
     case 'goals':

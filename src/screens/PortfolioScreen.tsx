@@ -1,51 +1,43 @@
 // ============================================
-// YASS Gold & YASS Bullion — Portfolio Screen
-// Executive Precious Metals Portfolio
-// A product by YASS Group, Dubai
+// OGold Wallet — Portfolio & Vault Assets Screen
+// Dual Precious Metals: 24K Gold & .999 Silver
+// App Store: id6504926022
 // ============================================
 
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import {
+  TrendingUp,
+  ShieldCheck,
+  ChevronRight,
+  CreditCard,
+  Percent,
   ArrowDownCircle,
   ArrowUpCircle,
-  RefreshCw,
-  Gift,
-  TrendingUp,
-  TrendingDown,
-  ChevronRight,
-  Award,
-  Percent,
-  ShieldCheck,
+  Sparkles,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
-import { DEMO_GOLD_RATE, COLORS } from '../constants';
+import { DEMO_GOLD_RATE, DEMO_SILVER_RATE } from '../constants';
 import type { Transaction } from '../types';
 
 const formatCurrency = (val: number): string =>
-  'AED ' + Math.round(val).toLocaleString('en-US');
+  'AED ' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-const formatGrams = (val: number): string =>
-  val.toFixed(4) + ' g';
+const formatGrams = (val: number): string => val.toFixed(4) + ' g';
 
 export const PortfolioScreen: React.FC = () => {
   const { state, setState, navigate } = useApp();
   const [activeTab, setActiveTab] = useState<'holdings' | 'transactions'>('holdings');
 
-  const { totalGrams, totalInvested, leasedGrams, yieldEarnedGrams, transactions } = state.holdings;
-  const currentValue = totalGrams * DEMO_GOLD_RATE;
-  const gain = currentValue - totalInvested;
+  const { totalGrams, silverGrams, totalInvested, leasedGrams, transactions } = state.holdings;
+  const goldValuation = totalGrams * DEMO_GOLD_RATE;
+  const silverValuation = silverGrams * DEMO_SILVER_RATE;
+  const totalValuation = goldValuation + silverValuation;
+
+  const gain = totalValuation - totalInvested;
   const gainPercentage = totalInvested > 0 ? (gain / totalInvested) * 100 : 0;
-  const isPositiveGain = gain >= 0;
-
-  // Breakdown between direct buy and SIP
-  const sipGrams = useMemo(() => {
-    return state.sips.reduce((sum, sip) => sum + sip.totalGoldAccumulated, 0);
-  }, [state.sips]);
-
-  const idleGrams = Math.max(0, totalGrams - leasedGrams);
 
   const handleTransactionClick = (txn: Transaction) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       selectedTransaction: txn,
     }));
@@ -53,84 +45,73 @@ export const PortfolioScreen: React.FC = () => {
   };
 
   return (
-    <div className="screen-container" style={{ paddingBottom: 90 }}>
-      <div className="screen-content">
+    <div className="screen-container">
+      <div className="screen-content" style={{ paddingTop: 16 }}>
         {/* Header */}
-        <div style={{ padding: '20px 0 16px' }}>
-          <h1 style={{ fontSize: 24, fontWeight: 800, color: COLORS.darkCharcoal }}>
-            My Gold Portfolio
+        <div style={{ paddingBottom: 14 }}>
+          <h1 style={{ fontSize: 20, fontWeight: 900, color: '#FFFFFF' }}>
+            Vault Portfolio
           </h1>
-          <p style={{ fontSize: 13, color: COLORS.secondaryText, marginTop: 2 }}>
-            Real-time valuation of your 24K 999.9 Dubai gold holdings
+          <p style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>
+            Real-time valuation of your DNI-insured 24K gold and .999 silver
           </p>
         </div>
 
         {/* Top Summary Card */}
-        <div
-          className="card card-gold"
-          style={{
-            background: 'linear-gradient(135deg, #17232D 0%, #171A1D 100%)',
-            color: '#FFF',
-            border: '1px solid rgba(232, 182, 63, 0.4)',
-            marginBottom: 16,
-            borderRadius: 16,
-            padding: '20px',
-          }}
-        >
+        <div className="card-gold-glow" style={{ marginBottom: 16 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <div style={{ fontSize: 11, color: '#A0AEC0', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                Current Vault Valuation
+              <div style={{ fontSize: 10.5, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.8, fontWeight: 700 }}>
+                Total Vault Valuation
               </div>
-              <div style={{ fontSize: 28, fontWeight: 800, color: '#FFFFFF', marginTop: 4 }}>
-                {formatCurrency(currentValue)}
+              <div style={{ fontSize: 26, fontWeight: 900, color: '#FFFFFF', marginTop: 4 }}>
+                {formatCurrency(totalValuation)}
               </div>
             </div>
+
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: 11, color: '#A0AEC0', textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                Total Weight
+              <div style={{ fontSize: 10.5, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.8, fontWeight: 700 }}>
+                Net Gain
               </div>
-              <div style={{ fontSize: 22, fontWeight: 800, color: COLORS.primaryGold, marginTop: 4 }}>
-                {formatGrams(totalGrams)}
+              <div style={{ fontSize: 15, fontWeight: 800, color: '#10B981', marginTop: 4, display: 'flex', alignItems: 'center', gap: 3 }}>
+                <TrendingUp size={14} />
+                <span>+{gainPercentage.toFixed(2)}%</span>
               </div>
             </div>
           </div>
 
-          <div style={{ height: 1, background: 'rgba(255,255,255,0.12)', margin: '16px 0' }} />
+          <div style={{ height: 1, background: 'rgba(255, 255, 255, 0.08)', margin: '14px 0' }} />
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          {/* Metal Split */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)' }}>Total Invested</div>
-              <div style={{ fontSize: 15, fontWeight: 600, color: '#FFFFFF', marginTop: 2 }}>
-                {formatCurrency(totalInvested)}
+              <div style={{ fontSize: 10, color: '#94A3B8', textTransform: 'uppercase', fontWeight: 700 }}>
+                24K Gold Vault
               </div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: '#FBBF24', marginTop: 2 }}>
+                {formatGrams(totalGrams)}
+              </div>
+              <div style={{ fontSize: 11, color: '#94A3B8' }}>{formatCurrency(goldValuation)}</div>
             </div>
+
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)' }}>Unrealised Gain</div>
-              <div
-                style={{
-                  fontSize: 15,
-                  fontWeight: 600,
-                  color: isPositiveGain ? '#4ADE80' : '#F87171',
-                  marginTop: 2,
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 4,
-                }}
-              >
-                {isPositiveGain ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
-                {formatCurrency(Math.abs(gain))} ({gainPercentage.toFixed(2)}%)
+              <div style={{ fontSize: 10, color: '#94A3B8', textTransform: 'uppercase', fontWeight: 700 }}>
+                .999 Silver Vault
               </div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: '#E2E8F0', marginTop: 2 }}>
+                {silverGrams.toFixed(1)} g
+              </div>
+              <div style={{ fontSize: 11, color: '#94A3B8' }}>{formatCurrency(silverValuation)}</div>
             </div>
           </div>
         </div>
 
-        {/* DMCC Vault Audit Banner */}
+        {/* DNI Vault Proof Banner */}
         <div
           onClick={() => navigate('vaultProof')}
           style={{
-            background: '#F0FDF4',
-            border: '1px solid #BBF7D0',
+            background: 'rgba(16, 185, 129, 0.1)',
+            border: '1px solid rgba(16, 185, 129, 0.25)',
             borderRadius: 12,
             padding: '12px 14px',
             marginBottom: 16,
@@ -141,30 +122,50 @@ export const PortfolioScreen: React.FC = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <ShieldCheck size={20} color="#16865B" />
+            <ShieldCheck size={18} color="#10B981" />
             <div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: '#166534' }}>
-                Physical Vault Audit Certificate
+              <div style={{ fontSize: 12, fontWeight: 800, color: '#10B981' }}>
+                DNI Insured Physical Depository
               </div>
-              <div style={{ fontSize: 11, color: '#15803D' }}>
-                100% Backed by Brink's & Transguard DMCC
+              <div style={{ fontSize: 10.5, color: '#94A3B8' }}>
+                Allocated 1:1 at Brink's DMCC in Almas Tower, Dubai
               </div>
             </div>
           </div>
-          <ChevronRight size={16} color="#166534" />
+          <ChevronRight size={16} color="#10B981" />
         </div>
 
         {/* Tab Selector */}
-        <div className="tab-bar">
+        <div style={{ display: 'flex', gap: 6, marginBottom: 14 }}>
           <button
-            className={`tab-item ${activeTab === 'holdings' ? 'active' : ''}`}
             onClick={() => setActiveTab('holdings')}
+            style={{
+              flex: 1,
+              padding: '8px 12px',
+              borderRadius: 8,
+              border: 'none',
+              background: activeTab === 'holdings' ? '#F59E0B' : '#161D2D',
+              color: activeTab === 'holdings' ? '#0A0D14' : '#94A3B8',
+              fontSize: 12.5,
+              fontWeight: 800,
+              cursor: 'pointer',
+            }}
           >
-            Holdings & Yield
+            Vault Breakdown
           </button>
           <button
-            className={`tab-item ${activeTab === 'transactions' ? 'active' : ''}`}
             onClick={() => setActiveTab('transactions')}
+            style={{
+              flex: 1,
+              padding: '8px 12px',
+              borderRadius: 8,
+              border: 'none',
+              background: activeTab === 'transactions' ? '#F59E0B' : '#161D2D',
+              color: activeTab === 'transactions' ? '#0A0D14' : '#94A3B8',
+              fontSize: 12.5,
+              fontWeight: 800,
+              cursor: 'pointer',
+            }}
           >
             Ledger ({transactions.length})
           </button>
@@ -172,248 +173,116 @@ export const PortfolioScreen: React.FC = () => {
 
         {/* HOLDINGS TAB */}
         {activeTab === 'holdings' && (
-          <div>
-            {/* Asset Allocation Breakdown */}
-            <div className="card" style={{ marginBottom: 16 }}>
-              <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 14, color: COLORS.darkCharcoal }}>
-                Allocation Breakdown
-              </h3>
-
-              {/* Idle Gold (Available for instant sale / redemption) */}
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '12px 0',
-                  borderBottom: `1px solid ${COLORS.border}`,
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div
-                    style={{
-                      width: 36,
-                      height: 36,
-                      borderRadius: 8,
-                      background: 'rgba(232, 182, 63, 0.15)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: COLORS.primaryGold,
-                    }}
-                  >
-                    <Award size={20} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.darkCharcoal }}>
-                      Available Vault Gold
-                    </div>
-                    <div style={{ fontSize: 11, color: COLORS.secondaryText }}>
-                      Instant sell or physical delivery
-                    </div>
-                  </div>
-                </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.darkCharcoal }}>
-                    {formatGrams(idleGrams)}
-                  </div>
-                  <div style={{ fontSize: 11, color: COLORS.secondaryText }}>
-                    {formatCurrency(idleGrams * DEMO_GOLD_RATE)}
-                  </div>
-                </div>
-              </div>
-
-              {/* Leased Gold Earning Extra Yield */}
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '12px 0',
-                  borderBottom: `1px solid ${COLORS.border}`,
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div
-                    style={{
-                      width: 36,
-                      height: 36,
-                      borderRadius: 8,
-                      background: 'rgba(147, 51, 234, 0.12)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: '#9333EA',
-                    }}
-                  >
-                    <Percent size={20} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.darkCharcoal }}>
-                      YASS Gold+ (Leased)
-                    </div>
-                    <div style={{ fontSize: 11, color: '#9333EA', fontWeight: 600 }}>
-                      Earning 5.2% p.a. gold yield
-                    </div>
-                  </div>
-                </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: '#9333EA' }}>
-                    {formatGrams(leasedGrams)}
-                  </div>
-                  <div style={{ fontSize: 11, color: COLORS.secondaryText }}>
-                    +{formatGrams(yieldEarnedGrams)} earned
-                  </div>
-                </div>
-              </div>
-
-              {/* SIP Accumulation */}
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '12px 0',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div
-                    style={{
-                      width: 36,
-                      height: 36,
-                      borderRadius: 8,
-                      background: 'rgba(22, 134, 91, 0.12)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: COLORS.positive,
-                    }}
-                  >
-                    <RefreshCw size={20} />
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 14, fontWeight: 600, color: COLORS.darkCharcoal }}>
-                      Gold SIP Accumulated
-                    </div>
-                    <div style={{ fontSize: 11, color: COLORS.secondaryText }}>
-                      Automated direct debit installments
-                    </div>
-                  </div>
-                </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.darkCharcoal }}>
-                    {formatGrams(sipGrams)}
-                  </div>
-                  <div style={{ fontSize: 11, color: COLORS.secondaryText }}>
-                    {formatCurrency(sipGrams * DEMO_GOLD_RATE)}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Quick Link to Lease More Gold */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {/* OGold Mastercard Ready Power */}
             <div
-              onClick={() => navigate('lease')}
-              style={{
-                background: 'linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%)',
-                border: '1px solid #D8B4FE',
-                borderRadius: 14,
-                padding: '14px 16px',
-                marginBottom: 16,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                cursor: 'pointer',
-              }}
+              className="card"
+              onClick={() => navigate('card')}
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px' }}
             >
-              <div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#6B21A8' }}>
-                  Have idle gold in your vault?
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div
+                  style={{
+                    width: 38,
+                    height: 38,
+                    borderRadius: 10,
+                    background: 'rgba(245, 158, 11, 0.15)',
+                    color: '#FBBF24',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <CreditCard size={18} />
                 </div>
-                <div style={{ fontSize: 11, color: '#7E22CE' }}>
-                  Earn up to 5.2% extra gold with YASS Gold+ Leasing
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 800, color: '#FFFFFF' }}>
+                    OGold Mastercard Spending Power
+                  </div>
+                  <div style={{ fontSize: 11, color: '#94A3B8' }}>
+                    Instant POS conversion for {state.card.spendingAsset.toUpperCase()}
+                  </div>
                 </div>
               </div>
-              <button
-                className="btn btn-primary"
-                style={{ padding: '6px 12px', fontSize: 12, background: '#9333EA', borderColor: '#9333EA' }}
-              >
-                Lease Now
-              </button>
+              <ChevronRight size={16} color="#64748B" />
+            </div>
+
+            {/* Wakala Yield Holdings */}
+            <div
+              className="card"
+              onClick={() => navigate('lease')}
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px' }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <div
+                  style={{
+                    width: 38,
+                    height: 38,
+                    borderRadius: 10,
+                    background: 'rgba(139, 92, 246, 0.15)',
+                    color: '#A78BFA',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Percent size={18} />
+                </div>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 800, color: '#FFFFFF' }}>
+                    Wakala Earn ({formatGrams(leasedGrams)})
+                  </div>
+                  <div style={{ fontSize: 11, color: '#94A3B8' }}>
+                    Earning 4.8% APR pure gold yield
+                  </div>
+                </div>
+              </div>
+              <ChevronRight size={16} color="#64748B" />
             </div>
           </div>
         )}
 
-        {/* TRANSACTIONS TAB */}
+        {/* LEDGER TAB */}
         {activeTab === 'transactions' && (
-          <div className="card" style={{ marginBottom: 16 }}>
-            {transactions.length === 0 ? (
-              <div className="empty-state">
-                <div className="empty-state-title">No transactions yet</div>
-                <div className="empty-state-desc">Your purchases and sales will show up here.</div>
-              </div>
-            ) : (
-              transactions.map((txn) => {
-                const isDebit = txn.type === 'sell' || txn.type === 'redemption' || txn.type === 'gift';
-                const sign = isDebit ? '-' : '+';
-                return (
-                  <div
-                    key={txn.id}
-                    className="txn-row"
-                    onClick={() => handleTransactionClick(txn)}
-                  >
-                    <div className={`txn-icon ${txn.type}`}>
-                      {txn.type === 'buy' && <ArrowDownCircle size={18} />}
-                      {txn.type === 'sell' && <ArrowUpCircle size={18} />}
-                      {txn.type === 'sip' && <RefreshCw size={18} />}
-                      {txn.type === 'lease' && <Percent size={18} />}
-                      {txn.type === 'gift' && <Gift size={18} />}
-                      {txn.type === 'redemption' && <Award size={18} />}
-                    </div>
+          <div className="card" style={{ padding: '4px 14px' }}>
+            {transactions.map((txn) => (
+              <div
+                key={txn.id}
+                className="txn-row"
+                onClick={() => handleTransactionClick(txn)}
+              >
+                <div className={`txn-icon ${txn.type}`}>
+                  {txn.type === 'buy' ? (
+                    <ArrowDownCircle size={17} />
+                  ) : txn.type === 'card_spend' ? (
+                    <CreditCard size={17} />
+                  ) : txn.type === 'spin_reward' ? (
+                    <Sparkles size={17} />
+                  ) : (
+                    <ArrowUpCircle size={17} />
+                  )}
+                </div>
 
-                    <div className="txn-details">
-                      <div className="txn-type">
-                        {txn.type === 'buy' && 'Bought Gold'}
-                        {txn.type === 'sell' && 'Sold Gold'}
-                        {txn.type === 'sip' && 'Gold SIP Auto-Debit'}
-                        {txn.type === 'lease' && 'YASS Gold+ Lease'}
-                        {txn.type === 'gift' && 'Gift Sent'}
-                        {txn.type === 'redemption' && 'Physical Bar Minted'}
-                      </div>
-                      <div className="txn-date">
-                        {new Date(txn.date).toLocaleDateString('en-AE', {
-                          day: 'numeric',
-                          month: 'short',
-                          year: 'numeric',
-                        })}
-                      </div>
-                    </div>
-
-                    <div className="txn-amounts">
-                      <div className={`txn-grams ${isDebit ? 'negative' : 'positive'}`}>
-                        {sign}
-                        {formatGrams(txn.goldGrams)}
-                      </div>
-                      <div className="txn-rupees">{formatCurrency(txn.amount)}</div>
-                    </div>
-
-                    <ChevronRight size={16} color={COLORS.secondaryText} style={{ marginLeft: 8 }} />
+                <div className="txn-details">
+                  <div className="txn-type">
+                    {txn.meta || txn.type}
                   </div>
-                );
-              })
-            )}
+                  <div className="txn-date">
+                    {new Date(txn.date).toLocaleDateString('en-AE', { day: 'numeric', month: 'short' })}
+                  </div>
+                </div>
+
+                <div className="txn-amounts">
+                  <div className={`txn-grams ${txn.type === 'buy' || txn.type === 'spin_reward' ? 'positive' : 'negative'}`}>
+                    {txn.type === 'buy' || txn.type === 'spin_reward' ? '+' : '−'}
+                    {txn.goldGrams.toFixed(4)} g
+                  </div>
+                  <div className="txn-rupees">{formatCurrency(txn.amount)}</div>
+                </div>
+              </div>
+            ))}
           </div>
         )}
-
-        {/* Action Buttons */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-          <button className="btn btn-primary" onClick={() => navigate('buy')}>
-            Buy Gold
-          </button>
-          <button className="btn btn-secondary" onClick={() => navigate('sell')}>
-            Sell Gold
-          </button>
-        </div>
       </div>
     </div>
   );

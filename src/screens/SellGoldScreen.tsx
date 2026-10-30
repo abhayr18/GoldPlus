@@ -1,48 +1,41 @@
 // ============================================
-// YASS Gold & YASS Bullion — Sell Gold Screen
-// A product by YASS Group, Dubai
+// OGold Wallet — Sell Gold & Silver Screen
+// Instant Liquidation to Bank or OGold Mastercard
+// App Store: id6504926022
 // ============================================
 
 import React, { useState, useMemo } from 'react';
-import { ArrowLeft, Check } from 'lucide-react';
+import { ArrowLeft, Check, CreditCard, Building2 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
-import { sellGold } from '../state/appState';
-import { DEMO_GOLD_RATE, COLORS } from '../constants';
+import { sellMetalAction } from '../state/appState';
+import { DEMO_GOLD_RATE, DEMO_SILVER_RATE } from '../constants';
+import type { MetalType } from '../types';
 
 type FlowState = 'input' | 'review' | 'success';
 
-// ---------- Local formatting helpers ----------
 const formatCurrency = (val: number): string =>
   'AED ' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-const formatGrams = (val: number): string =>
-  val.toFixed(4) + ' g';
+const formatGrams = (val: number): string => val.toFixed(4) + ' g';
 
-const SellGoldScreen: React.FC = () => {
+export const SellGoldScreen: React.FC = () => {
   const { state, setState, navigate, back, showToast } = useApp();
 
-  // ---------- Local state ----------
+  const [metal, setMetal] = useState<MetalType>('gold');
   const [flowState, setFlowState] = useState<FlowState>('input');
   const [weightStr, setWeightStr] = useState<string>('');
   const [activeChip, setActiveChip] = useState<string | null>(null);
+  const [payoutDestination, setPayoutDestination] = useState<'card' | 'bank'>('card');
 
-  // Available gold balance from holdings
-  const availableGrams = state.holdings.totalGrams;
-  const availableValue = Math.round(availableGrams * DEMO_GOLD_RATE * 100) / 100;
+  const activeRate = metal === 'gold' ? DEMO_GOLD_RATE : DEMO_SILVER_RATE;
+  const availableGrams = metal === 'gold' ? state.holdings.totalGrams : state.holdings.silverGrams;
+  const availableValue = availableGrams * activeRate;
 
-  // Parsed weight
   const grams = parseFloat(weightStr) || 0;
+  const expectedAmount = useMemo(() => Math.round(grams * activeRate * 100) / 100, [grams, activeRate]);
 
-  // Expected payout
-  const expectedAmount = useMemo(
-    () => Math.round(grams * DEMO_GOLD_RATE * 100) / 100,
-    [grams],
-  );
-
-  // Validation
   const isValid = grams > 0 && grams <= availableGrams;
 
-  // Quick-selection chips (percentage of holdings)
   const percentageChips = [
     { label: '25%', factor: 0.25 },
     { label: '50%', factor: 0.5 },
@@ -56,217 +49,275 @@ const SellGoldScreen: React.FC = () => {
     setActiveChip(label);
   };
 
-  // Continue to review
-  const handleContinue = () => {
-    if (!isValid) return;
-    setFlowState('review');
-  };
-
-  // Confirm sale
   const handleConfirm = () => {
-    const newState = sellGold(state, grams);
-    setState(newState);
-    showToast('Gold sold successfully!', 'success');
+    const destinationLabel =
+      payoutDestination === 'card' ? 'OGold Platinum Mastercard' : 'Emirates NBD (AE29026...)';
+    setState(sellMetalAction(state, metal, grams, destinationLabel));
+    showToast(`Successfully sold ${formatGrams(grams)}! AED ${expectedAmount.toFixed(2)} credited.`, 'success');
     setFlowState('success');
   };
 
-  // =============================================
-  // INPUT STATE
-  // =============================================
-  const renderInputState = () => (
-    <>
-      {/* Screen header */}
-      <div className="screen-header">
-        <button className="screen-header-back" onClick={back}>
-          <ArrowLeft size={18} />
-        </button>
-        <span className="screen-header-title">Sell Gold</span>
-      </div>
-
-      <div className="screen-content">
-        {/* Demo disclaimer */}
-        <div className="demo-banner">Illustrative Demo — No real money involved</div>
-
-        {/* Available balance card */}
-        <div className="card" style={{ marginBottom: 24 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <div style={{ fontSize: 13, color: COLORS.secondaryText, marginBottom: 4 }}>
-                Available Balance
-              </div>
-              <div style={{ fontSize: 24, fontWeight: 700, color: COLORS.mainText }}>
-                {availableGrams.toFixed(4)} g
-              </div>
-              <div style={{ fontSize: 13, color: COLORS.secondaryText, marginTop: 2 }}>
-                ({formatCurrency(availableValue)} approx.)
-              </div>
-            </div>
-            {/* Small gold bar decoration */}
-            <div className="gold-bar-icon" style={{ width: 44, height: 28 }} />
-          </div>
-        </div>
-
-        {/* Weight input */}
-        <div style={{ marginBottom: 12 }}>
-          <label className="form-label">Enter weight to sell</label>
-          <div className="form-input-prefix">
-            <input
-              type="number"
-              placeholder="e.g. 0.1"
-              step="0.0001"
-              min="0"
-              max={availableGrams}
-              value={weightStr}
-              onChange={(e) => {
-                setWeightStr(e.target.value);
-                setActiveChip(null);
-              }}
-              style={{ textAlign: 'left' }}
-            />
-            <span className="prefix">g</span>
-          </div>
-          {weightStr !== '' && grams > availableGrams && (
-            <div className="form-error" style={{ marginTop: 6 }}>
-              Insufficient gold balance
-            </div>
-          )}
-          {weightStr !== '' && grams <= 0 && (
-            <div className="form-error" style={{ marginTop: 6 }}>
-              Please enter a valid weight
-            </div>
-          )}
-        </div>
-
-        {/* Quick percentage chips */}
-        <div className="chip-row" style={{ marginBottom: 24 }}>
-          {percentageChips.map((chip) => (
-            <button
-              key={chip.label}
-              className={`chip ${activeChip === chip.label ? 'active' : ''}`}
-              onClick={() => handlePercentageChip(chip.label, chip.factor)}
-            >
-              {chip.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Expected amount section */}
-        <div className="card" style={{ marginBottom: 24 }}>
-          <div style={{ fontSize: 13, color: COLORS.secondaryText, marginBottom: 4 }}>
-            Expected Amount
-          </div>
-          <div style={{ fontSize: 18, fontWeight: 700, color: COLORS.mainText }}>
-            {formatCurrency(expectedAmount)}
-          </div>
-          <div style={{ fontSize: 12, color: COLORS.secondaryText, marginTop: 4 }}>
-            Based on current Dubai Gold Souk rate (AED {DEMO_GOLD_RATE.toFixed(2)}/g)
-          </div>
-        </div>
-
-        {/* Continue CTA */}
-        <button
-          className="btn btn-primary"
-          disabled={!isValid}
-          onClick={handleContinue}
-        >
-          Continue
-        </button>
-      </div>
-    </>
-  );
-
-  // =============================================
-  // REVIEW STATE
-  // =============================================
-  const renderReviewState = () => (
-    <>
-      {/* Screen header */}
-      <div className="screen-header">
-        <button className="screen-header-back" onClick={() => setFlowState('input')}>
-          <ArrowLeft size={18} />
-        </button>
-        <span className="screen-header-title">Sell Review</span>
-      </div>
-
-      <div className="screen-content">
-        <div className="demo-banner">Illustrative Demo — No real money involved</div>
-
-        <div className="card" style={{ marginBottom: 24 }}>
-          {/* Gold Quantity */}
-          <div className="summary-row">
-            <span className="label">Gold Quantity</span>
-            <span className="value">{formatGrams(grams)}</span>
-          </div>
-
-          {/* Sell Rate */}
-          <div className="summary-row">
-            <span className="label">Dubai Sell Rate</span>
-            <span className="value">
-              AED {DEMO_GOLD_RATE.toFixed(2)}/g{' '}
-              <span style={{ fontSize: 11, color: COLORS.secondaryText, fontWeight: 400 }}>
-                (DMCC)
-              </span>
-            </span>
-          </div>
-
-          {/* Estimated Payout */}
-          <div className="summary-row total">
-            <span className="label">Estimated Payout</span>
-            <span className="value">{formatCurrency(expectedAmount)}</span>
-          </div>
-
-          {/* Payout To */}
-          <div className="summary-row">
-            <span className="label">Payout To</span>
-            <span className="value">Emirates NBD ****9821</span>
-          </div>
-        </div>
-
-        {/* Confirm CTA */}
-        <button className="btn btn-primary" onClick={handleConfirm}>
-          Confirm Demo Sale
-        </button>
-      </div>
-    </>
-  );
-
-  // =============================================
-  // SUCCESS STATE
-  // =============================================
-  const renderSuccessState = () => (
-    <div className="success-screen">
-      {/* Green checkmark */}
-      <div className="success-check">
-        <Check size={36} strokeWidth={3} />
-      </div>
-
-      <div className="success-title">Sale Successful!</div>
-      <div className="success-desc">
-        Your gold has been sold and the payout will be credited to your bank account
-      </div>
-
-      {/* Sold quantity in large gold text */}
-      <div className="success-detail">{formatGrams(grams)}</div>
-
-      {/* Back to Dashboard */}
-      <button
-        className="btn btn-primary"
-        style={{ maxWidth: 280 }}
-        onClick={() => navigate('dashboard')}
-      >
-        Back to Dashboard
-      </button>
-    </div>
-  );
-
-  // =============================================
-  // RENDER
-  // =============================================
   return (
     <div className="screen-container">
-      {flowState === 'input' && renderInputState()}
-      {flowState === 'review' && renderReviewState()}
-      {flowState === 'success' && renderSuccessState()}
+      {/* ── Screen Header ────────────────────────────────────── */}
+      <div className="screen-header">
+        <button className="screen-header-back" onClick={back} aria-label="Back">
+          <ArrowLeft size={18} />
+        </button>
+        <span className="screen-header-title">Liquidate Precious Metals</span>
+        <div style={{ width: 36 }} />
+      </div>
+
+      <div className="screen-content" style={{ paddingTop: 14 }}>
+        {flowState === 'input' && (
+          <>
+            {/* Metal Toggle */}
+            <div className="metal-toggle-bar">
+              <button
+                className={`metal-toggle-btn ${metal === 'gold' ? 'active gold' : ''}`}
+                onClick={() => {
+                  setMetal('gold');
+                  setWeightStr('');
+                  setActiveChip(null);
+                }}
+              >
+                <span>24K Gold ({state.holdings.totalGrams.toFixed(2)}g)</span>
+              </button>
+              <button
+                className={`metal-toggle-btn ${metal === 'silver' ? 'active silver' : ''}`}
+                onClick={() => {
+                  setMetal('silver');
+                  setWeightStr('');
+                  setActiveChip(null);
+                }}
+              >
+                <span>.999 Silver ({state.holdings.silverGrams.toFixed(1)}g)</span>
+              </button>
+            </div>
+
+            {/* Available Balance Card */}
+            <div className="card" style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 11, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: 700 }}>
+                Available in Insured Vault
+              </div>
+              <div style={{ fontSize: 24, fontWeight: 900, color: '#FFFFFF', marginTop: 4 }}>
+                {formatGrams(availableGrams)}
+              </div>
+              <div style={{ fontSize: 12, color: '#FBBF24', marginTop: 2, fontWeight: 600 }}>
+                ≈ {formatCurrency(availableValue)} at live spot rate ({formatCurrency(activeRate)}/g)
+              </div>
+            </div>
+
+            {/* Weight Input */}
+            <div className="card" style={{ marginBottom: 16 }}>
+              <label className="form-label">How much {metal} do you want to liquidate?</label>
+              <div className="form-input-prefix">
+                <span className="prefix">Grams</span>
+                <input
+                  type="number"
+                  step="0.0001"
+                  placeholder="0.0000"
+                  value={weightStr}
+                  onChange={(e) => {
+                    setWeightStr(e.target.value);
+                    setActiveChip(null);
+                  }}
+                  autoFocus
+                />
+              </div>
+
+              {/* Percentage Chips */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 6, marginTop: 12 }}>
+                {percentageChips.map((chip) => (
+                  <button
+                    key={chip.label}
+                    onClick={() => handlePercentageChip(chip.label, chip.factor)}
+                    style={{
+                      padding: '8px 0',
+                      borderRadius: 8,
+                      border: '1px solid',
+                      borderColor: activeChip === chip.label ? '#F59E0B' : '#1E293B',
+                      background: activeChip === chip.label ? 'rgba(245, 158, 11, 0.15)' : '#121826',
+                      color: activeChip === chip.label ? '#FBBF24' : '#94A3B8',
+                      fontSize: 12,
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {chip.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Payout Destination */}
+            <div className="card" style={{ marginBottom: 20 }}>
+              <div style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF', marginBottom: 10 }}>
+                Deposit Funds To:
+              </div>
+
+              {/* OGold Mastercard option */}
+              <div
+                onClick={() => setPayoutDestination('card')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '10px 12px',
+                  borderRadius: 10,
+                  border: '1px solid',
+                  borderColor: payoutDestination === 'card' ? '#F59E0B' : '#1E293B',
+                  background: payoutDestination === 'card' ? 'rgba(245, 158, 11, 0.1)' : '#121826',
+                  marginBottom: 8,
+                  cursor: 'pointer',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <CreditCard size={18} color={payoutDestination === 'card' ? '#FBBF24' : '#94A3B8'} />
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF' }}>
+                      OGold Platinum Mastercard
+                    </div>
+                    <div style={{ fontSize: 11, color: '#94A3B8' }}>Instant spending availability</div>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    width: 18,
+                    height: 18,
+                    borderRadius: '50%',
+                    border: `2px solid ${payoutDestination === 'card' ? '#F59E0B' : '#64748B'}`,
+                    background: payoutDestination === 'card' ? '#F59E0B' : 'transparent',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {payoutDestination === 'card' && <Check size={12} color="#0A0D14" strokeWidth={3} />}
+                </div>
+              </div>
+
+              {/* Linked Bank */}
+              <div
+                onClick={() => setPayoutDestination('bank')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '10px 12px',
+                  borderRadius: 10,
+                  border: '1px solid',
+                  borderColor: payoutDestination === 'bank' ? '#F59E0B' : '#1E293B',
+                  background: payoutDestination === 'bank' ? 'rgba(245, 158, 11, 0.1)' : '#121826',
+                  cursor: 'pointer',
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <Building2 size={18} color={payoutDestination === 'bank' ? '#FBBF24' : '#94A3B8'} />
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF' }}>
+                      Emirates NBD (AE29026...)
+                    </div>
+                    <div style={{ fontSize: 11, color: '#94A3B8' }}>Direct UAE bank transfer</div>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    width: 18,
+                    height: 18,
+                    borderRadius: '50%',
+                    border: `2px solid ${payoutDestination === 'bank' ? '#F59E0B' : '#64748B'}`,
+                    background: payoutDestination === 'bank' ? '#F59E0B' : 'transparent',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {payoutDestination === 'bank' && <Check size={12} color="#0A0D14" strokeWidth={3} />}
+                </div>
+              </div>
+            </div>
+
+            <button
+              className="btn btn-primary"
+              disabled={!isValid}
+              onClick={() => setFlowState('review')}
+              style={{ height: 46, fontSize: 14 }}
+            >
+              Continue to Sell ({formatCurrency(expectedAmount)})
+            </button>
+          </>
+        )}
+
+        {flowState === 'review' && (
+          <>
+            <div className="card" style={{ marginBottom: 16 }}>
+              <div style={{ fontSize: 12, color: '#94A3B8' }}>Sale Summary</div>
+              <div style={{ fontSize: 20, fontWeight: 900, color: '#FFFFFF', marginTop: 4 }}>
+                {formatGrams(grams)} {metal === 'gold' ? '24K Gold' : '.999 Silver'}
+              </div>
+
+              <div style={{ height: 1, background: '#1E293B', margin: '14px 0' }} />
+
+              <div className="summary-row">
+                <span className="label">Applicable Spot Rate</span>
+                <span className="value">{formatCurrency(activeRate)}/g</span>
+              </div>
+              <div className="summary-row">
+                <span className="label">Destination</span>
+                <span className="value">
+                  {payoutDestination === 'card' ? 'OGold Mastercard' : 'Emirates NBD'}
+                </span>
+              </div>
+              <div className="summary-row total">
+                <span className="label">Net Payout to You</span>
+                <span className="value">{formatCurrency(expectedAmount)}</span>
+              </div>
+            </div>
+
+            <div style={{ display: 'flex', gap: 10 }}>
+              <button className="btn btn-secondary" onClick={() => setFlowState('input')}>
+                Back
+              </button>
+              <button className="btn btn-primary" onClick={handleConfirm}>
+                Confirm Instant Sale
+              </button>
+            </div>
+          </>
+        )}
+
+        {flowState === 'success' && (
+          <div style={{ textAlign: 'center', padding: '36px 16px' }}>
+            <div
+              style={{
+                width: 68,
+                height: 68,
+                borderRadius: '50%',
+                background: 'rgba(16, 185, 129, 0.15)',
+                border: '2px solid #10B981',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#10B981',
+                margin: '0 auto 16px',
+              }}
+            >
+              <Check size={36} strokeWidth={3} />
+            </div>
+
+            <h2 style={{ fontSize: 22, fontWeight: 900, color: '#FFFFFF', marginBottom: 6 }}>
+              Payout Processed!
+            </h2>
+            <p style={{ fontSize: 13, color: '#94A3B8', marginBottom: 20 }}>
+              {formatCurrency(expectedAmount)} has been credited to your {payoutDestination === 'card' ? 'OGold Mastercard' : 'bank account'}.
+            </p>
+
+            <button className="btn btn-primary" onClick={() => navigate('dashboard')}>
+              Back to Wallet
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

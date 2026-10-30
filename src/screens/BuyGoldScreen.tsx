@@ -1,51 +1,48 @@
 // ============================================
-// YASS Gold & YASS Bullion — Buy Digital Gold Screen
-// 5-Minute Dubai Souk Price Lock & Karat Selection
-// A product by YASS Group, Dubai
+// OGold Wallet — Buy Gold & Silver Screen
+// Buy 24K Gold & .999 Silver Instantly from AED 1
+// App Store: id6504926022
 // ============================================
 
 import React, { useState, useMemo, useEffect } from 'react';
 import {
   ArrowLeft,
   Check,
-  Smartphone,
-  Building2,
   CreditCard,
   Clock,
   ShieldCheck,
-  Sparkles,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
-import { buyGold, generateTransactionId } from '../state/appState';
-import { DUBAI_MARKET_RATES, COLORS } from '../constants';
+import { buyMetalAction, generateTransactionId } from '../state/appState';
+import { DEMO_GOLD_RATE, DEMO_SILVER_RATE } from '../constants';
+import type { MetalType } from '../types';
 
 type FlowState = 'input' | 'review' | 'success';
 type InputMode = 'amount' | 'weight';
-type KaratChoice = '24K' | '22K';
-type PaymentMethod = 'Aani Instant Pay' | 'Emirates NBD Bank' | 'Apple Pay / Card';
+type PaymentMethod = 'Apple Pay / Card' | 'Aani Instant Pay' | 'Emirates NBD Transfer';
 
 export const BuyGoldScreen: React.FC = () => {
   const { state, setState, navigate, back, showToast } = useApp();
 
   // ---------- Local state ----------
+  const [metal, setMetal] = useState<MetalType>('gold');
   const [flowState, setFlowState] = useState<FlowState>('input');
   const [inputMode, setInputMode] = useState<InputMode>('amount');
-  const [karat, setKarat] = useState<KaratChoice>('24K');
   const [amountStr, setAmountStr] = useState<string>('500');
   const [weightStr, setWeightStr] = useState<string>('');
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('Aani Instant Pay');
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('Apple Pay / Card');
   const [selectedChip, setSelectedChip] = useState<number | null>(500);
   const [reference] = useState<string>(generateTransactionId());
 
-  // 5-Minute Dubai Souk Price Lock Timer
-  const [secondsRemaining, setSecondsRemaining] = useState<number>(298);
+  // 60-Second Real-Time Price Lock Timer
+  const [secondsRemaining, setSecondsRemaining] = useState<number>(60);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setSecondsRemaining(prev => {
+      setSecondsRemaining((prev) => {
         if (prev <= 1) {
-          showToast('Gold rate refreshed from Dubai Gold Souk & DMCC benchmark', 'info');
-          return 300; // Reset 5-min window
+          showToast('Spot rate refreshed to live Dubai benchmark', 'info');
+          return 60;
         }
         return prev - 1;
       });
@@ -54,14 +51,7 @@ export const BuyGoldScreen: React.FC = () => {
     return () => clearInterval(timer);
   }, [showToast]);
 
-  const formatTimer = (secs: number) => {
-    const m = Math.floor(secs / 60);
-    const s = secs % 60;
-    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-  };
-
-  // Rates based on karat choice
-  const activeRate = karat === '24K' ? DUBAI_MARKET_RATES.rate24K : DUBAI_MARKET_RATES.rate22K;
+  const activeRate = metal === 'gold' ? DEMO_GOLD_RATE : DEMO_SILVER_RATE;
 
   // ---------- Derived values ----------
   const amount = parseFloat(amountStr) || 0;
@@ -72,29 +62,27 @@ export const BuyGoldScreen: React.FC = () => {
     return Math.round(weight * activeRate * 100) / 100;
   }, [inputMode, amount, weight, activeRate]);
 
-  const goldGrams = useMemo(() => {
+  const metalGrams = useMemo(() => {
     if (inputMode === 'weight') return weight;
     return Math.round((amount / activeRate) * 10000) / 10000;
   }, [inputMode, amount, weight, activeRate]);
 
   const isValid = useMemo(() => {
-    if (inputMode === 'amount') return amount >= 10;
+    if (inputMode === 'amount') return amount >= 1; // OGold allows buying from 1 AED
     return weight > 0;
   }, [inputMode, amount, weight]);
 
-  // ---------- Helpers ----------
   const formatCurrency = (val: number): string =>
     'AED ' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-  const formatGrams = (val: number): string =>
-    val.toFixed(4) + ' g';
+  const formatGrams = (val: number): string => val.toFixed(4) + ' g';
 
   const handleChip = (value: number) => {
     setSelectedChip(value);
     setAmountStr(value.toString());
   };
 
-  const quickAmounts = [100, 250, 500, 1000, 5000];
+  const quickAmounts = metal === 'gold' ? [100, 250, 500, 1000, 5000] : [50, 100, 250, 500, 1000];
 
   const handleProceed = () => {
     if (!isValid) return;
@@ -102,404 +90,386 @@ export const BuyGoldScreen: React.FC = () => {
   };
 
   const handleConfirm = () => {
-    const newState = buyGold(state, effectiveAmount, paymentMethod);
-    setState(newState);
-    showToast(`Purchased ${goldGrams.toFixed(4)}g 24K pure gold!`, 'success');
+    setState(buyMetalAction(state, metal, effectiveAmount, paymentMethod));
     setFlowState('success');
+    showToast(`Successfully bought ${formatGrams(metalGrams)} of ${metal === 'gold' ? '24K Gold' : '.999 Silver'}!`, 'success');
   };
 
-  // =============================================
-  // INPUT STATE
-  // =============================================
+  // ── 1. INPUT STATE ─────────────────────────────────────────
   const renderInputState = () => (
     <>
       <div className="screen-header">
-        <button className="screen-header-back" onClick={back}>
+        <button className="screen-header-back" onClick={back} aria-label="Back">
           <ArrowLeft size={18} />
         </button>
-        <span className="screen-header-title">Buy Digital Gold</span>
-        <div style={{ width: 24 }} />
+        <span className="screen-header-title">Buy Precious Metals</span>
+        <div style={{ width: 36 }} />
       </div>
 
-      <div className="screen-content" style={{ paddingBottom: 80 }}>
-        {/* 5-Minute Price Lock Timer Banner */}
-        <div
-          style={{
-            background: '#FFF9E6',
-            border: '1px solid #F4D681',
-            borderRadius: 12,
-            padding: '10px 14px',
-            marginBottom: 16,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: '#8F6600', fontWeight: 600 }}>
-            <Clock size={16} />
-            <span>Rate locked for:</span>
-            <span style={{ fontWeight: 800, fontSize: 14, fontFamily: 'monospace' }}>
-              {formatTimer(secondsRemaining)}
-            </span>
-          </div>
-
-          <div style={{ fontSize: 11, color: '#8F6600', display: 'flex', alignItems: 'center', gap: 4 }}>
-            <ShieldCheck size={14} color="#16865B" />
-            <span>DMCC Guaranteed</span>
-          </div>
-        </div>
-
-        {/* Karat Selector (24K vs 22K) */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 10,
-            marginBottom: 20,
-          }}
-        >
-          <div
-            onClick={() => setKarat('24K')}
-            style={{
-              padding: '12px 14px',
-              borderRadius: 12,
-              border: karat === '24K' ? '2px solid #E8B63F' : '1px solid #E2E8F0',
-              background: karat === '24K' ? '#FFF' : '#FAFAFA',
-              boxShadow: karat === '24K' ? '0 4px 12px rgba(232, 182, 63, 0.15)' : 'none',
-              cursor: 'pointer',
-              position: 'relative',
-            }}
-          >
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#16865B', textTransform: 'uppercase' }}>
-              0% VAT • 999.9 Purity
-            </div>
-            <div style={{ fontSize: 15, fontWeight: 800, color: COLORS.darkCharcoal, marginTop: 2 }}>
-              24K Bullion Gold
-            </div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.primaryGold, marginTop: 2 }}>
-              AED {DUBAI_MARKET_RATES.rate24K.toFixed(2)} /g
-            </div>
-          </div>
-
-          <div
-            onClick={() => setKarat('22K')}
-            style={{
-              padding: '12px 14px',
-              borderRadius: 12,
-              border: karat === '22K' ? '2px solid #E8B63F' : '1px solid #E2E8F0',
-              background: karat === '22K' ? '#FFF' : '#FAFAFA',
-              boxShadow: karat === '22K' ? '0 4px 12px rgba(232, 182, 63, 0.15)' : 'none',
-              cursor: 'pointer',
-            }}
-          >
-            <div style={{ fontSize: 11, fontWeight: 600, color: COLORS.secondaryText, textTransform: 'uppercase' }}>
-              916 Jewellery Grade
-            </div>
-            <div style={{ fontSize: 15, fontWeight: 800, color: COLORS.darkCharcoal, marginTop: 2 }}>
-              22K Standard Gold
-            </div>
-            <div style={{ fontSize: 13, fontWeight: 700, color: COLORS.darkCharcoal, marginTop: 2 }}>
-              AED {DUBAI_MARKET_RATES.rate22K.toFixed(2)} /g
-            </div>
-          </div>
-        </div>
-
-        {/* Segmented control: Amount / Weight */}
-        <div className="segmented-control" style={{ marginBottom: 20 }}>
+      <div className="screen-content" style={{ paddingTop: 14 }}>
+        {/* Metal Toggle: Gold vs Silver */}
+        <div className="metal-toggle-bar">
           <button
-            className={`segmented-item ${inputMode === 'amount' ? 'active' : ''}`}
+            className={`metal-toggle-btn ${metal === 'gold' ? 'active gold' : ''}`}
             onClick={() => {
-              setInputMode('amount');
-              setWeightStr('');
+              setMetal('gold');
               setSelectedChip(500);
               setAmountStr('500');
             }}
           >
-            Buy in AED
+            <span>24K Gold (999.9)</span>
           </button>
           <button
-            className={`segmented-item ${inputMode === 'weight' ? 'active' : ''}`}
+            className={`metal-toggle-btn ${metal === 'silver' ? 'active silver' : ''}`}
             onClick={() => {
-              setInputMode('weight');
-              setAmountStr('');
-              setSelectedChip(null);
-              setWeightStr('1.0');
+              setMetal('silver');
+              setSelectedChip(250);
+              setAmountStr('250');
             }}
           >
-            Buy in Grams
+            <span>.999 Pure Silver</span>
           </button>
         </div>
 
-        {/* ------- Amount mode ------- */}
-        {inputMode === 'amount' && (
-          <>
-            <div className="amount-display">
-              <span className="currency">AED </span>
-              {amountStr || '0'}
-            </div>
-
-            <div style={{ marginBottom: 16 }}>
-              <input
-                type="number"
-                className="form-input"
-                placeholder="Enter amount (min AED 10)"
-                value={amountStr}
-                min={10}
-                onChange={(e) => {
-                  setAmountStr(e.target.value);
-                  setSelectedChip(null);
-                }}
-                style={{ textAlign: 'center', fontSize: 18, fontWeight: 700 }}
-              />
-              {amountStr !== '' && amount < 10 && (
-                <div className="form-error" style={{ textAlign: 'center', marginTop: 6 }}>
-                  Minimum purchase is AED 10
-                </div>
-              )}
-            </div>
-
-            <div className="chip-row" style={{ justifyContent: 'center', marginBottom: 20 }}>
-              {quickAmounts.map((val) => (
-                <button
-                  key={val}
-                  className={`chip ${selectedChip === val ? 'active' : ''}`}
-                  onClick={() => handleChip(val)}
-                >
-                  AED {val}
-                </button>
-              ))}
-            </div>
-          </>
-        )}
-
-        {/* ------- Weight mode ------- */}
-        {inputMode === 'weight' && (
-          <div style={{ marginBottom: 20 }}>
-            <label className="form-label">Enter gold weight</label>
-            <div className="form-input-prefix">
-              <input
-                type="number"
-                placeholder="e.g. 1.0"
-                step="0.0001"
-                min="0"
-                value={weightStr}
-                onChange={(e) => setWeightStr(e.target.value)}
-                style={{ textAlign: 'left', fontSize: 16, fontWeight: 600 }}
-              />
-              <span className="prefix">g</span>
-            </div>
-
-            <div className="chip-row" style={{ marginTop: 10, justifyContent: 'center' }}>
-              {[1, 5, 10, 20, 50, 100].map((g) => (
-                <button
-                  key={g}
-                  className={`chip ${weightStr === g.toString() ? 'active' : ''}`}
-                  onClick={() => setWeightStr(g.toString())}
-                >
-                  {g}g
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Gold Quote Card */}
+        {/* Live Spot Rate Banner with Timer */}
         <div
-          className="card"
           style={{
-            marginBottom: 20,
-            background: 'linear-gradient(135deg, #FFFFFF 0%, #FDFBF7 100%)',
-            border: '1px solid #E8B63F',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '12px 14px',
+            borderRadius: 12,
+            background: '#161D2D',
+            border: `1px solid ${metal === 'gold' ? 'rgba(245, 158, 11, 0.3)' : 'rgba(148, 163, 184, 0.3)'}`,
+            marginBottom: 16,
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div>
-              <div style={{ fontSize: 12, color: COLORS.secondaryText, textTransform: 'uppercase', letterSpacing: 0.5 }}>
-                Estimated Pure Gold Credited
-              </div>
-              <div style={{ fontSize: 24, fontWeight: 800, color: COLORS.primaryGold, marginTop: 4 }}>
-                {goldGrams.toFixed(4)} <span style={{ fontSize: 16, color: COLORS.darkCharcoal }}>g</span>
-              </div>
-              <div style={{ fontSize: 12, color: COLORS.secondaryText, marginTop: 4 }}>
-                Live Dubai Gold Souk Rate: <strong>AED {activeRate.toFixed(2)}/g</strong>
-              </div>
+          <div>
+            <div style={{ fontSize: 10.5, color: '#94A3B8', textTransform: 'uppercase', fontWeight: 700, letterSpacing: 0.5 }}>
+              Live Dubai Spot Benchmark
             </div>
-            <div className="gold-coin-icon">
-              <Sparkles size={20} color="#FFF" />
+            <div style={{ fontSize: 18, fontWeight: 900, color: '#FFFFFF', marginTop: 2 }}>
+              {formatCurrency(activeRate)} <span style={{ fontSize: 12, color: '#94A3B8', fontWeight: 500 }}>/ gram</span>
             </div>
           </div>
 
           <div
             style={{
-              marginTop: 14,
-              paddingTop: 12,
-              borderTop: '1px solid #E9E7E0',
               display: 'flex',
-              justifyContent: 'space-between',
+              alignItems: 'center',
+              gap: 5,
               fontSize: 11,
-              color: '#16865B',
-              fontWeight: 600,
+              fontWeight: 800,
+              color: '#FBBF24',
+              background: 'rgba(245, 158, 11, 0.15)',
+              padding: '4px 10px',
+              borderRadius: 20,
             }}
           >
-            <span>✓ 0% UAE VAT (Investment Gold)</span>
-            <span>✓ Free Lifetime Brink's Vaulting</span>
+            <Clock size={13} />
+            <span>Lock: {secondsRemaining}s</span>
           </div>
         </div>
 
-        {/* Payment Methods */}
-        <div style={{ marginBottom: 24 }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.darkCharcoal, marginBottom: 12 }}>
-            Instant UAE Payment Method
-          </div>
-
-          {/* Aani */}
-          <div
-            className={`payment-card ${paymentMethod === 'Aani Instant Pay' ? 'selected' : ''}`}
-            style={{ marginBottom: 10 }}
-            onClick={() => setPaymentMethod('Aani Instant Pay')}
+        {/* Amount / Weight Input Mode Tabs */}
+        <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
+          <button
+            onClick={() => setInputMode('amount')}
+            style={{
+              flex: 1,
+              padding: '8px 12px',
+              borderRadius: 8,
+              border: 'none',
+              background: inputMode === 'amount' ? '#F59E0B' : '#161D2D',
+              color: inputMode === 'amount' ? '#0A0D14' : '#94A3B8',
+              fontSize: 12,
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
           >
-            <div className="payment-card-icon">
-              <Smartphone size={18} />
-            </div>
-            <div className="payment-card-info">
-              <div className="payment-card-name">Aani Instant Pay</div>
-              <div className="payment-card-desc">Central Bank of UAE instant debit • 0% fee</div>
-            </div>
-            <div className="payment-card-check">
-              {paymentMethod === 'Aani Instant Pay' && <Check size={14} />}
-            </div>
-          </div>
-
-          {/* Apple Pay */}
-          <div
-            className={`payment-card ${paymentMethod === 'Apple Pay / Card' ? 'selected' : ''}`}
-            style={{ marginBottom: 10 }}
-            onClick={() => setPaymentMethod('Apple Pay / Card')}
+            Enter in AED (Cash)
+          </button>
+          <button
+            onClick={() => setInputMode('weight')}
+            style={{
+              flex: 1,
+              padding: '8px 12px',
+              borderRadius: 8,
+              border: 'none',
+              background: inputMode === 'weight' ? '#F59E0B' : '#161D2D',
+              color: inputMode === 'weight' ? '#0A0D14' : '#94A3B8',
+              fontSize: 12,
+              fontWeight: 700,
+              cursor: 'pointer',
+            }}
           >
-            <div className="payment-card-icon">
-              <CreditCard size={18} />
-            </div>
-            <div className="payment-card-info">
-              <div className="payment-card-name">Apple Pay / Cards</div>
-              <div className="payment-card-desc">Instant 1-tap checkout with Face ID</div>
-            </div>
-            <div className="payment-card-check">
-              {paymentMethod === 'Apple Pay / Card' && <Check size={14} />}
-            </div>
-          </div>
-
-          {/* Emirates NBD */}
-          <div
-            className={`payment-card ${paymentMethod === 'Emirates NBD Bank' ? 'selected' : ''}`}
-            onClick={() => setPaymentMethod('Emirates NBD Bank')}
-          >
-            <div className="payment-card-icon">
-              <Building2 size={18} />
-            </div>
-            <div className="payment-card-info">
-              <div className="payment-card-name">Emirates NBD Direct Debit</div>
-              <div className="payment-card-desc">IBAN: AE290260...9821</div>
-            </div>
-            <div className="payment-card-check">
-              {paymentMethod === 'Emirates NBD Bank' && <Check size={14} />}
-            </div>
-          </div>
+            Enter in Grams (Weight)
+          </button>
         </div>
 
-        {/* Proceed Button */}
-        <button className="btn btn-primary" disabled={!isValid} onClick={handleProceed}>
-          Proceed to Order Review ({formatCurrency(effectiveAmount)})
+        {/* Input Card */}
+        <div className="card" style={{ marginBottom: 14 }}>
+          {inputMode === 'amount' ? (
+            <div>
+              <label className="form-label">How much would you like to invest?</label>
+              <div className="form-input-prefix">
+                <span className="prefix">AED</span>
+                <input
+                  type="number"
+                  placeholder="0.00"
+                  value={amountStr}
+                  onChange={(e) => {
+                    setAmountStr(e.target.value);
+                    setSelectedChip(null);
+                  }}
+                  autoFocus
+                />
+              </div>
+              <div style={{ fontSize: 11.5, color: '#94A3B8', marginTop: 8 }}>
+                You will receive:{' '}
+                <strong style={{ color: '#FBBF24' }}>{formatGrams(metalGrams)}</strong> of {metal === 'gold' ? '24K 999.9 Gold' : '.999 Silver'}
+              </div>
+            </div>
+          ) : (
+            <div>
+              <label className="form-label">Weight of bullion to purchase:</label>
+              <div className="form-input-prefix">
+                <span className="prefix">Grams</span>
+                <input
+                  type="number"
+                  step="0.0001"
+                  placeholder="e.g. 5.0000"
+                  value={weightStr}
+                  onChange={(e) => setWeightStr(e.target.value)}
+                  autoFocus
+                />
+              </div>
+              <div style={{ fontSize: 11.5, color: '#94A3B8', marginTop: 8 }}>
+                Total payable:{' '}
+                <strong style={{ color: '#FBBF24' }}>{formatCurrency(effectiveAmount)}</strong>
+              </div>
+            </div>
+          )}
+
+          {/* Quick Selection Chips */}
+          {inputMode === 'amount' && (
+            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 14 }}>
+              {quickAmounts.map((amt) => (
+                <button
+                  key={amt}
+                  onClick={() => handleChip(amt)}
+                  style={{
+                    padding: '6px 12px',
+                    borderRadius: 8,
+                    border: '1px solid',
+                    borderColor: selectedChip === amt ? '#F59E0B' : '#1E293B',
+                    background: selectedChip === amt ? 'rgba(245, 158, 11, 0.15)' : '#121826',
+                    color: selectedChip === amt ? '#FBBF24' : '#94A3B8',
+                    fontSize: 12,
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                  }}
+                >
+                  +{amt}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* 0% VAT Notice & Shariah Shield */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            padding: '10px 14px',
+            background: 'rgba(16, 185, 129, 0.08)',
+            border: '1px solid rgba(16, 185, 129, 0.25)',
+            borderRadius: 10,
+            marginBottom: 20,
+          }}
+        >
+          <ShieldCheck size={16} color="#10B981" />
+          <span style={{ fontSize: 11.5, color: '#10B981', fontWeight: 600 }}>
+            0% UAE VAT on Investment Grade Bullion • Instant Depository Credit
+          </span>
+        </div>
+
+        {/* Continue Button */}
+        <button
+          className="btn btn-primary"
+          disabled={!isValid}
+          onClick={handleProceed}
+          style={{ height: 46, fontSize: 14 }}
+        >
+          Review Order ({formatCurrency(effectiveAmount)})
         </button>
       </div>
     </>
   );
 
-  // =============================================
-  // REVIEW STATE
-  // =============================================
+  // ── 2. REVIEW STATE ────────────────────────────────────────
   const renderReviewState = () => (
     <>
       <div className="screen-header">
-        <button className="screen-header-back" onClick={() => setFlowState('input')}>
+        <button className="screen-header-back" onClick={() => setFlowState('input')} aria-label="Back">
           <ArrowLeft size={18} />
         </button>
-        <span className="screen-header-title">Order Confirmation</span>
-        <div style={{ width: 24 }} />
+        <span className="screen-header-title">Confirm Order</span>
+        <div style={{ width: 36 }} />
       </div>
 
-      <div className="screen-content">
-        <div className="demo-banner">Dubai Financial Prototype — Live Sim Mode</div>
+      <div className="screen-content" style={{ paddingTop: 14 }}>
+        <div className="card" style={{ marginBottom: 16 }}>
+          <div style={{ fontSize: 12, color: '#94A3B8' }}>Asset Details</div>
+          <div style={{ fontSize: 18, fontWeight: 800, color: '#FFFFFF', marginTop: 4 }}>
+            {formatGrams(metalGrams)} {metal === 'gold' ? '24K 999.9 Fine Gold' : '.999 Pure Silver'}
+          </div>
 
-        <div className="card" style={{ marginBottom: 20 }}>
+          <div style={{ height: 1, background: '#1E293B', margin: '14px 0' }} />
+
           <div className="summary-row">
-            <span className="label">Total Amount</span>
+            <span className="label">Spot Benchmark Rate</span>
+            <span className="value">{formatCurrency(activeRate)}/g</span>
+          </div>
+          <div className="summary-row">
+            <span className="label">Assay Purity Standard</span>
+            <span className="value">{metal === 'gold' ? '999.9 Dubai Good Delivery' : '.999 Fine Bullion'}</span>
+          </div>
+          <div className="summary-row">
+            <span className="label">Vault Custody & Insurance</span>
+            <span className="value" style={{ color: '#10B981' }}>FREE (DNI Insured)</span>
+          </div>
+          <div className="summary-row">
+            <span className="label">UAE VAT (Investment Grade)</span>
+            <span className="value" style={{ color: '#10B981' }}>AED 0.00 (0% Exempt)</span>
+          </div>
+          <div className="summary-row total">
+            <span className="label">Total Amount Payable</span>
             <span className="value">{formatCurrency(effectiveAmount)}</span>
-          </div>
-
-          <div className="summary-row">
-            <span className="label">Pure Gold Credited</span>
-            <span className="value" style={{ color: COLORS.primaryGold, fontWeight: 700 }}>
-              {formatGrams(goldGrams)}
-            </span>
-          </div>
-
-          <div className="summary-row">
-            <span className="label">Grade & Purity</span>
-            <span className="value">{karat} (999.9 Fine DGD)</span>
-          </div>
-
-          <div className="summary-row">
-            <span className="label">Dubai Gold Souk Benchmark</span>
-            <span className="value">AED {activeRate.toFixed(2)} /g</span>
-          </div>
-
-          <div className="summary-row">
-            <span className="label">Physical Custody</span>
-            <span className="value">Brink’s DMCC Vault</span>
-          </div>
-
-          <div className="summary-row">
-            <span className="label">Payment Channel</span>
-            <span className="value">{paymentMethod}</span>
-          </div>
-
-          <div className="summary-row">
-            <span className="label">Transaction Reference</span>
-            <span className="value" style={{ fontSize: 12, fontFamily: 'monospace' }}>
-              {reference}
-            </span>
           </div>
         </div>
 
-        <button className="btn btn-primary" onClick={handleConfirm}>
-          Confirm Purchase of {formatGrams(goldGrams)}
+        {/* Payment Method Selector */}
+        <div className="card" style={{ marginBottom: 20 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF', marginBottom: 12 }}>
+            Select Payment Method
+          </div>
+
+          {(['Apple Pay / Card', 'Aani Instant Pay', 'Emirates NBD Transfer'] as const).map((method) => (
+            <div
+              key={method}
+              onClick={() => setPaymentMethod(method)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '10px 12px',
+                borderRadius: 10,
+                border: '1px solid',
+                borderColor: paymentMethod === method ? '#F59E0B' : '#1E293B',
+                background: paymentMethod === method ? 'rgba(245, 158, 11, 0.1)' : '#121826',
+                marginBottom: 8,
+                cursor: 'pointer',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <CreditCard size={18} color={paymentMethod === method ? '#FBBF24' : '#94A3B8'} />
+                <span style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF' }}>{method}</span>
+              </div>
+              <div
+                style={{
+                  width: 18,
+                  height: 18,
+                  borderRadius: '50%',
+                  border: `2px solid ${paymentMethod === method ? '#F59E0B' : '#64748B'}`,
+                  background: paymentMethod === method ? '#F59E0B' : 'transparent',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {paymentMethod === method && <Check size={12} color="#0A0D14" strokeWidth={3} />}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <button className="btn btn-primary" onClick={handleConfirm} style={{ height: 48, fontSize: 14.5 }}>
+          Pay {formatCurrency(effectiveAmount)} via {paymentMethod}
         </button>
       </div>
     </>
   );
 
-  // =============================================
-  // SUCCESS STATE
-  // =============================================
+  // ── 3. SUCCESS STATE ───────────────────────────────────────
   const renderSuccessState = () => (
-    <div className="success-screen">
-      <div className="success-check">
-        <Check size={36} strokeWidth={3} />
+    <div
+      style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '32px 24px',
+        textAlign: 'center',
+        background: '#0A0D14',
+      }}
+    >
+      <div
+        style={{
+          width: 72,
+          height: 72,
+          borderRadius: '50%',
+          background: 'rgba(16, 185, 129, 0.15)',
+          border: '2px solid #10B981',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: '#10B981',
+          marginBottom: 16,
+          boxShadow: '0 0 30px rgba(16, 185, 129, 0.3)',
+        }}
+      >
+        <Check size={38} strokeWidth={3} />
       </div>
 
-      <div className="success-title">24K Gold Credited to Vault!</div>
-      <div className="success-desc">
-        Your gold has been securely deposited at Brink's DMCC Vault.
+      <h2 style={{ fontSize: 22, fontWeight: 900, color: '#FFFFFF', marginBottom: 6 }}>
+        Purchase Completed!
+      </h2>
+      <p style={{ fontSize: 13, color: '#94A3B8', maxWidth: 300, lineHeight: 1.5, marginBottom: 20 }}>
+        Your bullion is securely deposited into your Brink’s DMCC insured vault.
+      </p>
+
+      <div
+        style={{
+          padding: '16px 24px',
+          borderRadius: 14,
+          background: '#161D2D',
+          border: '1px solid rgba(245, 158, 11, 0.3)',
+          marginBottom: 24,
+          width: '100%',
+          maxWidth: 320,
+        }}
+      >
+        <div style={{ fontSize: 22, fontWeight: 900, color: '#FBBF24' }}>
+          +{formatGrams(metalGrams)}
+        </div>
+        <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>
+          {metal === 'gold' ? '24K 999.9 Fine Gold' : '.999 Pure Silver'}
+        </div>
+        <div style={{ fontSize: 11, color: '#64748B', marginTop: 8 }}>
+          Ref: {reference}
+        </div>
       </div>
 
-      <div className="success-detail">{formatGrams(goldGrams)}</div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 300, marginTop: 10 }}>
-        <button className="btn btn-primary" onClick={() => navigate('vaultProof')}>
-          View Vault Certificate
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 320 }}>
+        <button className="btn btn-primary" onClick={() => navigate('card')}>
+          View in OGold Mastercard
         </button>
         <button className="btn btn-secondary" onClick={() => navigate('dashboard')}>
-          Back to Dashboard
+          Back to Wallet
         </button>
       </div>
     </div>

@@ -1,7 +1,10 @@
 // ============================================
-// YASS Gold & YASS Bullion — Production Fintech Type Definitions
-// A product by YASS Group, Dubai
+// OGold Wallet — Type Definitions
+// The Precious Metals & Lifestyle Super App (Dubai, UAE)
+// Dual-metal: 24K Gold & .999 Silver | OGold Mastercard
 // ============================================
+
+export type MetalType = 'gold' | 'silver';
 
 export interface UserProfile {
   fullName: string;
@@ -14,22 +17,45 @@ export interface UserProfile {
   emiratesId?: string;
   savingsStreakDays: number;
   freeGoldRewardsMg: number;
+  freeSilverRewardsMg: number;
+  xpPoints: number;
+  tier: 'Bronze' | 'Silver' | 'Gold' | 'Platinum VIP';
+  spinsAvailable: number;
+  lastSpinTimestamp?: string;
 }
 
-export interface GoldHolding {
-  totalGrams: number;
+export interface MetalHolding {
+  totalGrams: number; // 24K Gold in grams
+  silverGrams: number; // .999 Silver in grams
   totalInvested: number;
-  leasedGrams: number;
+  leasedGrams: number; // Gold in Wakala yield pool
+  leasedSilverGrams: number; // Silver in Wakala yield pool
   yieldEarnedGrams: number;
+  yieldEarnedSilverGrams: number;
   transactions: Transaction[];
+}
+
+export interface OGoldCard {
+  cardNumber: string;
+  cardHolder: string;
+  expiry: string;
+  cvv: string;
+  isFrozen: boolean;
+  isOnlineEnabled: boolean;
+  isAtmEnabled: boolean;
+  spendingLimitMonthly: number;
+  spendingAsset: MetalType;
+  physicalCardStatus: 'none' | 'ordered' | 'shipped' | 'active';
+  appleWalletAdded: boolean;
 }
 
 export interface Transaction {
   id: string;
-  type: 'buy' | 'sell' | 'sip' | 'redemption' | 'lease' | 'gift';
+  type: 'buy' | 'sell' | 'sip' | 'redemption' | 'lease' | 'gift' | 'card_spend' | 'spin_reward';
+  metal: MetalType;
   date: string;
-  goldGrams: number;
-  amount: number;
+  goldGrams: number; // Metal grams (gold or silver)
+  amount: number; // In AED
   rate: number;
   status: 'completed' | 'pending' | 'failed' | 'processing';
   paymentMethod?: string;
@@ -40,35 +66,39 @@ export interface Transaction {
 export interface SIPRecord {
   id: string;
   nickname: string;
+  metal: MetalType;
   amount: number;
-  frequency: 'daily' | 'weekly' | 'monthly' | 'quarterly';
+  frequency: 'daily' | 'weekly' | 'monthly';
   status: 'active' | 'paused' | 'cancelled';
   nextDate: string;
   startDate: string;
   paymentMethod: string;
   totalInstallments: number;
   completedInstallments: number;
-  totalGoldAccumulated: number;
+  totalAccumulatedGrams: number;
+  totalGoldAccumulated?: number;
   totalAmountInvested: number;
 }
 
-export interface GoldLease {
+export interface WakalaDeposit {
   id: string;
+  metal: MetalType;
   grams: number;
-  annualYieldPercent: number; // e.g. 5.2%
+  aprYieldPercent: number; // e.g. 4.8% p.a.
   startDate: string;
   durationMonths: number;
   accruedYieldGrams: number;
   status: 'active' | 'completed';
-  jewelerPartner: string;
-  bankGuaranteeRef: string;
+  depositoryPartner: string;
+  shariahCertRef: string;
 }
 
 export interface GiftRecord {
   id: string;
+  metal: MetalType;
   recipientName: string;
   recipientMobile: string;
-  goldGrams: number;
+  grams: number;
   amount: number;
   occasion: string;
   message?: string;
@@ -80,6 +110,7 @@ export interface GiftRecord {
 export interface SavingsGoal {
   id: string;
   title: string;
+  metal?: MetalType;
   targetGrams: number;
   currentGrams: number;
   targetDate: string;
@@ -89,10 +120,11 @@ export interface SavingsGoal {
 
 export interface DeliveryOrder {
   id: string;
+  metal: MetalType;
   productType: 'coin' | 'bar';
   weight: number;
   purity: string;
-  goldRequired: number;
+  metalRequired: number;
   makingCharges: number;
   deliveryCharges: number;
   totalCharges: number;
@@ -120,7 +152,6 @@ export interface BankAccount {
   bankName: string;
   accountNumber: string;
   iban?: string;
-  ifsc?: string;
   holderName: string;
   isPrimary: boolean;
 }
@@ -132,10 +163,24 @@ export interface NotificationPreferences {
   promotions: boolean;
 }
 
+export interface LifestyleService {
+  id: string;
+  category: 'esim' | 'giftcard';
+  title: string;
+  provider: string;
+  priceAED: number;
+  goldEquivalentGrams: number;
+  tag: string;
+  image: string;
+}
+
 export type Screen =
   | 'splash'
   | 'signup'
   | 'dashboard'
+  | 'card'
+  | 'earn'
+  | 'rewards'
   | 'buy'
   | 'sell'
   | 'sip'
