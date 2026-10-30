@@ -1,80 +1,85 @@
-# OGold Wallet — The Precious Metals & Lifestyle Super App (Dubai, UAE)
-> **App Store Reference**: [OGold Wallet: Buy Gold & Silver (id6504926022)](https://apps.apple.com/ae/app/ogold-wallet-buy-gold-silver/id6504926022)  
-> **Brand**: **OGold Wallet** (O Gold Precious Metals Trading L.L.C.)  
-> **Tagline**: *Buy, Sell, Save & Spend Physical Gold and Silver in UAE*  
-> **Currency**: **AED (United Arab Emirates Dirham)**  
-> **Depository**: *Brink’s Global Services (DMCC) & Transguard Vaults*  
-> **Insurance**: *100% Insured by Dubai National Insurance (DNI)*  
+# YASS Bullion Dubai
+
+> **Institutional Precious Metals Custody & Physical Delivery Platform**  
+> **Brand**: YASS Bullion (A product by YASS Group, Dubai)  
+> **Depository**: Brink's Global Services (DMCC), Almas Tower, JLT, Dubai  
+> **Auditor**: BDO Chartered Accountants Dubai  
+> **Purity**: Dubai Good Delivery (DGD) 999.9 Fine Gold (24 Karat)  
+> **Currency**: AED (United Arab Emirates Dirham)
 
 ---
 
-## 🌟 Overview
+## Overview
 
-**OGold Wallet** is the UAE's premier precious metals and lifestyle fintech super app, built to replicate the exact experience and features of the iOS App Store app **OGold: Buy Gold & Silver (id6504926022)**.
+**YASS Bullion** is a production-grade precious metals web application and platform designed for direct digital acquisition, vaulted custody, and doorstep physical delivery of 24K 999.9 fine gold across Dubai and the United Arab Emirates.
 
-The platform bridges physical precious metal ownership with everyday global spending through the **OGold Platinum Mastercard**, allowing users to convert vaulted 24K 999.9 fine gold and .999 pure silver into real-world purchasing power seamlessly at any point of sale with Apple Pay.
-
----
-
-## 🚀 Core Features (Exact OGold Wallet Replica)
-
-### 1. 🥇 Dual Precious Metals Wallet (Gold & Silver)
-* **24K 999.9 Fine Gold**: Instant fractional purchases starting from **AED 1** with 0% UAE VAT.
-* **.999 Pure Silver Bullion**: Real-time silver accumulation starting from **AED 1**.
-* **Live Spot Benchmarks**: Second-by-second spot price feeds for 24K (`AED 318.50/g`) and .999 Silver (`AED 3.85/g`) directly linked to Dubai Gold Souk & DMCC benchmark rates.
-
-### 2. 💳 OGold Platinum Mastercard Hub (Signature Feature)
-* **Real-Time Point-of-Sale Conversion**: Spend your physical gold or silver directly at over 100M+ merchants worldwide with zero liquidation lag.
-* **Apple Wallet Integration**: One-tap *"Add to Apple Wallet"* button for instant Apple Pay checkouts.
-* **Asset Selector**: Toggle between spending from your **24K Gold Vault** or **.999 Silver Vault**.
-* **Card Controls & Security**:
-  * Instant Freeze / Unfreeze toggle.
-  * Online & International e-commerce toggle.
-  * Monthly spending limit slider (AED 1,000 to AED 50,000).
-  * Interactive POS spend simulator (test real-time gold deduction on coffee or shopping).
-* **Physical Heavyweight Metal Card**: Order and track physical metal cards delivered via Transguard Armoured Courier.
-
-### 3. 📈 OGold Earn (Shariah-Compliant Wakala Yield Pools)
-* Put idle vaulted bullion to work in Shariah-compliant profit-share pools.
-* **4.8% APR** on 24K Gold and **5.2% APR** on .999 Silver.
-* Passive yield calculated daily and distributed monthly in physical grams directly to your vault.
-
-### 4. 🎡 Daily Spin & Win + Rewards Super App
-* **Interactive Lucky Wheel**: Daily spin for users to win free gold/silver milligrams, XP points, and bonus rewards.
-* **XP Tiers**: Bronze, Silver, Gold, and Platinum VIP tiers unlocking zero making charges and higher spending limits.
-* **Lifestyle Services**:
-  * Global Travel eSIMs (UAE, GCC, and 160+ countries) payable directly with gold.
-  * Digital Gift Cards (Amazon.ae, Noon.com, Apple, Carrefour).
-
-### 5. 📦 Physical Bullion Minting & Armoured Delivery
-* Redeem digital holdings into physical minted 24K gold coins/bars (1g, 5g, 10g, 50g, 100g) and .999 silver bars (1 oz, 250g, 1kg).
-* Sealed in tamper-proof certified assay certicards with QR verification.
-* Delivered directly to doorstep across the UAE via Transguard Armoured Logistics.
-
-### 6. 🛡️ Institutional Security & Insurance
-* **Dubai National Insurance (DNI)**: 100% underwritten physical bullion insurance.
-* **Brink’s DMCC Depository**: Vaulted in high-security facilities in Almas Tower, JLT, Dubai.
-* **BDO Chartered Accountants**: Quarterly independent physical bullion custody audits.
-* **UAE PASS**: Tier-3 biometric qualified KYC verification linked to Emirates ID.
+The application combines two complementary experiences:
+1. **Apple-Restrained Marketing Experience**: A calm, product-focused marketing front with system typography, generous whitespace, warm neutral background (`#F5F5F7`), and a restrained metallic gold accent (`#8A6718`).
+2. **Native Mobile Web App Dashboard**: An authentic mobile-first client interface for digital gold accumulation, live spot rate tracking, vaulted depository certificates, Wakala yields, and armoured courier deliveries.
 
 ---
 
-## 📱 Navigation & App Structure
+## Core Product Capabilities
 
-The app implements the standard 5-tab OGold layout:
-1. 🏠 **Wallet**: Portfolio balance in AED, Gold & Silver vault splits, live rate ticker, quick Buy/Sell/Transfer/Bullion actions, and activity ledger.
-2. 💳 **Card**: OGold Platinum Mastercard visualizer, Apple Pay button, spending asset toggle, security controls, limit slider, and physical card tracking.
-3. 📈 **Earn**: Shariah Wakala yield pools and Systematic Investment Plans (SIP).
-4. 🎁 **Rewards**: Daily Spin & Win wheel, XP tier progression, travel eSIMs, and gift cards.
-5. 👤 **Profile**: UAE PASS KYC verification status, linked bank accounts (Emirates NBD), DNI insurance proof, and security preferences.
+### 1. 24K 999.9 Digital Gold Accumulation
+* Fractional purchases starting from **AED 1** with 0% UAE VAT.
+* Real-time benchmark spot pricing linked directly to DMCC and Dubai Gold Souk rates.
+* Instant liquid sell-back with direct payout to UAE bank accounts (Emirates NBD, FAB, ADCB).
+
+### 2. Physical Bullion Minting & Armoured Delivery
+* Mint digital allocations into stamped physical 24K bars and coins (1g, 5g, 10g, 20g, 50g, 100g, 1kg).
+* Tamper-proof assay certicards with individual QR provenance codes.
+* Fully insured doorstep delivery across all seven Emirates handled by Transguard Armoured Logistics.
+
+### 3. Institutional Vaulting & Live Audit Certificates
+* Depository custody at Brink's DMCC facility in Almas Tower, Jumeirah Lakes Towers.
+* Real-time verifiable digital Vault Certificates detailing client bar serial numbers, purity marks, and vault locations.
+* On-demand escorted audit appointment scheduling.
+
+### 4. Systematic Savings & Wakala Yield
+* Daily, weekly, and monthly recurring gold savings (SIP) from AED 20.
+* Shariah-compliant Wakala yield pools earning up to 4.8% APR in physical gold weight.
+* Goal-oriented savings trackers (e.g., Wedding, Hajj, Sovereign Reserve).
 
 ---
 
-## 🛠️ Tech Stack
+## Design System & Standards
+
+* **Color Palette**:
+  * Page Ground: Warm Neutral (`#F5F5F7`)
+  * Elevated Surfaces: Pure White (`#FFFFFF`)
+  * Primary Accent: Restrained Bullion Gold (`#8A6718` / `#C59B27`)
+  * Typography: High-contrast Dark Slate (`#1D1D1F` / `#0F172A`) and Cool Grey (`#64748B`)
+  * Success Indicators: Clean Mint Emerald (`#059669` / `#ECFDF5`)
+* **Typography**: Clean native system font stack (`-apple-system`, `BlinkMacSystemFont`, `SF Pro Display`, `Segoe UI`, `Roboto`).
+* **Icons & App Assets**:
+  * Vector SVG Favicon (`public/favicon.svg`): 24K Dubai bullion squircle with ingot monogram and hallmark.
+  * iOS Touch Icon (`public/apple-touch-icon.png`): 180x180 px squircle.
+  * Android PWA Manifest (`public/manifest.json`): 192x192 px and 512x512 px icons with `#F5F5F7` theme color.
+  * SVG lucide-react icons used strictly for navigational clarity.
+
+---
+
+## Tech Stack & Architecture
 
 * **Frontend**: React 18, TypeScript (Strict Mode)
-* **Styling**: Luxury Obsidian & 24K Gold CSS Design System (`#0A0D14`, `#F59E0B`, `#E5C05B`)
-* **State Management**: React Context + Custom LocalStorage persistence (`ogold_wallet_app_state_v3`)
-* **Icons**: Lucide React
 * **Build Tool**: Vite v8
-* **Deployment**: GitHub (`origin/main`)
+* **Styling**: Standard scoped CSS design tokens in `src/index.css`
+* **State Management**: React Context + LocalStorage persistence in `src/state/appState.ts`
+* **Verification**: `tsc -b && vite build` (zero errors)
+* **Remote Repository**: `https://github.com/abhayr18/GoldPlus.git` (`main` branch)
+
+---
+
+## Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start Vite development server
+npm run dev
+
+# Run TypeScript checks and production build
+npm run build
+```
