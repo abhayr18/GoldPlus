@@ -34,6 +34,25 @@ const SplashScreen: React.FC = () => {
 
         {/* Wordmark */}
         <h1 style={styles.wordmark}>{BRAND.name}</h1>
+        <div style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 6,
+          padding: '4px 12px',
+          borderRadius: 999,
+          background: 'rgba(232, 182, 63, 0.12)',
+          border: '1px solid rgba(232, 182, 63, 0.25)',
+          color: COLORS.secondaryGold,
+          fontSize: 11,
+          fontWeight: 600,
+          letterSpacing: '0.8px',
+          textTransform: 'uppercase',
+          marginBottom: 16,
+        }}>
+          <span>YASS Bullion</span>
+          <span>•</span>
+          <span>Dubai, UAE</span>
+        </div>
 
         {/* Hero heading */}
         <h2 style={styles.heading}>{BRAND.heading}</h2>

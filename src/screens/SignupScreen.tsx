@@ -5,12 +5,12 @@ import { loginUser } from '../state/appState';
 import { BRAND, COLORS } from '../constants';
 
 // ============================================
-// GoldPlus — Signup / Registration Screen
-// Clean ivory form with validation
+// YASS Gold & YASS Bullion — Signup / Registration Screen
+// A product by YASS Group, Dubai
 // ============================================
 
 /** Validation helpers */
-const MOBILE_REGEX = /^[6-9]\d{9}$/; // Indian mobile: starts 6-9, 10 digits
+const MOBILE_REGEX = /^(5\d{8}|\d{9,10})$/; // UAE mobile (starts with 5, 9 digits) or 10-digit international
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 interface FormData {
@@ -69,7 +69,7 @@ const SignupScreen: React.FC = () => {
         break;
       case 'mobile':
         if (!form.mobile) error = 'Mobile number is required';
-        else if (!MOBILE_REGEX.test(form.mobile)) error = 'Enter a valid 10-digit Indian mobile number';
+        else if (!MOBILE_REGEX.test(form.mobile)) error = 'Enter a valid UAE mobile (e.g. 50 123 4567)';
         break;
       case 'email':
         if (form.email && !EMAIL_REGEX.test(form.email)) error = 'Enter a valid email address';
@@ -97,7 +97,7 @@ const SignupScreen: React.FC = () => {
       const updated = loginUser(prev, form.fullName.trim(), form.mobile, form.email.trim());
       return { ...updated, isLoggedIn: true };
     });
-    showToast('Welcome to GoldPlus! 🎉', 'success');
+    showToast(`Welcome to ${BRAND.name}! ✨`, 'success');
     navigate('dashboard');
   }, [form]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -150,11 +150,11 @@ const SignupScreen: React.FC = () => {
               className={`form-input-prefix${hasError('mobile') ? ' error' : ''}`}
               style={hasError('mobile') ? { borderColor: COLORS.negative } : undefined}
             >
-              <span className="prefix">+91</span>
+              <span className="prefix">+971</span>
               <input
                 id="mobile"
                 type="tel"
-                placeholder="9876543210"
+                placeholder="50 123 4567"
                 value={form.mobile}
                 onChange={handleChange('mobile')}
                 onBlur={handleBlur('mobile')}

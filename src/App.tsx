@@ -1,6 +1,6 @@
 // ============================================
-// GoldPlus — Main Application Router
-// A product by Urbanspire Group
+// YASS Gold & YASS Bullion — Main Application Router
+// A product by YASS Group, Dubai
 // ============================================
 
 import React from 'react';

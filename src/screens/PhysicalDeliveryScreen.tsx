@@ -1,7 +1,6 @@
 // ============================================
-// GoldPlus — Physical Gold Delivery Screen
-// Flow states: 'catalog' | 'address' | 'review' | 'success' | 'orders'
-// A product by Urbanspire Group
+// YASS Gold & YASS Bullion — Physical Gold Delivery Screen
+// A product by YASS Group, Dubai
 // ============================================
 
 import React, { useState } from 'react';
@@ -31,7 +30,7 @@ interface ProductItem {
 }
 
 const formatCurrency = (val: number): string =>
-  '₹' + Math.round(val).toLocaleString('en-IN');
+  'AED ' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const PhysicalDeliveryScreen: React.FC = () => {
   const { state, setState, navigate, showToast } = useApp();
@@ -44,15 +43,15 @@ const PhysicalDeliveryScreen: React.FC = () => {
     DELIVERY_PRODUCTS.coins[0]
   );
 
-  // Address form
+  // Address form (Dubai / UAE default)
   const [address, setAddress] = useState<DeliveryAddress>({
-    recipientName: state.user?.fullName || 'Rahul Sharma',
-    mobile: state.user?.mobile || '9876543210',
-    addressLine1: 'Flat 402, Sunshine Heights, MG Road',
-    addressLine2: 'Near Central Mall',
-    city: 'Mumbai',
-    state: 'Maharashtra',
-    pinCode: '400001',
+    recipientName: state.user?.fullName || 'Tariq Al Mansoori',
+    mobile: state.user?.mobile || '501234567',
+    addressLine1: 'Apartment 1804, Burj Crown',
+    addressLine2: 'Sheikh Mohammed bin Rashid Blvd, Downtown Dubai',
+    city: 'Dubai',
+    state: 'Dubai (UAE)',
+    pinCode: 'PO Box 12345',
   });
 
   const availableGrams = state.holdings.totalGrams;
@@ -63,11 +62,9 @@ const PhysicalDeliveryScreen: React.FC = () => {
   // Address validation
   const isAddressValid =
     address.recipientName.trim().length > 0 &&
-    address.mobile.trim().length === 10 &&
+    address.mobile.trim().length >= 9 &&
     address.addressLine1.trim().length > 0 &&
-    address.city.trim().length > 0 &&
-    address.state.trim().length > 0 &&
-    address.pinCode.trim().length === 6;
+    address.city.trim().length > 0;
 
   const handleConfirmOrder = () => {
     if (!isBalanceSufficient) {
@@ -344,13 +341,13 @@ const PhysicalDeliveryScreen: React.FC = () => {
         <div className="form-group">
           <label className="form-label">Mobile Number</label>
           <div className="form-input-prefix">
-            <span className="prefix">+91</span>
+            <span className="prefix">+971</span>
             <input
               type="tel"
-              maxLength={10}
+              maxLength={12}
               value={address.mobile}
               onChange={(e) => setAddress({ ...address, mobile: e.target.value.replace(/\D/g, '') })}
-              placeholder="10-digit mobile number"
+              placeholder="e.g. 50 123 4567"
             />
           </div>
         </div>
@@ -386,24 +383,23 @@ const PhysicalDeliveryScreen: React.FC = () => {
             />
           </div>
           <div className="form-group">
-            <label className="form-label">PIN Code</label>
+            <label className="form-label">PO Box / Area Code</label>
             <input
               className="form-input"
-              maxLength={6}
               value={address.pinCode}
-              onChange={(e) => setAddress({ ...address, pinCode: e.target.value.replace(/\D/g, '') })}
-              placeholder="6 digits"
+              onChange={(e) => setAddress({ ...address, pinCode: e.target.value })}
+              placeholder="e.g. PO Box 12345"
             />
           </div>
         </div>
 
         <div className="form-group">
-          <label className="form-label">State</label>
+          <label className="form-label">Emirate</label>
           <input
             className="form-input"
             value={address.state}
             onChange={(e) => setAddress({ ...address, state: e.target.value })}
-            placeholder="State"
+            placeholder="Dubai, Abu Dhabi, Sharjah, etc."
           />
         </div>
 

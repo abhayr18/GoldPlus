@@ -1,7 +1,6 @@
 // ============================================
-// GoldPlus — Transaction History Screen
-// Filterable by type (All, Buy, Sell, SIP) with detail drawer/modal
-// A product by Urbanspire Group
+// YASS Gold & YASS Bullion — Transaction History Screen
+// A product by YASS Group, Dubai
 // ============================================
 
 import React, { useState, useMemo } from 'react';
@@ -23,7 +22,7 @@ import type { Transaction } from '../types';
 type FilterType = 'all' | 'buy' | 'sell' | 'sip';
 
 const formatCurrency = (val: number): string =>
-  '₹' + Math.round(val).toLocaleString('en-IN');
+  'AED ' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const formatGrams = (val: number): string =>
   val.toFixed(4) + ' g';
@@ -193,7 +192,7 @@ const TransactionHistoryScreen: React.FC = () => {
             </div>
             <div className="summary-row">
               <span className="label">Applicable Rate</span>
-              <span className="value">₹{activeTxn.rate.toLocaleString('en-IN')}/g</span>
+              <span className="value">AED {activeTxn.rate.toFixed(2)}/g</span>
             </div>
             <div className="summary-row">
               <span className="label">Payment / Payout Method</span>

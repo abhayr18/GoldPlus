@@ -1,7 +1,6 @@
 // ============================================
-// GoldPlus — Portfolio Screen
-// Holdings & Transactions Views
-// A product by Urbanspire Group
+// YASS Gold & YASS Bullion — Portfolio Screen
+// A product by YASS Group, Dubai
 // ============================================
 
 import React, { useState, useMemo } from 'react';
@@ -11,7 +10,7 @@ import { DEMO_GOLD_RATE, COLORS } from '../constants';
 import type { Transaction } from '../types';
 
 const formatCurrency = (val: number): string =>
-  '₹' + Math.round(val).toLocaleString('en-IN');
+  'AED ' + Math.round(val).toLocaleString('en-US');
 
 const formatGrams = (val: number): string =>
   val.toFixed(4) + ' g';
@@ -50,7 +49,7 @@ const PortfolioScreen: React.FC = () => {
             My Portfolio
           </h1>
           <p style={{ fontSize: 13, color: COLORS.secondaryText, marginTop: 2 }}>
-            Real-time valuation of your 24K digital gold
+            Real-time valuation of your 24K 999.9 Dubai gold holdings
           </p>
         </div>
 

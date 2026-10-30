@@ -1,15 +1,17 @@
 // ============================================
-// GoldPlus — Type Definitions
-// A product by Urbanspire Group
+// YASS Gold & YASS Bullion — Type Definitions
+// A product by YASS Group, Dubai
 // ============================================
 
 export interface UserProfile {
   fullName: string;
   mobile: string;
+  countryCode?: string;
   email: string;
   avatar?: string;
   createdAt: string;
   kycStatus: 'pending' | 'verified' | 'rejected';
+  emiratesId?: string;
 }
 
 export interface GoldHolding {
@@ -69,13 +71,15 @@ export interface DeliveryAddress {
   city: string;
   state: string;
   pinCode: string;
+  deliveryOption?: 'home' | 'vault_pickup';
 }
 
 export interface BankAccount {
   id: string;
   bankName: string;
   accountNumber: string;
-  ifsc: string;
+  iban?: string;
+  ifsc?: string;
   holderName: string;
   isPrimary: boolean;
 }
@@ -119,4 +123,3 @@ export type Screen =
   | 'transactionDetail'
   | 'goldPriceDetail'
   | 'settings';
-

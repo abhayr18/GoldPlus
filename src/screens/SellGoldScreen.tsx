@@ -1,6 +1,6 @@
 // ============================================
-// GoldPlus — Sell Gold Screen
-// Three-step flow: Input → Review → Success
+// YASS Gold & YASS Bullion — Sell Gold Screen
+// A product by YASS Group, Dubai
 // ============================================
 
 import React, { useState, useMemo } from 'react';
@@ -13,7 +13,7 @@ type FlowState = 'input' | 'review' | 'success';
 
 // ---------- Local formatting helpers ----------
 const formatCurrency = (val: number): string =>
-  '₹' + val.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+  'AED ' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const formatGrams = (val: number): string =>
   val.toFixed(4) + ' g';
@@ -159,7 +159,7 @@ const SellGoldScreen: React.FC = () => {
             {formatCurrency(expectedAmount)}
           </div>
           <div style={{ fontSize: 12, color: COLORS.secondaryText, marginTop: 4 }}>
-            Based on current gold price (₹{DEMO_GOLD_RATE.toLocaleString('en-IN')}/g)
+            Based on current Dubai Gold Souk rate (AED {DEMO_GOLD_RATE.toFixed(2)}/g)
           </div>
         </div>
 
@@ -200,11 +200,11 @@ const SellGoldScreen: React.FC = () => {
 
           {/* Sell Rate */}
           <div className="summary-row">
-            <span className="label">Sell Rate</span>
+            <span className="label">Dubai Sell Rate</span>
             <span className="value">
-              ₹{DEMO_GOLD_RATE.toLocaleString('en-IN')}/g{' '}
+              AED {DEMO_GOLD_RATE.toFixed(2)}/g{' '}
               <span style={{ fontSize: 11, color: COLORS.secondaryText, fontWeight: 400 }}>
-                (Illustrative)
+                (DMCC)
               </span>
             </span>
           </div>
@@ -218,7 +218,7 @@ const SellGoldScreen: React.FC = () => {
           {/* Payout To */}
           <div className="summary-row">
             <span className="label">Payout To</span>
-            <span className="value">HDFC Bank ****6789</span>
+            <span className="value">Emirates NBD ****9821</span>
           </div>
         </div>
 

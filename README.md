@@ -1,83 +1,86 @@
-# GoldPlus — Digital Gold Mobile App Prototype
-> **A product prototype by Urbanspire Group**  
-> Temporary Consumer Brand: **GoldPlus**  
-> Tagline: *Save Today. Secure Tomorrow.*  
-> Descriptor: *Digital Gold & Savings*
+# YASS Gold & YASS Bullion — Dubai Digital Gold Mobile App Prototype
+> **A product prototype by YASS Group of Dubai**  
+> Brand: **YASS Gold** • **YASS Bullion**  
+> Tagline: *The Gold Standard of Dubai. Save & Invest with Confidence.*  
+> Descriptor: *Dubai Digital Gold & Physical Bullion*  
+> Currency: **AED (United Arab Emirates Dirham)**
 
 ---
 
 ## Overview
 
-**GoldPlus** is a high-fidelity, interactive digital gold fintech prototype designed for Indian consumers, inspired by leading platforms such as Gullak and SafeGold. Built as an end-to-end interactive client application, it demonstrates the full customer journey from onboarding to purchasing 24K digital gold, setting up a recurring Gold SIP, monitoring portfolio growth, selling gold, and requesting certified physical gold bullion delivery.
+**YASS Gold** is an ultra-luxury, institutional-grade digital gold and bullion application prototype designed for **YASS Group of Dubai**. Built for both UAE residents and global wealth investors, it enables clients to buy 24K 999.9 fine digital gold backed by physical bullion in certified Dubai vaults (Transguard & Brink's DMCC), schedule automated recurring Gold SIPs, track real-time Dubai Gold Souk market rates, and order physical delivery or lounge pickup of Dubai Good Delivery (DGD) minted bullion bars and coins.
 
-> **DEMO DATA NOTICE**: All gold prices, holdings, transaction IDs, payment methods, and delivery statuses in this prototype are simulated. No actual financial debits, bank transfers, or gold bullion custody operations are executed.
+> **DEMO DATA NOTICE**: All gold prices, holdings, transaction IDs, payment methods, and delivery statuses in this prototype are simulated for stakeholder review and demonstration. No actual financial debits, bank transfers, or gold bullion custody operations are executed.
 
 ---
 
 ## Key Features & Screen Catalog
 
-The prototype faithfully implements all ten reference screens from the design specification:
+The prototype implements all 10 key screens tailored to the Dubai bullion market:
 
-1. **Splash / Onboarding (`SplashScreen.tsx`)**:
-   - Dark charcoal luxury background with geometric gold emblem and gold wordmark.
-   - Core value proposition: *"Digital Gold for a Brighter Future"*.
-   - Feature pills: *Buy Gold*, *Sell Gold*, *Gold SIP*, *Redeem Gold*.
-   - Attributed footer: *A product by Urbanspire Group*.
+1. **Screen 1 — Splash / Onboarding (`SplashScreen.tsx`)**:
+   - Dark luxury charcoal background (`#171A1D`) with Dubai gold shield emblem and glow.
+   - Core proposition: *"Dubai Digital Gold for a Brighter Future"*.
+   - Feature pills: *Buy Gold*, *Sell Gold*, *Gold SIP*, *Redeem Bullion*.
+   - Attributed footer: *A product by YASS Group, Dubai*.
 
-2. **Sign Up / Registration (`SignupScreen.tsx`)**:
-   - Clean Indian fintech onboarding form.
-   - Validates full name and Indian mobile numbers (+91 with 10 digits).
-   - Social login demonstration controls & Terms agreement.
+2. **Screen 2 — Sign Up / Registration (`SignupScreen.tsx`)**:
+   - UAE-first onboarding form with `+971` mobile prefix.
+   - Real-time validation for UAE mobile numbers (`5X XXX XXXX`).
+   - Integration hooks for UAE PASS and decorative social sign-in.
 
-3. **Home / Dashboard (`DashboardScreen.tsx`)**:
-   - Time-aware user greeting (*Good Morning, Rahul 👋*).
-   - Live gold balance card displaying 24K digital gold holdings (0.5321 g / ₹12,460).
-   - Quick-action grid (*Buy Gold*, *Sell Gold*, *Start SIP*, *Redeem Gold*).
-   - Gold SIP promotional banner (*Build your future, one gram at a time*).
-   - Live Gold Price quote card with green trendline (Illustrative rate: ₹7,382/g).
-   - Recent activity list with real-time updates.
+3. **Screen 3 — Home / Dashboard (`DashboardScreen.tsx`)**:
+   - Personalized time-aware greeting (*"Good Morning, Tariq 👋"*).
+   - High-contrast gold balance card showing 24K 999.9 Dubai Fine Gold holdings (`39.1209 g` / `AED 12,460.00`).
+   - Quick-action grid (*Buy Gold*, *Sell Gold*, *Gold SIP*, *Redeem Bullion*).
+   - YASS Bullion promotional banner (*"Build your future, one gram at a time"*).
+   - Live Dubai Gold Rate quote card with green trendline (`AED 318.50/g` DMCC benchmark).
+   - Recent activity ledger.
 
-4. **Buy Gold (`BuyGoldScreen.tsx`)**:
-   - Dual-input mode: By Amount (₹) or By Weight (g) with automatic cross-calculation.
-   - Quick amount chips (₹1,000, ₹2,000, ₹5,000, ₹10,000).
-   - Payment method selection (UPI with instant check indicator, Bank Account).
-   - Order review with breakdown, followed by simulated purchase confirmation and automatic vault balance update.
+4. **Screen 4 — Buy Gold (`BuyGoldScreen.tsx`)**:
+   - Dual-input mode: By Amount (AED) or By Weight (g) with instant cross-conversion.
+   - Quick amount chips (AED 500, AED 1,000, AED 2,500, AED 5,000, AED 10,000).
+   - UAE Payment methods: **Aani Instant Pay (UAE IPP)**, **Emirates NBD Bank**, **Apple Pay / Visa / Mastercard**.
+   - Multi-step flow: Amount Input → Order Review Breakdown → Success Screen → Immediate vault holdings update.
 
-5. **Sell Gold (`SellGoldScreen.tsx`)**:
-   - Real-time vault balance check and valuation.
+5. **Screen 5 — Sell Gold (`SellGoldScreen.tsx`)**:
+   - Live vault balance check and Dubai market valuation.
    - Percentage sell presets (25%, 50%, 75%, Max).
-   - Instant expected payout calculation with bank account credit confirmation.
+   - Instant expected payout calculation in AED with transfer to UAE Bank (Emirates NBD).
 
-6. **Gold SIP (`SIPScreen.tsx`)**:
+6. **Screen 6 — Gold SIP (`SIPScreen.tsx`)**:
    - Recurring frequencies: Weekly, Monthly, Quarterly.
-   - Flexible installment selector with quick chips.
+   - Flexible AED installment selector with quick chips.
    - Full SIP management dashboard: view active plans, next debit dates, pause/resume, and cancellation modal.
 
-7. **My Portfolio (`PortfolioScreen.tsx`)**:
-   - Total Gold, Current Valuation, Invested Amount, and Unrealised Gain/Loss (+11.2%).
-   - Visual allocation donut chart (Digital Gold vs. SIP-accumulated Gold).
-   - Holdings breakdown and detailed transaction list.
+7. **Screen 7 — My Portfolio (`PortfolioScreen.tsx`)**:
+   - Total Gold, Current Valuation in AED, Invested Amount, and Unrealised Gain/Loss (+11.2%).
+   - Visual allocation donut chart (Digital Gold vs. SIP-accumulated Bullion).
+   - Asset breakdown and chronological transaction ledger.
 
-8. **Transaction History (`TransactionHistoryScreen.tsx`)**:
+8. **Screen 8 — Transaction History (`TransactionHistoryScreen.tsx`)**:
    - Filter pills (*All*, *Buy*, *Sell*, *SIP*).
-   - Chronological ledger with positive (green) and negative (red) quantity indicators.
+   - Colored debit/credit indicators (positive green for buys/SIPs, negative red for sales/redemptions).
    - Interactive transaction modal with full details and reference ID copy capability.
 
-9. **Physical Gold Delivery (`PhysicalDeliveryScreen.tsx`)**:
-   - Catalog of 24K 99.9% pure certified Coins and Bars (1g, 5g, 10g, 20g).
+9. **Screen 9 — Physical Bullion Delivery (`PhysicalDeliveryScreen.tsx`)**:
+   - Catalog of 24K 999.9 pure certified Coins and Bars (1g, 5g, 10g, 20g, 50g, 100g).
    - Real-time vault balance validation before redemption.
-   - Doorstep delivery address form with PIN code validation.
-   - Interactive 4-step delivery status tracking timeline (*Request Created → Processing → Dispatched → Doorstep Delivery*).
+   - Doorstep delivery address form with UAE Emirates and PO Box validation.
+   - Transguard / Brink's armoured courier logistics with 4-step delivery status tracking timeline (*Request Created → Processing & Minting → Dispatched → Doorstep Delivery*).
 
-10. **Profile & More (`ProfileScreen.tsx`)**:
-    - User avatar and verified status badge for Rahul Sharma.
-    - KYC Verification status (Simulated PAN & Aadhaar e-KYC).
-    - Linked bank accounts (HDFC Bank).
-    - Notification preferences (Price alerts, SIP reminders).
-    - Help & Support FAQs with contact form.
-    - About Us with official Urbanspire Group parent company attribution.
-    - Terms & Conditions and Privacy Policy.
-    - **Reset Demo Data** button to quickly restore baseline data before presentations.
+10. **Screen 10 — Profile & More (`ProfileScreen.tsx`)**:
+    - User avatar and verified badge for Tariq Al Mansoori.
+    - Simulated UAE PASS & Emirates ID verification status.
+    - Linked bank accounts (Emirates NBD Dubai, First Abu Dhabi Bank - FAB).
+    - Notification preferences (Dubai rate alerts, SIP reminders).
+    - Help & Support FAQs with YASS Group Dubai contact details (`contact@yassgroup.ae`).
+    - About Us modal with parent company attribution (**YASS Group of Dubai**).
+    - **Reset Demo Data** button to quickly restore baseline data before stakeholder meetings.
+
+11. **Live Dubai Gold Rate Detail (`GoldPriceDetailScreen.tsx`)**:
+    - Interactive timeframe chart (1D, 1W, 1M, 1Y), Dubai Good Delivery (DGD) standards, 0% UAE VAT investment precious metal specifications, and instant buy/sell shortcuts.
 
 ---
 
@@ -94,49 +97,21 @@ The prototype faithfully implements all ten reference screens from the design sp
   - Deep Navy: `#17232D`
   - Ivory Background: `#F7F5EF`
   - Positive Green: `#16865B`
-- **State & Persistence**: React Context API + LocalStorage state persistence
+- **State & Persistence**: React Context API + LocalStorage state persistence (`yass_gold_state`)
 
 ---
 
 ## Setup & Running Locally
 
-### 1. Prerequisites
-- Node.js (v18.0 or newer recommended)
-- npm (v9.0 or newer)
-
-### 2. Installation
 ```bash
-# Navigate to the project root
+# Navigate to the project directory
 cd d:\GOLD
 
-# Install dependencies
+# Install dependencies (if not already installed)
 npm install
-```
 
-### 3. Development Server
-Start the local development server:
-```bash
+# Start development server
 npm run dev
 ```
-Open your browser and navigate to `http://localhost:5173`.
 
-### 4. Production Build
-To create a production-ready bundle:
-```bash
-npm run build
-```
-The optimized static build will be generated in the `dist/` directory.
-
----
-
-## Demo Test Journeys
-
-For stakeholder presentations, the prototype includes pre-configured journeys:
-
-- **Journey A (Onboarding)**: Splash screen → Tap "Get Started" → Enter mobile number → Continue to Dashboard.
-- **Journey B (Buy Gold)**: Dashboard → Quick Action "Buy Gold" → Select ₹1,000 → Proceed to Pay → Confirm Demo Purchase → Observe updated balance (₹13,460).
-- **Journey C (Sell Gold)**: Dashboard → "Sell Gold" → Choose "25%" → Review → Confirm Sale → Observe vault reduction and transaction ledger entry.
-- **Journey D (Gold SIP)**: Dashboard → Promo Card "Start Saving" → Choose Monthly ₹1,000 → Confirm SIP → View active SIP card with pause/resume controls.
-- **Journey E (Portfolio & Ledger)**: Bottom nav "Portfolio" → Switch between Holdings Breakdown and Transactions → Tap any row for full reference modal.
-- **Journey F (Physical Delivery)**: Dashboard → Quick Action "Redeem Gold" → Select 1g 24K Coin → Enter Address → Place Order → View 4-stage tracking timeline.
-- **Journey G (Brand Attribution & Reset)**: Bottom nav "More" → "About Us" to verify Urbanspire Group attribution → "Reset Demo Data" to restore pristine presentation state.
+Open your browser at `http://localhost:5173`.

@@ -1,7 +1,6 @@
 // ============================================
-// GoldPlus — App Shell & Responsive Navigation
-// Desktop Sidebar + Mobile Bottom Navigation
-// A product by Urbanspire Group
+// YASS Gold & YASS Bullion — App Shell & Responsive Navigation
+// A product by YASS Group, Dubai
 // ============================================
 
 import React from 'react';

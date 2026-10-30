@@ -1,7 +1,6 @@
 // ============================================
-// GoldPlus — Dashboard / Home Screen
-// Premium digital gold fintech dashboard
-// A product by Urbanspire Group
+// YASS Gold & YASS Bullion — Dashboard / Home Screen
+// A product by YASS Group, Dubai
 // ============================================
 
 import React, { useMemo } from 'react';
@@ -23,11 +22,10 @@ import type { Transaction } from '../types';
 // Helpers
 // ============================================
 
-/** Format a number as Indian-style ₹ currency (e.g. ₹3,92,818) */
+/** Format a number as UAE Dirhams (AED) */
 function formatCurrency(value: number): string {
   const rounded = Math.round(value * 100) / 100;
-  // Use en-IN locale for comma grouping (lakh-crore style)
-  return '₹' + rounded.toLocaleString('en-IN', {
+  return 'AED ' + rounded.toLocaleString('en-US', {
     minimumFractionDigits: rounded % 1 !== 0 ? 2 : 0,
     maximumFractionDigits: 2,
   });
@@ -84,7 +82,7 @@ function txnLabel(type: Transaction['type']): string {
 
 const DashboardScreen: React.FC = () => {
   const { state, navigate } = useApp();
-  const userName = state.user?.fullName || 'Rahul';
+  const userName = state.user?.fullName || 'Tariq';
   const firstName = userName.split(' ')[0];
 
   // Derived values
@@ -102,8 +100,8 @@ const DashboardScreen: React.FC = () => {
   const quickActions = [
     { label: 'Buy Gold',    icon: ArrowDownCircle, screen: 'buy' as const },
     { label: 'Sell Gold',   icon: ArrowUpCircle,   screen: 'sell' as const },
-    { label: 'Start SIP',   icon: RefreshCw,       screen: 'sip' as const },
-    { label: 'Redeem Gold', icon: Gift,            screen: 'delivery' as const },
+    { label: 'Gold SIP',    icon: RefreshCw,       screen: 'sip' as const },
+    { label: 'Redeem Bullion', icon: Gift,         screen: 'delivery' as const },
   ];
 
   return (
@@ -146,7 +144,7 @@ const DashboardScreen: React.FC = () => {
                 <span style={styles.goldGrams}>
                   {formatGrams(state.holdings.totalGrams)} g
                 </span>
-                <span style={styles.purityBadge}>24K Digital Gold</span>
+                <span style={styles.purityBadge}>24K 999.9 Dubai Gold</span>
               </div>
 
               {/* Illustrative gain indicator */}
@@ -241,11 +239,11 @@ const DashboardScreen: React.FC = () => {
           <div style={styles.livePriceRow}>
             <div style={{ flex: 1 }}>
               <div style={styles.livePriceLabelRow}>
-                <span style={styles.livePriceLabel}>Live Gold Price</span>
-                <span style={styles.livePriceTag}>(Illustrative)</span>
+                <span style={styles.livePriceLabel}>Live Dubai Gold Rate</span>
+                <span style={styles.livePriceTag}>(DMCC Reference)</span>
               </div>
               <h3 style={styles.livePriceAmount}>
-                ₹{DEMO_GOLD_RATE.toLocaleString('en-IN')}/g
+                AED {DEMO_GOLD_RATE.toFixed(2)}/g
               </h3>
               <div style={styles.livePriceChange}>
                 <TrendingUp size={13} />

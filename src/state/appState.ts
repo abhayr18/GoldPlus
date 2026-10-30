@@ -1,12 +1,13 @@
 // ============================================
-// GoldPlus — Application State Manager
+// YASS Gold & YASS Bullion — Application State Manager
 // Manages all demo state with localStorage persistence
+// A product by YASS Group, Dubai
 // ============================================
 
 import type { UserProfile, GoldHolding, Transaction, SIPRecord, DeliveryOrder, BankAccount, NotificationPreferences, Screen } from '../types';
 import { DEMO_USER, DEMO_INITIAL_HOLDINGS, INITIAL_TRANSACTIONS, DEMO_GOLD_RATE } from '../constants';
 
-const STORAGE_KEY = 'goldplus_demo_state';
+const STORAGE_KEY = 'yass_gold_state';
 
 export interface AppState {
   isLoggedIn: boolean;
@@ -33,29 +34,37 @@ function getDefaultState(): AppState {
     },
     sips: [
       {
-        id: 'SIP-GP-001',
-        nickname: 'Monthly Gold',
+        id: 'SIP-YASS-001',
+        nickname: 'Dubai Gold Accumulator',
         amount: 1000,
         frequency: 'monthly',
         status: 'active',
         nextDate: getNextSIPDate(),
         startDate: '2025-03-01',
-        paymentMethod: 'UPI',
+        paymentMethod: 'UAE Direct Debit',
         totalInstallments: 12,
         completedInstallments: 3,
-        totalGoldAccumulated: 0.1000 * 3,
-        totalAmountInvested: 750 * 3,
+        totalGoldAccumulated: 3.1446 * 3,
+        totalAmountInvested: 1000 * 3,
       },
     ],
     deliveryOrders: [],
     bankAccounts: [
       {
         id: 'BA-001',
-        bankName: 'HDFC Bank',
-        accountNumber: '****6789',
-        ifsc: 'HDFC0001234',
-        holderName: 'Rahul Sharma',
+        bankName: 'Emirates NBD (Dubai)',
+        accountNumber: '****9821',
+        iban: 'AE290260000123456789012',
+        holderName: 'Tariq Al Mansoori',
         isPrimary: true,
+      },
+      {
+        id: 'BA-002',
+        bankName: 'First Abu Dhabi Bank (FAB)',
+        accountNumber: '****4412',
+        iban: 'AE030330000987654321098',
+        holderName: 'Tariq Al Mansoori',
+        isPrimary: false,
       },
     ],
     notificationPrefs: {
@@ -82,7 +91,6 @@ export function loadState(): AppState {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
       const parsed = JSON.parse(stored);
-      // Ensure all fields exist (for forward compatibility)
       return { ...getDefaultState(), ...parsed };
     }
   } catch (e) {
@@ -112,15 +120,15 @@ export function generateTransactionId(): string {
   const now = new Date();
   const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '');
   const rand = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-  return `TXN-GP-${dateStr}-${rand}`;
+  return `TXN-YASS-${dateStr}-${rand}`;
 }
 
 export function generateSIPId(): string {
-  return `SIP-GP-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
+  return `SIP-YASS-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
 }
 
 export function generateDeliveryId(): string {
-  return `DEL-GP-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
+  return `DEL-YASS-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
 }
 
 export function buyGold(state: AppState, amount: number, paymentMethod: string): AppState {
@@ -161,7 +169,7 @@ export function sellGold(state: AppState, grams: number): AppState {
     amount: amount,
     rate: rate,
     status: 'completed',
-    paymentMethod: 'Bank Account',
+    paymentMethod: 'Emirates NBD Transfer',
     reference: generateTransactionId(),
   };
 
@@ -184,7 +192,7 @@ export function createSIP(
 ): AppState {
   const sip: SIPRecord = {
     id: generateSIPId(),
-    nickname: nickname || `${frequency.charAt(0).toUpperCase() + frequency.slice(1)} Gold SIP`,
+    nickname: nickname || `${frequency.charAt(0).toUpperCase() + frequency.slice(1)} YASS Gold SIP`,
     amount,
     frequency,
     status: 'active',
@@ -234,7 +242,7 @@ export function createDeliveryOrder(
     address,
     status: 'created',
     createdAt: new Date().toISOString(),
-    estimatedDelivery: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+    estimatedDelivery: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
   };
 
   // Deduct gold from holdings
@@ -266,9 +274,11 @@ export function loginUser(state: AppState, fullName: string, mobile: string, ema
   const user: UserProfile = {
     fullName: fullName || DEMO_USER.fullName,
     mobile: mobile || DEMO_USER.mobile,
+    countryCode: '+971',
     email: email || DEMO_USER.email,
     createdAt: new Date().toISOString(),
     kycStatus: 'verified',
+    emiratesId: DEMO_USER.emiratesId,
   };
 
   return {
@@ -305,4 +315,3 @@ export function goBack(state: AppState): AppState {
     currentScreen: prev,
   };
 }
-

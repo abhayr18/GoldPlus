@@ -1,7 +1,6 @@
 // ============================================
-// GoldPlus — Gold Price Detail Screen
-// Historical trend, 24K purity specifications & market insights
-// A product by Urbanspire Group
+// YASS Gold & YASS Bullion — Gold Price Detail Screen
+// A product by YASS Group, Dubai
 // ============================================
 
 import React, { useState } from 'react';
@@ -22,20 +21,20 @@ const GoldPriceDetailScreen: React.FC = () => {
           <button className="screen-header-back" onClick={back} aria-label="Back">
             <ArrowLeft size={18} />
           </button>
-          <h2 className="screen-header-title">Live Gold Rate</h2>
+          <h2 className="screen-header-title">Live Dubai Gold Rate</h2>
         </div>
 
         <div style={{ padding: '0 4px', marginTop: 16 }}>
           {/* Main Price Card */}
           <div className="card" style={{ marginBottom: 16, textAlign: 'center', padding: '24px 16px' }}>
             <div style={{ fontSize: 13, color: COLORS.secondaryText, textTransform: 'uppercase', letterSpacing: 0.5 }}>
-              24K 99.9% Digital Gold
+              24K 999.9 Fine Gold • Dubai Good Delivery
             </div>
             <div style={{ fontSize: 36, fontWeight: 700, color: COLORS.mainText, margin: '8px 0' }}>
-              ₹{DEMO_GOLD_RATE.toLocaleString('en-IN')}<span style={{ fontSize: 18, color: COLORS.secondaryText }}> / gram</span>
+              AED {DEMO_GOLD_RATE.toFixed(2)}<span style={{ fontSize: 18, color: COLORS.secondaryText }}> / gram</span>
             </div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: COLORS.positive, fontSize: 14, fontWeight: 600 }}>
-              <TrendingUp size={16} /> +₹48.50 (+0.66%) today
+              <TrendingUp size={16} /> +AED 2.40 (+0.75%) today
             </div>
 
             {/* Timeframe selector */}
@@ -74,37 +73,41 @@ const GoldPriceDetailScreen: React.FC = () => {
             </div>
 
             <div style={{ fontSize: 11, color: COLORS.secondaryText, marginTop: 8 }}>
-              Rates are updated in real-time linked to live MCX reference quotes (Illustrative Demo)
+              Linked directly to live Dubai Gold Souk & DMCC benchmark bullion rates
             </div>
           </div>
 
           {/* Key Specifications */}
           <div className="card" style={{ marginBottom: 16 }}>
             <h3 style={{ fontSize: 15, fontWeight: 600, color: COLORS.mainText, marginBottom: 12 }}>
-              Gold Quality & Standards
+              Dubai Bullion Standards
             </h3>
             <div className="summary-row">
               <span className="label">Purity</span>
-              <span className="value">24 Karat (99.9% Pure)</span>
+              <span className="value">24 Karat (999.9 Fine Gold)</span>
             </div>
             <div className="summary-row">
-              <span className="label">Storage Vault</span>
-              <span className="value">Brink's / Sequel Secure Vaults</span>
+              <span className="label">Standard</span>
+              <span className="value">Dubai Good Delivery (DGD)</span>
+            </div>
+            <div className="summary-row">
+              <span className="label">Storage Vaults</span>
+              <span className="value">Transguard & Brink's DMCC Dubai</span>
             </div>
             <div className="summary-row">
               <span className="label">Insurance</span>
-              <span className="value" style={{ color: COLORS.positive }}>100% Insured</span>
+              <span className="value" style={{ color: COLORS.positive }}>100% Lloyds Underwritten</span>
             </div>
             <div className="summary-row">
-              <span className="label">GST Rate</span>
-              <span className="value">3% Inclusive in displayed quote</span>
+              <span className="label">UAE VAT</span>
+              <span className="value" style={{ color: COLORS.positive }}>0% (Investment Precious Metal)</span>
             </div>
           </div>
 
           {/* Actions */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             <button className="btn btn-primary" onClick={() => navigate('buy')}>
-              Buy at ₹{DEMO_GOLD_RATE}/g
+              Buy at AED {DEMO_GOLD_RATE.toFixed(2)}/g
             </button>
             <button className="btn btn-secondary" onClick={() => navigate('sell')}>
               Sell Gold

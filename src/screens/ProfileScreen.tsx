@@ -1,7 +1,6 @@
 // ============================================
-// GoldPlus — Profile / More Screen
-// User info, KYC, Bank accounts, Help, About Us (Urbanspire Group), Terms, Reset Demo, Logout
-// A product by Urbanspire Group
+// YASS Gold & YASS Bullion — Profile / More Screen
+// A product by YASS Group, Dubai
 // ============================================
 
 import React, { useState } from 'react';
@@ -44,9 +43,9 @@ const ProfileScreen: React.FC = () => {
   const [notifState, setNotifState] = useState(state.notificationPrefs);
 
   const user = state.user || {
-    fullName: 'Rahul Sharma',
-    mobile: '9876543210',
-    email: 'rahul@example.com',
+    fullName: 'Tariq Al Mansoori',
+    mobile: '501234567',
+    email: 'tariq.mansoori@yassgroup.ae',
     kycStatus: 'verified' as const,
   };
 
@@ -115,7 +114,7 @@ const ProfileScreen: React.FC = () => {
                 {user.fullName}
               </h2>
               <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginTop: 2 }}>
-                +91 {user.mobile}
+                +971 {user.mobile}
               </div>
               <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 2 }}>
                 {user.email}
@@ -171,7 +170,7 @@ const ProfileScreen: React.FC = () => {
             </div>
             <div className="profile-menu-label">Linked Bank Accounts</div>
             <span style={{ fontSize: 12, color: COLORS.secondaryText, marginRight: 8 }}>
-              HDFC Bank
+              Emirates NBD
             </span>
             <ChevronRight size={18} className="profile-menu-chevron" />
           </div>
@@ -281,24 +280,24 @@ const ProfileScreen: React.FC = () => {
                 <CheckCircle size={28} />
               </div>
               <div style={{ fontSize: 16, fontWeight: 700, color: COLORS.positive }}>
-                Full KYC Completed (Simulated)
+                UAE PASS Verified (Simulated)
               </div>
               <div style={{ fontSize: 12, color: COLORS.secondaryText, marginTop: 4 }}>
-                PAN & Aadhaar linked for unlimited digital gold transactions
+                Emirates ID linked for unlimited digital gold & physical bullion operations
               </div>
             </div>
 
             <div className="summary-row">
-              <span className="label">PAN Status</span>
-              <span className="value">ABCDE1234F (Verified)</span>
+              <span className="label">Emirates ID</span>
+              <span className="value">784-1988-1234567-1 (Verified)</span>
             </div>
             <div className="summary-row">
-              <span className="label">Aadhaar e-KYC</span>
-              <span className="value">XXXX-XXXX-8921 (Verified)</span>
+              <span className="label">UAE PASS Tier</span>
+              <span className="value">SOP3 Qualified Signature</span>
             </div>
             <div className="summary-row">
-              <span className="label">Holding Limit</span>
-              <span className="value" style={{ color: COLORS.positive }}>Unlimited</span>
+              <span className="label">Bullion Trading Limit</span>
+              <span className="value" style={{ color: COLORS.positive }}>Unlimited (DMCC Compliant)</span>
             </div>
 
             <div className="demo-banner" style={{ marginTop: 16 }}>
@@ -331,7 +330,7 @@ const ProfileScreen: React.FC = () => {
                       {acc.bankName}
                     </div>
                     <div style={{ fontSize: 13, color: COLORS.secondaryText, marginTop: 2 }}>
-                      A/C: {acc.accountNumber} • IFSC: {acc.ifsc}
+                      IBAN: {acc.iban || acc.accountNumber}
                     </div>
                     <div style={{ fontSize: 12, color: COLORS.secondaryText }}>
                       Holder: {acc.holderName}
@@ -430,24 +429,24 @@ const ProfileScreen: React.FC = () => {
                 Frequently Asked Questions
               </h4>
               <div style={{ fontSize: 13, color: COLORS.mainText, marginBottom: 6, fontWeight: 600 }}>
-                Q: What is 24K Digital Gold?
+                Q: What is YASS Gold?
               </div>
               <div style={{ fontSize: 12, color: COLORS.secondaryText, marginBottom: 12 }}>
-                Digital gold allows you to buy 99.9% pure 24K gold in fractional amounts starting from just ₹100, stored in secure vaults.
+                YASS Gold is a premier digital bullion application by YASS Group of Dubai, allowing institutional and retail clients to trade 24K 999.9 fine gold backed 1:1 by physical bullion vaulted in Dubai.
               </div>
 
               <div style={{ fontSize: 13, color: COLORS.mainText, marginBottom: 6, fontWeight: 600 }}>
-                Q: Can I convert to physical gold?
+                Q: Where is the physical gold stored?
               </div>
               <div style={{ fontSize: 12, color: COLORS.secondaryText, marginBottom: 12 }}>
-                Yes, you can request doorstep delivery of BIS-hallmarked 24K coins and bars through the Physical Delivery section.
+                All physical bullion is stored in ultra-secure, fully insured Dubai vaults (Transguard / Brink's DMCC Vaults) and can be redeemed for physical doorstep delivery or lounge collection.
               </div>
             </div>
 
             <div style={{ padding: 14, background: COLORS.ivoryBg, borderRadius: 12 }}>
-              <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.mainText }}>Need support with your demo?</div>
+              <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.mainText }}>Contact YASS Group</div>
               <div style={{ fontSize: 12, color: COLORS.secondaryText, marginTop: 4 }}>
-                Contact Urbanspire Group demo representatives at demo@urbanspire.example.com
+                YASS Group of Dubai • Almas Tower, JLT / Deira Gold Souk, Dubai, UAE • contact@yassgroup.ae
               </div>
             </div>
 
@@ -486,18 +485,18 @@ const ProfileScreen: React.FC = () => {
 
             <div className="card" style={{ background: COLORS.ivoryBg, marginBottom: 16 }}>
               <div style={{ fontSize: 13, fontWeight: 600, color: COLORS.mainText, marginBottom: 4 }}>
-                Parent Company
+                Parent Group
               </div>
               <div style={{ fontSize: 16, fontWeight: 700, color: COLORS.primaryGold }}>
                 {BRAND.parentCompany}
               </div>
               <p style={{ fontSize: 13, color: COLORS.secondaryText, marginTop: 8, lineHeight: 1.5 }}>
-                {BRAND.attribution}. GoldPlus is a digital gold savings and bullion redemption platform prototype engineered for Indian consumers seeking accessible, modern wealth preservation.
+                {BRAND.attribution}. Headquartered in Dubai, UAE, YASS Group operates premier commodities, gold trading, and fintech wealth management solutions. YASS Gold and YASS Bullion bring the integrity of Dubai's gold trading legacy into an effortless, institutional-grade mobile experience.
               </p>
             </div>
 
             <div className="demo-banner">
-              DEMONSTRATION PROTOTYPE — NO COMMERCIAL TRANSACTIONS EXECUTED
+              DUBAI BULLION DEMONSTRATION PROTOTYPE — YASS GROUP
             </div>
 
             <button className="btn btn-secondary" onClick={() => setSubView('none')}>
@@ -518,9 +517,9 @@ const ProfileScreen: React.FC = () => {
               </button>
             </div>
             <div style={{ fontSize: 13, color: COLORS.secondaryText, maxHeight: 300, overflowY: 'auto', lineHeight: 1.6, paddingRight: 8 }}>
-              <p><strong>1. Prototype Nature:</strong> This mobile application interface is an interactive demonstration prototype built by Urbanspire Group.</p>
-              <p style={{ marginTop: 8 }}><strong>2. No Financial Undertaking:</strong> No real payments, currency settlements, or bullion transfers are executed. Prices displayed are illustrative reference figures (₹{DEMO_GOLD_RATE}/g).</p>
-              <p style={{ marginTop: 8 }}><strong>3. Custody & Fulfillment:</strong> Any references to vaulting or courier logistics are conceptual representations of product architecture.</p>
+              <p><strong>1. Prototype Nature:</strong> This mobile application interface is an interactive demonstration prototype built for YASS Group of Dubai.</p>
+              <p style={{ marginTop: 8 }}><strong>2. Bullion & Reference Rates:</strong> Indicative gold rates (AED {DEMO_GOLD_RATE.toFixed(2)}/g) reflect illustrative Dubai Gold Souk / DMCC bullion pricing. No real monetary transactions or bullion transfers are executed in prototype mode.</p>
+              <p style={{ marginTop: 8 }}><strong>3. Vaulting & Custody:</strong> Conceptual architecture features Brink's DMCC and Transguard Dubai high-security vaulting.</p>
             </div>
             <button className="btn btn-secondary" style={{ marginTop: 16 }} onClick={() => setSubView('none')}>
               Close

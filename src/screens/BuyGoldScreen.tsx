@@ -1,17 +1,17 @@
 // ============================================
-// GoldPlus — Buy Gold Screen
-// Three-step flow: Input → Review → Success
+// YASS Gold & YASS Bullion — Buy Gold Screen
+// A product by YASS Group, Dubai
 // ============================================
 
 import React, { useState, useMemo } from 'react';
-import { ArrowLeft, Check, Smartphone, Building2 } from 'lucide-react';
+import { ArrowLeft, Check, Smartphone, Building2, CreditCard } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
 import { buyGold, generateTransactionId } from '../state/appState';
 import { DEMO_GOLD_RATE, COLORS } from '../constants';
 
 type FlowState = 'input' | 'review' | 'success';
 type InputMode = 'amount' | 'weight';
-type PaymentMethod = 'UPI' | 'Bank Account';
+type PaymentMethod = 'Aani Instant Pay' | 'Emirates NBD Bank' | 'Apple Pay / Card';
 
 const BuyGoldScreen: React.FC = () => {
   const { state, setState, navigate, back, showToast } = useApp();
@@ -21,7 +21,7 @@ const BuyGoldScreen: React.FC = () => {
   const [inputMode, setInputMode] = useState<InputMode>('amount');
   const [amountStr, setAmountStr] = useState<string>('');
   const [weightStr, setWeightStr] = useState<string>('');
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('UPI');
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('Aani Instant Pay');
   const [selectedChip, setSelectedChip] = useState<number | null>(null);
   const [reference] = useState<string>(generateTransactionId());
 
@@ -43,13 +43,13 @@ const BuyGoldScreen: React.FC = () => {
 
   /** Whether the CTA should be enabled */
   const isValid = useMemo(() => {
-    if (inputMode === 'amount') return amount >= 100;
+    if (inputMode === 'amount') return amount >= 50;
     return weight > 0;
   }, [inputMode, amount, weight]);
 
   // ---------- Helpers ----------
   const formatCurrency = (val: number): string =>
-    '₹' + val.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+    'AED ' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   const formatGrams = (val: number): string =>
     val.toFixed(4) + ' g';
@@ -60,8 +60,8 @@ const BuyGoldScreen: React.FC = () => {
     setAmountStr(value.toString());
   };
 
-  // Percentage chip for weight mode (based on current holdings)
-  const quickAmounts = [1000, 2000, 5000, 10000];
+  // Quick selection chips
+  const quickAmounts = [500, 1000, 2500, 5000, 10000];
 
   // Proceed to review
   const handleProceed = () => {
@@ -100,7 +100,7 @@ const BuyGoldScreen: React.FC = () => {
             className={`segmented-item ${inputMode === 'amount' ? 'active' : ''}`}
             onClick={() => { setInputMode('amount'); setWeightStr(''); setSelectedChip(null); }}
           >
-            Amount (₹)
+            Amount (AED)
           </button>
           <button
             className={`segmented-item ${inputMode === 'weight' ? 'active' : ''}`}
@@ -115,7 +115,7 @@ const BuyGoldScreen: React.FC = () => {
           <>
             {/* Large amount display */}
             <div className="amount-display">
-              <span className="currency">₹ </span>
+              <span className="currency">AED </span>
               {amountStr || '0'}
             </div>
 
@@ -124,18 +124,18 @@ const BuyGoldScreen: React.FC = () => {
               <input
                 type="number"
                 className="form-input"
-                placeholder="Enter amount (min ₹100)"
+                placeholder="Enter amount (min AED 50)"
                 value={amountStr}
-                min={100}
+                min={50}
                 onChange={(e) => {
                   setAmountStr(e.target.value);
                   setSelectedChip(null);
                 }}
                 style={{ textAlign: 'center', fontSize: 16 }}
               />
-              {amountStr !== '' && amount < 100 && (
+              {amountStr !== '' && amount < 50 && (
                 <div className="form-error" style={{ textAlign: 'center', marginTop: 6 }}>
-                  Minimum amount is ₹100
+                  Minimum amount is AED 50
                 </div>
               )}
             </div>
@@ -148,7 +148,7 @@ const BuyGoldScreen: React.FC = () => {
                   className={`chip ${selectedChip === val ? 'active' : ''}`}
                   onClick={() => handleChip(val)}
                 >
-                  ₹{val.toLocaleString('en-IN')}
+                  AED {val.toLocaleString('en-US')}
                 </button>
               ))}
             </div>
@@ -190,7 +190,7 @@ const BuyGoldScreen: React.FC = () => {
                 {goldGrams.toFixed(4)} g
               </div>
               <div style={{ fontSize: 12, color: COLORS.secondaryText, marginTop: 4 }}>
-                Gold price: ₹{DEMO_GOLD_RATE.toLocaleString('en-IN')}/g
+                Dubai rate: AED {DEMO_GOLD_RATE.toFixed(2)}/g (24K 999.9)
               </div>
             </div>
             {/* Small gold coin decoration */}
@@ -204,7 +204,7 @@ const BuyGoldScreen: React.FC = () => {
               fontStyle: 'italic',
             }}
           >
-            (Illustrative quote)
+            (DMCC Dubai Gold Souk Reference Quote)
           </div>
         </div>
 
@@ -221,38 +221,56 @@ const BuyGoldScreen: React.FC = () => {
             Payment Method
           </div>
 
-          {/* UPI option */}
+          {/* Aani option */}
           <div
-            className={`payment-card ${paymentMethod === 'UPI' ? 'selected' : ''}`}
+            className={`payment-card ${paymentMethod === 'Aani Instant Pay' ? 'selected' : ''}`}
             style={{ marginBottom: 10 }}
-            onClick={() => setPaymentMethod('UPI')}
+            onClick={() => setPaymentMethod('Aani Instant Pay')}
           >
             <div className="payment-card-icon">
               <Smartphone size={18} />
             </div>
             <div className="payment-card-info">
-              <div className="payment-card-name">UPI</div>
-              <div className="payment-card-desc">Pay via any UPI app</div>
+              <div className="payment-card-name">Aani Instant Pay</div>
+              <div className="payment-card-desc">UAE Central Bank instant payment</div>
             </div>
             <div className="payment-card-check">
-              {paymentMethod === 'UPI' && <Check size={14} />}
+              {paymentMethod === 'Aani Instant Pay' && <Check size={14} />}
             </div>
           </div>
 
           {/* Bank Account option */}
           <div
-            className={`payment-card ${paymentMethod === 'Bank Account' ? 'selected' : ''}`}
-            onClick={() => setPaymentMethod('Bank Account')}
+            className={`payment-card ${paymentMethod === 'Emirates NBD Bank' ? 'selected' : ''}`}
+            style={{ marginBottom: 10 }}
+            onClick={() => setPaymentMethod('Emirates NBD Bank')}
           >
             <div className="payment-card-icon">
               <Building2 size={18} />
             </div>
             <div className="payment-card-info">
-              <div className="payment-card-name">Bank Account</div>
-              <div className="payment-card-desc">HDFC Bank ****6789</div>
+              <div className="payment-card-name">Emirates NBD Bank</div>
+              <div className="payment-card-desc">IBAN: AE290260...9821</div>
             </div>
             <div className="payment-card-check">
-              {paymentMethod === 'Bank Account' && <Check size={14} />}
+              {paymentMethod === 'Emirates NBD Bank' && <Check size={14} />}
+            </div>
+          </div>
+
+          {/* Apple Pay / Card */}
+          <div
+            className={`payment-card ${paymentMethod === 'Apple Pay / Card' ? 'selected' : ''}`}
+            onClick={() => setPaymentMethod('Apple Pay / Card')}
+          >
+            <div className="payment-card-icon">
+              <CreditCard size={18} />
+            </div>
+            <div className="payment-card-info">
+              <div className="payment-card-name">Apple Pay / Visa / MC</div>
+              <div className="payment-card-desc">Zero foreign transaction fee</div>
+            </div>
+            <div className="payment-card-check">
+              {paymentMethod === 'Apple Pay / Card' && <Check size={14} />}
             </div>
           </div>
         </div>
@@ -300,11 +318,11 @@ const BuyGoldScreen: React.FC = () => {
 
           {/* Gold Rate */}
           <div className="summary-row">
-            <span className="label">Gold Rate</span>
+            <span className="label">Dubai Gold Rate</span>
             <span className="value">
-              ₹{DEMO_GOLD_RATE.toLocaleString('en-IN')}/g{' '}
+              AED {DEMO_GOLD_RATE.toFixed(2)}/g{' '}
               <span style={{ fontSize: 11, color: COLORS.secondaryText, fontWeight: 400 }}>
-                (Illustrative)
+                (DMCC)
               </span>
             </span>
           </div>

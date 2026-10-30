@@ -1,7 +1,6 @@
 // ============================================
-// GoldPlus — Gold SIP Screen
-// Flow states: 'setup' | 'review' | 'success' | 'manage'
-// A product by Urbanspire Group
+// YASS Gold & YASS Bullion — Gold SIP Screen
+// A product by YASS Group, Dubai
 // ============================================
 
 import React, { useState, useMemo } from 'react';
@@ -15,7 +14,7 @@ type FlowState = 'setup' | 'review' | 'success' | 'manage';
 type Frequency = 'weekly' | 'monthly' | 'quarterly';
 
 const formatCurrency = (val: number): string =>
-  '₹' + val.toLocaleString('en-IN', { maximumFractionDigits: 2 });
+  'AED ' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const formatGrams = (val: number): string =>
   val.toFixed(4) + ' g';
@@ -31,8 +30,8 @@ const SIPScreen: React.FC = () => {
   // Setup form states
   const [frequency, setFrequency] = useState<Frequency>('monthly');
   const [amountStr, setAmountStr] = useState<string>('1000');
-  const [nickname, setNickname] = useState<string>('Monthly Gold Savings');
-  const [paymentMethod] = useState<string>('UPI Auto-Debit');
+  const [nickname, setNickname] = useState<string>('Dubai Gold Accumulator');
+  const [paymentMethod] = useState<string>('UAE Direct Debit (Aani)');
   const [selectedChip, setSelectedChip] = useState<number>(1000);
   const [cancelModalSipId, setCancelModalSipId] = useState<string | null>(null);
 
@@ -185,7 +184,7 @@ const SIPScreen: React.FC = () => {
         <div className="form-group">
           <label className="form-label">Amount per installment</label>
           <div className="form-input-prefix">
-            <span className="prefix">₹</span>
+            <span className="prefix">AED</span>
             <input
               type="number"
               value={amountStr}
@@ -205,7 +204,7 @@ const SIPScreen: React.FC = () => {
               className={`chip ${selectedChip === val ? 'active' : ''}`}
               onClick={() => handleChipClick(val)}
             >
-              ₹{val.toLocaleString('en-IN')}
+              AED {val.toLocaleString('en-US')}
             </button>
           ))}
         </div>
@@ -340,8 +339,8 @@ const SIPScreen: React.FC = () => {
             <span className="value">{nextDateFormatted}</span>
           </div>
           <div className="summary-row">
-            <span className="label">Illustrative Rate</span>
-            <span className="value">₹{DEMO_GOLD_RATE.toLocaleString('en-IN')}/g</span>
+            <span className="label">Dubai Gold Rate</span>
+            <span className="value">AED {DEMO_GOLD_RATE.toFixed(2)}/g</span>
           </div>
           <div className="summary-row">
             <span className="label">Est. Gold per cycle</span>
