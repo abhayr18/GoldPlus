@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold — Platinum Bullion Card Hub
+﻿// ============================================
+// YASS Gold - Platinum Bullion Card Hub
 // Spend your physical vaulted gold globally
 // A Product by YASS Group, Dubai
 // ============================================

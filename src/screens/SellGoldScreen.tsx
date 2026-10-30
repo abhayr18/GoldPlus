@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold & Bullion — Sell Gold Screen
+﻿// ============================================
+// YASS Gold & Bullion - Sell Gold Screen
 // Instant Liquidation to UAE Bank Account
 // White + Gold Clean Minimalist Theme
 // ============================================

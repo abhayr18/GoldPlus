@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold & Bullion — Profile / Account Screen
+﻿// ============================================
+// YASS Gold & Bullion - Profile / Account Screen
 // White + Gold Clean Minimalist Theme
 // ============================================
 

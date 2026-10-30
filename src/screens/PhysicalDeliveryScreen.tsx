@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold & Bullion — Physical Bullion Redemption & Delivery
+﻿// ============================================
+// YASS Gold & Bullion - Physical Bullion Redemption & Delivery
 // White + Gold Clean Executive Catalog & Order Tracking
 // Core Feature: 24K 999.9 Minted Coins & Bars
 // ============================================
@@ -460,7 +460,7 @@ export const PhysicalDeliveryScreen: React.FC = () => {
           </div>
           <div style={{ fontSize: 12, color: '#64748B', lineHeight: 1.4 }}>
             {address.recipientName} ({address.mobile})<br />
-            {address.addressLine1}, {address.city} — {address.pinCode}
+            {address.addressLine1}, {address.city} - {address.pinCode}
           </div>
         </div>
 

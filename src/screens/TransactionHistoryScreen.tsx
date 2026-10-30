@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold & YASS Bullion — Transaction History Screen
+﻿// ============================================
+// YASS Gold & YASS Bullion - Transaction History Screen
 // A product by YASS Group, Dubai
 // ============================================
 

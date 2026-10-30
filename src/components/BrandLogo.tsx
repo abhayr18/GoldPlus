@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import yassGoldBarImg from '../assets/yass-gold-bar.png';
 
 export const GoldEmblemMark: React.FC<{ size?: number }> = ({ size = 32 }) => {

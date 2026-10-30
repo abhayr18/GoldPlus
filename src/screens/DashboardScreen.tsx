@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold & Bullion — Executive Dashboard
+﻿// ============================================
+// YASS Gold & Bullion - Executive Dashboard
 // High-End Mobile UI with SafeGold, Gullak & OGold Features
 // A Product by YASS Group, Dubai
 // ============================================
@@ -326,7 +326,7 @@ export const DashboardScreen: React.FC = () => {
                 Get Bullion
               </div>
               <div className="feature-tile-sub" style={{ color: '#B8860B' }}>
-                1g–1kg Bars
+                1g-1kg Bars
               </div>
             </div>
           </button>

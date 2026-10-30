@@ -1,40 +1,40 @@
 /* ============================================
-   White + Golden Clean Executive Design System
-   Standard, Minimalist, Professional Fintech UI
-   Focused on Digital Gold & Doorstep Physical Delivery
+   YASS Bullion Dubai — Design System
+   Restrained, Product-Focused Bullion Depository
+   System Typography & Warm Neutral Ground
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
-
 :root {
-  /* Pristine White Canvas & Card Surfaces */
+  /* Warm Neutral Page Background & Pure Surfaces */
+  --bg-page: #F5F5F7;
   --bg-app: #FFFFFF;
-  --bg-page: #F8FAFC;
-  --bg-subtle: #F9FAFB;
+  --bg-surface: #FFFFFF;
+  --bg-surface-secondary: #EDEDF0;
+  --bg-subtle: #FBFBFD;
   --bg-card: #FFFFFF;
   --bg-input: #FFFFFF;
 
-  /* Executive Dubai Bullion Gold */
-  --gold-primary: #C59B27;
-  --gold-secondary: #D4AF37;
-  --gold-dark: #A67C1E;
-  --gold-deep: #8F6914;
-  --gold-surface: #FEFBF2;
-  --gold-light: #FFFDF7;
-  --gold-border: #EED8A1;
-  --gold-border-subtle: #F3E8C8;
-  --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
-  --gold-soft-gradient: linear-gradient(135deg, #FFFDF7 0%, #FEFBF0 100%);
+  /* Disciplined Bullion Accent (WCAG AA Compliant 4.9:1 against #F5F5F7) */
+  --gold-primary: #8A6718;
+  --gold-secondary: #A37C20;
+  --gold-dark: #735510;
+  --gold-deep: #5E450C;
+  --gold-surface: #F8F5EE;
+  --gold-light: #FBF9F4;
+  --gold-border: #DCD2BE;
+  --gold-border-subtle: #EBE4D5;
+  --gold-gradient: linear-gradient(180deg, #8A6718 0%, #735510 100%);
+  --gold-soft-gradient: linear-gradient(180deg, #FFFFFF 0%, #F8F5EE 100%);
 
-  /* High-Legibility Typography */
-  --text-main: #0F172A;
-  --text-body: #334155;
-  --text-secondary: #64748B;
-  --text-muted: #94A3B8;
+  /* High-Legibility Apple-Grade Typography */
+  --text-main: #1D1D1F;
+  --text-body: #333336;
+  --text-secondary: #6E6E73;
+  --text-muted: #86868B;
 
-  /* Borders & Dividers */
-  --border: #E2E8F0;
-  --border-light: #F1F5F9;
+  /* Crisp Hairline Borders */
+  --border: #D2D2D7;
+  --border-light: #E5E5EA;
 
   /* Functional Status */
   --positive: #059669;
@@ -44,16 +44,16 @@
   --negative-bg: #FEF2F2;
   --negative-border: #FECACA;
 
-  /* Subtle Clean Shadows */
-  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
-  --shadow-gold: 0 4px 14px rgba(197, 155, 39, 0.22);
+  /* Restrained Micro-Shadows (No Excessive Shadows) */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-gold: 0 2px 8px rgba(138, 103, 24, 0.18);
 
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
   --radius-full: 9999px;
 
   --max-app-width: 480px;
@@ -71,7 +71,7 @@ html, body, #root {
   margin: 0;
   padding: 0;
   background-color: var(--bg-page);
-  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -793,5 +793,558 @@ html, body, #root {
   }
   to {
     transform: translateY(0);
+  }
+}
+
+/* ============================================
+   Apple-Grade Marketing Website Styles
+   Product-Focused, Generous Space, Restrained
+   ============================================ */
+
+.site-root {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 1. Global Navigation Bar */
+.site-nav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: rgba(245, 245, 247, 0.88);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  z-index: 100;
+}
+
+.site-nav-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  height: 52px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+}
+
+.site-brand-tag {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gold-primary);
+  background: var(--gold-surface);
+  border: 1px solid var(--gold-border);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.site-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+
+.site-nav-link {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.15s ease;
+  cursor: pointer;
+}
+
+.site-nav-link:hover {
+  color: var(--text-main);
+}
+
+.site-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-rate-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.site-rate-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--positive);
+  display: inline-block;
+}
+
+.site-btn-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  background: var(--text-main);
+  color: #FFFFFF;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 500;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.site-btn-nav:hover {
+  background: #000000;
+}
+
+/* 2. Container & Sections */
+.site-container {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.site-section {
+  padding: 88px 0;
+}
+
+.site-section-alt {
+  background: #FFFFFF;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.site-section-head {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 56px;
+}
+
+.site-section-title {
+  font-size: 40px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  color: var(--text-main);
+  margin-top: 8px;
+}
+
+.site-section-desc {
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-top: 14px;
+}
+
+/* 3. Hero Section */
+.site-hero {
+  text-align: center;
+  padding: 80px 24px 40px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.site-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold-primary);
+  margin-bottom: 12px;
+}
+
+.site-headline {
+  font-size: 58px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  color: var(--text-main);
+  margin-bottom: 18px;
+}
+
+.site-subhead {
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  max-width: 660px;
+  margin: 0 auto 32px;
+}
+
+.site-cta-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.site-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 22px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.site-btn-dark {
+  background: var(--text-main);
+  color: #FFFFFF;
+  border: none;
+}
+
+.site-btn-dark:hover {
+  background: #000000;
+}
+
+.site-btn-outline {
+  background: #FFFFFF;
+  color: var(--text-main);
+  border: 1px solid var(--border);
+}
+
+.site-btn-outline:hover {
+  border-color: var(--text-main);
+}
+
+.site-btn-accent {
+  background: var(--gold-primary);
+  color: #FFFFFF;
+  border: none;
+}
+
+.site-btn-accent:hover {
+  background: var(--gold-dark);
+}
+
+/* 4. Product Hero Stage */
+.site-product-stage {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 48px 32px 36px;
+  text-align: center;
+  position: relative;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.site-product-image {
+  max-width: 380px;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto 28px;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.1));
+}
+
+.site-product-caption {
+  font-size: 13px;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-light);
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* 5. Grids & Panels */
+.site-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.site-panel {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 32px;
+}
+
+.site-panel-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.site-panel-desc {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+/* 6. Technical Specifications Table */
+.site-specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.site-specs-table th {
+  background: #FAFAFC;
+  padding: 16px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-align: left;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.site-specs-table td {
+  padding: 16px 20px;
+  font-size: 14px;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.site-specs-table tr:last-child td {
+  border-bottom: none;
+}
+
+.site-specs-table td.label-col {
+  font-weight: 500;
+  color: var(--text-secondary);
+  width: 30%;
+}
+
+/* 7. Calculator Component */
+.site-calc-box {
+  background: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 36px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.site-weight-selector {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 24px;
+}
+
+.site-weight-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: #FFFFFF;
+  color: var(--text-main);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.site-weight-btn:hover {
+  border-color: var(--text-main);
+}
+
+.site-weight-btn.active {
+  background: var(--text-main);
+  color: #FFFFFF;
+  border-color: var(--text-main);
+}
+
+.site-calc-result {
+  background: var(--bg-page);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.site-calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+}
+
+.site-calc-row.total {
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+  padding-top: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* 8. App Bridge Header (When inside the prototype app) */
+.app-bridge-bar {
+  background: #1D1D1F;
+  color: #FFFFFF;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  position: sticky;
+  top: 0;
+  z-index: 60;
+}
+
+.app-bridge-btn {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 11.5px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.15s ease;
+}
+
+.app-bridge-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.app-bridge-tag {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+
+/* 9. Footer */
+.site-footer {
+  background: var(--bg-page);
+  border-top: 1px solid var(--border);
+  padding: 48px 24px 64px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.site-footer-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.site-footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+.site-footer-col h4 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-main);
+  margin-bottom: 14px;
+}
+
+.site-footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.site-footer-col a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.site-footer-col a:hover {
+  color: var(--text-main);
+}
+
+.site-footer-legal {
+  border-top: 1px solid var(--border-light);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 768px) {
+  .site-nav-links {
+    display: none;
+  }
+  .site-mobile-toggle {
+    display: inline-flex !important;
+  }
+  .site-headline {
+    font-size: 38px;
+  }
+  .site-subhead {
+    font-size: 17px;
+  }
+  .site-section-title {
+    font-size: 28px;
+  }
+  .site-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .site-footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .site-section {
+    padding: 56px 0;
+  }
+  .site-calc-box {
+    padding: 24px 16px;
   }
 }

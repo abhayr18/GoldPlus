@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold — Rewards & Bullion Privileges Screen
+﻿// ============================================
+// YASS Gold - Rewards & Bullion Privileges Screen
 // Daily Spin & Win, Tier Benefits & Gold Gifting
 // A Product by YASS Group, Dubai
 // ============================================
@@ -196,7 +196,7 @@ export const RewardsScreen: React.FC = () => {
             onClick={handleSpin}
             style={{ height: 44, fontSize: 13 }}
           >
-            {spinsLeft > 0 ? '🎡 Tap to Spin Wheel' : '✓ Daily Spin Used — Come Back Tomorrow'}
+            {spinsLeft > 0 ? '🎡 Tap to Spin Wheel' : '✓ Daily Spin Used - Come Back Tomorrow'}
           </button>
         </div>
 

@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold & YASS Bullion — Gold Auto-Save Screen
+﻿// ============================================
+// YASS Gold & YASS Bullion - Gold Auto-Save Screen
 // Daily Micro-Savings & Central Bank Aani Direct Debit
 // A product by YASS Group, Dubai
 // ============================================

@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold & Bullion — Design Tokens & Constants
+﻿// ============================================
+// YASS Gold & Bullion - Design Tokens & Constants
 // A product by YASS Group, Dubai
 // DMCC Accredited Precious Metals Depository
 // White + Gold Clean Executive Theme

@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold & Bullion — Vault Certificate & Audit Screen
+﻿// ============================================
+// YASS Gold & Bullion - Vault Certificate & Audit Screen
 // Official DMCC & Dubai Good Delivery Physical Allocation
 // White + Gold Clean Executive Theme
 // ============================================

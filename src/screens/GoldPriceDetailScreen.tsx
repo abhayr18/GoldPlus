@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold — Live Dubai Spot Market Benchmark Screen
+﻿// ============================================
+// YASS Gold - Live Dubai Spot Market Benchmark Screen
 // DMCC & Dubai Gold Souk Benchmark Rates
 // A Product by YASS Group, Dubai
 // ============================================

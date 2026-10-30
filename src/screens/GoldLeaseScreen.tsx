@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold — Wakala Bullion Yield Pools Screen
+﻿// ============================================
+// YASS Gold - Wakala Bullion Yield Pools Screen
 // Shariah-Compliant Precious Metals Depository Yield
 // A Product by YASS Group, Dubai
 // ============================================

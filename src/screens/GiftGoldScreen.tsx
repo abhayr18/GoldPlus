@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold & YASS Bullion — Gift 24K Gold Screen
+﻿// ============================================
+// YASS Gold & YASS Bullion - Gift 24K Gold Screen
 // Send certified 24K gold with luxury occasion cards
 // A product by YASS Group, Dubai
 // ============================================
@@ -132,7 +132,7 @@ const GiftGoldScreen: React.FC = () => {
               "{message}"
             </p>
             <div style={{ textAlign: 'right', marginTop: 12, fontSize: 12, color: '#B8860B', fontWeight: 700 }}>
-              — From {state.user?.fullName || 'Tariq Al Mansoori'} (YASS Bullion Vault)
+              - From {state.user?.fullName || 'Tariq Al Mansoori'} (YASS Bullion Vault)
             </div>
           </div>
 

@@ -1,5 +1,5 @@
-// ============================================
-// OGold Wallet — Type Definitions
+﻿// ============================================
+// OGold Wallet - Type Definitions
 // The Precious Metals & Lifestyle Super App (Dubai, UAE)
 // Dual-metal: 24K Gold & .999 Silver | OGold Mastercard
 // ============================================

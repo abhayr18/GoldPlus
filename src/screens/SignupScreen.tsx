@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from 'react';
+﻿import React, { useState, useCallback } from 'react';
 import { ChevronLeft, Globe, Apple, Phone } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
 import { loginUser } from '../state/appState';
 import { BRAND, COLORS } from '../constants';
 
 // ============================================
-// YASS Gold & YASS Bullion — Signup / Registration Screen
+// YASS Gold & YASS Bullion - Signup / Registration Screen
 // A product by YASS Group, Dubai
 // ============================================
 

@@ -1,5 +1,5 @@
-// ============================================
-// OGold Wallet — Application State Manager
+﻿// ============================================
+// OGold Wallet - Application State Manager
 // The Precious Metals & Lifestyle Super App (Dubai, UAE)
 // Manages Gold & Silver balances, OGold Mastercard,
 // Wakala Yield, SIP, Spin & Win, and Bullion Delivery

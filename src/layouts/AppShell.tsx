@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold & Bullion — Executive App Shell
+﻿// ============================================
+// YASS Gold & Bullion - Executive App Shell
 // Clean White + Gold Minimalist Layout
 // ============================================
 
@@ -22,12 +22,32 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const { state, navigate } = useApp();
   const { currentScreen } = state;
 
-  const isAuthScreen = currentScreen === 'splash' || currentScreen === 'signup';
+  // When on splash / marketing website, render full-width website without app wrapper
+  if (currentScreen === 'splash') {
+    return <div className="site-root">{children}</div>;
+  }
+
+  const isAuthScreen = currentScreen === 'signup';
   const isCurrent = (screen: Screen) => currentScreen === screen;
 
   return (
     <div className="app-viewport">
       <div className="app-container">
+        {/* App Bridge Header to return to Marketing Website */}
+        <div className="app-bridge-bar">
+          <button
+            onClick={() => navigate('splash')}
+            className="app-bridge-btn"
+            aria-label="Return to Marketing Website"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            <span>Back to Website</span>
+          </button>
+          <span className="app-bridge-tag">YASS Bullion Prototype</span>
+        </div>
+
         {/* Scrollable Screen Content */}
         <main className="app-main">
           {children}
@@ -54,7 +74,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
               <span>Buy Gold</span>
             </button>
 
-            {/* 3. Physical Bullion Delivery (Core Client Feature) */}
+            {/* 3. Physical Bullion Delivery */}
             <button
               className={`nav-tab-item ${isCurrent('delivery') ? 'active' : ''}`}
               onClick={() => navigate('delivery')}

@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold & Bullion — Buy Digital Gold Screen
+﻿// ============================================
+// YASS Gold & Bullion - Buy Digital Gold Screen
 // White + Gold Clean Minimalist & Professional Flow
 // Real-time Dubai Gold Souk Benchmark
 // ============================================

@@ -1,5 +1,5 @@
-// ============================================
-// OGold Wallet — Main Application Router
+﻿// ============================================
+// OGold Wallet - Main Application Router
 // The Precious Metals & Lifestyle Super App (Dubai, UAE)
 // App Store ID: 6504926022
 // ============================================

@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold & YASS Bullion — Savings Goals Screen
+﻿// ============================================
+// YASS Gold & YASS Bullion - Savings Goals Screen
 // Goal-based 24K gold accumulation planner
 // A product by YASS Group, Dubai
 // ============================================

@@ -1,5 +1,5 @@
-// ============================================
-// YASS Gold — Vault Portfolio Screen
+﻿// ============================================
+// YASS Gold - Vault Portfolio Screen
 // DMCC 24K 999.9 Good Delivery Digital Gold
 // A Product by YASS Group, Dubai
 // ============================================
