@@ -145,12 +145,12 @@ export const SavingsGoalScreen: React.FC = () => {
         {/* Streak & Gamification Banner */}
         <div
           style={{
-            background: 'linear-gradient(135deg, #17232D 0%, #171A1D 100%)',
+            background: '#FFF7ED',
             borderRadius: 16,
             padding: '16px 20px',
-            color: '#FFF',
+            color: '#0F172A',
             marginBottom: 20,
-            border: '1px solid rgba(232, 182, 63, 0.3)',
+            border: '1px solid #FED7AA',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -160,28 +160,28 @@ export const SavingsGoalScreen: React.FC = () => {
                   width: 40,
                   height: 40,
                   borderRadius: '50%',
-                  background: 'rgba(232, 182, 63, 0.2)',
+                  background: '#FFEDD5',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
-                <Flame size={24} color="#FF6B00" />
+                <Flame size={24} color="#EA580C" />
               </div>
               <div>
-                <div style={{ fontSize: 15, fontWeight: 800, color: '#FFF' }}>
+                <div style={{ fontSize: 15, fontWeight: 800, color: '#9A3412' }}>
                   {user?.savingsStreakDays || 5}-Day Savings Streak! 🔥
                 </div>
-                <div style={{ fontSize: 12, color: '#CBD5E0' }}>
+                <div style={{ fontSize: 12, color: '#C2410C' }}>
                   Save today to claim +5mg free 24K gold reward
                 </div>
               </div>
             </div>
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: 10, color: COLORS.primaryGold, textTransform: 'uppercase', fontWeight: 700 }}>
+              <div style={{ fontSize: 10, color: '#EA580C', textTransform: 'uppercase', fontWeight: 800 }}>
                 Rewards Won
               </div>
-              <div style={{ fontSize: 16, fontWeight: 800, color: '#FFF' }}>
+              <div style={{ fontSize: 16, fontWeight: 900, color: '#9A3412' }}>
                 {user?.freeGoldRewardsMg || 25} mg
               </div>
             </div>

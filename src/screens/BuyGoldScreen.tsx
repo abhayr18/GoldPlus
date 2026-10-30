@@ -227,24 +227,14 @@ export const BuyGoldScreen: React.FC = () => {
 
           {/* Quick Amount Chips */}
           {inputMode === 'amount' && (
-            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 14 }}>
+            <div className="chip-row" style={{ marginTop: 14 }}>
               {quickAmounts.map((amt) => (
                 <button
                   key={amt}
+                  className={`chip ${selectedChip === amt ? 'active' : ''}`}
                   onClick={() => handleChip(amt)}
-                  style={{
-                    padding: '6px 12px',
-                    borderRadius: 8,
-                    border: '1px solid',
-                    borderColor: selectedChip === amt ? '#C59B27' : '#E2E8F0',
-                    background: selectedChip === amt ? '#FEFBF2' : '#FFFFFF',
-                    color: selectedChip === amt ? '#8F6914' : '#64748B',
-                    fontSize: 12,
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                  }}
                 >
-                  +{amt}
+                  +{amt} AED
                 </button>
               ))}
             </div>

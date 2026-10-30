@@ -239,9 +239,20 @@ html, body, #root {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 16px;
-  box-shadow: var(--shadow-xs);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
   color: var(--text-main);
-  transition: border-color 0.15s ease;
+  transition: all 0.15s ease;
+}
+
+.card-interactive {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card-interactive:active {
+  transform: scale(0.985);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
 }
 
 .card-gold {
@@ -249,13 +260,89 @@ html, body, #root {
   border: 1px solid var(--gold-border);
   border-radius: var(--radius-lg);
   padding: 18px 20px;
-  box-shadow: 0 2px 8px rgba(197, 155, 39, 0.08);
+  box-shadow: 0 3px 12px rgba(197, 155, 39, 0.09);
   position: relative;
   overflow: hidden;
 }
 
+/* Feature Grid & Action Tiles (Mobile First) */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.feature-tile {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+  transition: all 0.15s ease;
+  position: relative;
+  min-height: 94px;
+}
+
+.feature-tile:active {
+  transform: scale(0.96);
+  background: #FEFBF2;
+  border-color: var(--gold-border);
+}
+
+.feature-tile-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.feature-tile:active .feature-tile-icon {
+  transform: scale(0.92);
+}
+
+.feature-tile-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.25;
+}
+
+.feature-tile-sub {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--gold-dark);
+}
+
+.feature-tile-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: #ECFDF5;
+  color: #059669;
+  border: 1px solid #A7F3D0;
+  font-size: 8px;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 4px;
+  letter-spacing: 0.2px;
+}
+
 /* ============================================
-   Buttons & CTAs
+   Buttons & CTAs (Tactile Native Feel)
    ============================================ */
 
 .btn {
@@ -264,29 +351,35 @@ html, body, #root {
   justify-content: center;
   gap: 8px;
   width: 100%;
+  min-height: 48px;
   padding: 13px 20px;
   border-radius: var(--radius-md);
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 700;
   cursor: pointer;
   border: none;
-  transition: all 0.15s ease;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
   box-sizing: border-box;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.975);
 }
 
 .btn-primary {
   background: var(--gold-gradient);
   color: #FFFFFF;
-  box-shadow: var(--shadow-gold);
+  box-shadow: 0 4px 14px rgba(197, 155, 39, 0.25);
 }
 
 .btn-primary:hover:not(:disabled) {
-  filter: brightness(1.05);
-  transform: translateY(-1px);
+  filter: brightness(1.04);
 }
 
 .btn-primary:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
   box-shadow: none;
 }
@@ -294,12 +387,16 @@ html, body, #root {
 .btn-secondary {
   background: #FFFFFF;
   color: var(--text-main);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
 }
 
 .btn-secondary:hover:not(:disabled) {
   background: #F8FAFC;
-  border-color: var(--gold-primary);
+  border-color: var(--gold-border);
+}
+
+.btn-secondary:active:not(:disabled) {
+  background: #F1F5F9;
 }
 
 /* ============================================
@@ -603,6 +700,53 @@ html, body, #root {
 }
 
 /* ============================================
+   Chips & Quick Selectors (Mobile Touch Ergonomics)
+   ============================================ */
+
+.chip-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chip-row::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #FFFFFF;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chip:hover {
+  border-color: var(--gold-border);
+}
+
+.chip:active {
+  transform: scale(0.96);
+}
+
+.chip.active {
+  background: var(--gold-surface);
+  border-color: var(--gold-primary);
+  color: var(--gold-dark);
+  box-shadow: 0 2px 8px rgba(197, 155, 39, 0.15);
+}
+
+/* ============================================
    Modal & Overlays
    ============================================ */
 
@@ -622,13 +766,32 @@ html, body, #root {
   width: 100%;
   max-width: var(--max-app-width);
   background: #FFFFFF;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
   border: 1px solid var(--border);
   border-bottom: none;
-  padding: 24px 20px 32px;
+  padding: 16px 20px 32px;
   color: var(--text-main);
   max-height: 85vh;
   overflow-y: auto;
-  box-shadow: 0 -8px 25px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 -8px 30px rgba(15, 23, 42, 0.14);
+  position: relative;
+  animation: slideUpModal 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-drag-handle {
+  width: 36px;
+  height: 4px;
+  border-radius: 2px;
+  background: #CBD5E1;
+  margin: 0 auto 16px;
+}
+
+@keyframes slideUpModal {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }

@@ -98,22 +98,13 @@ export const SellGoldScreen: React.FC = () => {
               </div>
 
               {/* Percentage Chips */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 6, marginTop: 12 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8, marginTop: 12 }}>
                 {percentageChips.map((chip) => (
                   <button
                     key={chip.label}
                     onClick={() => handlePercentageChip(chip.label, chip.factor)}
-                    style={{
-                      padding: '8px 0',
-                      borderRadius: 8,
-                      border: '1px solid',
-                      borderColor: activeChip === chip.label ? '#C59B27' : '#E2E8F0',
-                      background: activeChip === chip.label ? '#FEFBF2' : '#FFFFFF',
-                      color: activeChip === chip.label ? '#8F6914' : '#64748B',
-                      fontSize: 12,
-                      fontWeight: 700,
-                      cursor: 'pointer',
-                    }}
+                    className={`chip ${activeChip === chip.label ? 'active' : ''}`}
+                    style={{ textAlign: 'center', padding: '9px 0' }}
                   >
                     {chip.label}
                   </button>
