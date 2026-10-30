@@ -1,7 +1,6 @@
 // ============================================
-// OGold Wallet — Profile / Account Screen
-// UAE PASS KYC, Bank Accounts, DNI Insurance & Security
-// App Store: id6504926022
+// YASS Gold & Bullion — Profile / Account Screen
+// White + Gold Clean Minimalist Theme
 // ============================================
 
 import React, { useState } from 'react';
@@ -17,7 +16,7 @@ import {
   ChevronRight,
   CheckCircle,
   X,
-  CreditCard,
+  Package,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
 import { BrandLogo } from '../components/BrandLogo';
@@ -29,7 +28,6 @@ type SubView =
   | 'kyc'
   | 'bank'
   | 'notifications'
-  | 'help'
   | 'about'
   | 'terms'
   | 'privacy';
@@ -45,7 +43,7 @@ export const ProfileScreen: React.FC = () => {
   const user = state.user || {
     fullName: 'Tariq Al Mansoori',
     mobile: '501234567',
-    email: 'tariq.mansoori@ogold.app',
+    email: 'tariq.mansoori@yassgroup.ae',
     kycStatus: 'verified' as const,
     emiratesId: '784-1988-1234567-1',
   };
@@ -53,14 +51,14 @@ export const ProfileScreen: React.FC = () => {
   const handleLogout = () => {
     setState(logoutUser(state));
     setShowLogoutModal(false);
-    showToast('Logged out of OGold Wallet', 'info');
+    showToast('Logged out successfully', 'info');
     navigate('splash');
   };
 
   const handleResetDemo = () => {
     resetDemo();
     setShowResetModal(false);
-    showToast('OGold demo data restored to initial state', 'success');
+    showToast('Demo data restored to initial state', 'success');
     navigate('dashboard');
   };
 
@@ -81,26 +79,26 @@ export const ProfileScreen: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               gap: 14,
-              background: '#161D2D',
-              border: '1px solid #1E293B',
+              background: '#FEFBF2',
+              border: '1px solid #EED8A1',
               padding: '18px',
               borderRadius: 16,
-              color: '#FFFFFF',
             }}
           >
             <div
               style={{
-                width: 54,
-                height: 54,
+                width: 52,
+                height: 52,
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #FBBF24 0%, #D97706 100%)',
-                color: '#0A0D14',
+                background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)',
+                color: '#FFFFFF',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: 18,
                 fontWeight: 900,
                 flexShrink: 0,
+                boxShadow: '0 2px 8px rgba(197, 155, 39, 0.25)',
               }}
             >
               {user.fullName
@@ -112,13 +110,13 @@ export const ProfileScreen: React.FC = () => {
             </div>
 
             <div style={{ flex: 1, minWidth: 0 }}>
-              <h2 style={{ fontSize: 16, fontWeight: 800, margin: 0, color: '#FFFFFF' }}>
+              <h2 style={{ fontSize: 16, fontWeight: 800, margin: 0, color: '#0F172A' }}>
                 {user.fullName}
               </h2>
-              <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>
+              <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
                 +971 {user.mobile}
               </div>
-              <div style={{ fontSize: 11, color: '#64748B', marginTop: 1 }}>
+              <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 1 }}>
                 Emirates ID: {user.emiratesId}
               </div>
             </div>
@@ -130,9 +128,10 @@ export const ProfileScreen: React.FC = () => {
                 gap: 4,
                 fontSize: 10,
                 padding: '3px 8px',
-                borderRadius: 6,
-                background: 'rgba(16, 185, 129, 0.15)',
-                color: '#10B981',
+                borderRadius: 4,
+                background: '#ECFDF5',
+                color: '#059669',
+                border: '1px solid #A7F3D0',
                 fontWeight: 800,
               }}
             >
@@ -144,37 +143,37 @@ export const ProfileScreen: React.FC = () => {
 
         {/* Menu Items */}
         <div className="card" style={{ marginBottom: 14 }}>
-          {/* OGold Mastercard shortcut */}
-          <div className="profile-menu-item" onClick={() => navigate('card')}>
-            <div className="profile-menu-icon" style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#FBBF24' }}>
-              <CreditCard size={18} />
+          {/* Physical Delivery Orders */}
+          <div className="profile-menu-item" onClick={() => navigate('delivery')}>
+            <div className="profile-menu-icon" style={{ background: '#FEFBF2', color: '#A67C1E' }}>
+              <Package size={18} />
             </div>
-            <div className="profile-menu-label">OGold Mastercard</div>
-            <span style={{ fontSize: 11.5, color: '#10B981', fontWeight: 700, marginRight: 8 }}>
-              Active
+            <div className="profile-menu-label">Physical Bullion Deliveries</div>
+            <span style={{ fontSize: 11.5, color: '#A67C1E', fontWeight: 700, marginRight: 8 }}>
+              {state.deliveryOrders.length} Orders
             </span>
             <ChevronRight size={16} className="profile-menu-chevron" />
           </div>
 
-          {/* DNI Vault Proof */}
+          {/* DMCC Vault Certificate */}
           <div className="profile-menu-item" onClick={() => navigate('vaultProof')}>
-            <div className="profile-menu-icon" style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#10B981' }}>
+            <div className="profile-menu-icon" style={{ background: '#ECFDF5', color: '#059669' }}>
               <ShieldCheck size={18} />
             </div>
-            <div className="profile-menu-label">DNI Vault Audit Certificate</div>
-            <span style={{ fontSize: 11.5, color: '#94A3B8', marginRight: 8 }}>
-              Brink’s DMCC
+            <div className="profile-menu-label">Brink’s Vault Certificate</div>
+            <span style={{ fontSize: 11.5, color: '#059669', marginRight: 8, fontWeight: 700 }}>
+              100% Backed
             </span>
             <ChevronRight size={16} className="profile-menu-chevron" />
           </div>
 
-          {/* KYC Verification */}
+          {/* KYC Status */}
           <div className="profile-menu-item" onClick={() => setSubView('kyc')}>
             <div className="profile-menu-icon">
               <ShieldCheck size={18} />
             </div>
             <div className="profile-menu-label">UAE PASS KYC Status</div>
-            <span style={{ fontSize: 11.5, fontWeight: 700, color: '#10B981', marginRight: 8 }}>
+            <span style={{ fontSize: 11.5, fontWeight: 700, color: '#059669', marginRight: 8 }}>
               Level 3 Verified
             </span>
             <ChevronRight size={16} className="profile-menu-chevron" />
@@ -186,7 +185,7 @@ export const ProfileScreen: React.FC = () => {
               <Building2 size={18} />
             </div>
             <div className="profile-menu-label">Linked UAE Bank</div>
-            <span style={{ fontSize: 11.5, color: '#94A3B8', marginRight: 8 }}>
+            <span style={{ fontSize: 11.5, color: '#64748B', marginRight: 8 }}>
               Emirates NBD
             </span>
             <ChevronRight size={16} className="profile-menu-chevron" />
@@ -197,13 +196,13 @@ export const ProfileScreen: React.FC = () => {
             <div className="profile-menu-icon">
               <Bell size={18} />
             </div>
-            <div className="profile-menu-label">Notifications & Alerts</div>
+            <div className="profile-menu-label">Notifications & Rates</div>
             <ChevronRight size={16} className="profile-menu-chevron" />
           </div>
 
-          {/* About OGold */}
+          {/* About */}
           <div className="profile-menu-item" onClick={() => setSubView('about')}>
-            <div className="profile-menu-icon" style={{ background: 'rgba(245, 158, 11, 0.15)', color: '#FBBF24' }}>
+            <div className="profile-menu-icon" style={{ background: '#FEFBF2', color: '#A67C1E' }}>
               <Info size={18} />
             </div>
             <div className="profile-menu-label">About {BRAND.name}</div>
@@ -231,16 +230,16 @@ export const ProfileScreen: React.FC = () => {
 
         {/* Demo Controls */}
         <div className="card" style={{ marginBottom: 16 }}>
-          <div style={{ fontSize: 11, fontWeight: 800, color: '#64748B', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 }}>
+          <div style={{ fontSize: 11, fontWeight: 800, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 10 }}>
             Demo Controls
           </div>
 
           <div
             className="profile-menu-item"
             onClick={() => setShowResetModal(true)}
-            style={{ borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}
+            style={{ borderBottom: '1px solid #F1F5F9' }}
           >
-            <div className="profile-menu-icon" style={{ color: '#FBBF24' }}>
+            <div className="profile-menu-icon" style={{ color: '#A67C1E' }}>
               <RotateCcw size={18} />
             </div>
             <div className="profile-menu-label">Reset Demo Wallet Data</div>
@@ -250,21 +249,21 @@ export const ProfileScreen: React.FC = () => {
           <div
             className="profile-menu-item"
             onClick={() => setShowLogoutModal(true)}
-            style={{ color: '#EF4444' }}
+            style={{ color: '#DC2626' }}
           >
-            <div className="profile-menu-icon" style={{ background: 'rgba(239, 68, 68, 0.15)', color: '#EF4444' }}>
+            <div className="profile-menu-icon" style={{ background: '#FEF2F2', color: '#DC2626' }}>
               <LogOut size={18} />
             </div>
-            <div className="profile-menu-label" style={{ color: '#EF4444' }}>Log Out</div>
+            <div className="profile-menu-label" style={{ color: '#DC2626' }}>Log Out</div>
             <ChevronRight size={16} className="profile-menu-chevron" />
           </div>
         </div>
 
-        {/* Footer attribution */}
-        <div style={{ textAlign: 'center', padding: '16px 0 28px', fontSize: 11.5, color: '#64748B' }}>
+        {/* Footer */}
+        <div style={{ textAlign: 'center', padding: '16px 0 24px', fontSize: 11.5, color: '#94A3B8' }}>
           {BRAND.attribution}
-          <div style={{ fontSize: 10.5, color: '#475569', marginTop: 3 }}>
-            OGold Wallet App iOS v2.4.1 (Build 6504926022)
+          <div style={{ fontSize: 10.5, color: '#CBD5E1', marginTop: 3 }}>
+            Version 2.0.0 (Clean Executive Release)
           </div>
         </div>
       </div>
@@ -274,34 +273,34 @@ export const ProfileScreen: React.FC = () => {
         <div className="modal-overlay" onClick={() => setSubView('none')}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-              <h3 style={{ fontSize: 17, fontWeight: 800, color: '#FFFFFF' }}>About {BRAND.name}</h3>
-              <button onClick={() => setSubView('none')} style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer' }}>
+              <h3 style={{ fontSize: 17, fontWeight: 800, color: '#0F172A' }}>About {BRAND.name}</h3>
+              <button onClick={() => setSubView('none')} style={{ background: 'none', border: 'none', color: '#64748B', cursor: 'pointer' }}>
                 <X size={18} />
               </button>
             </div>
 
             <div style={{ textAlign: 'center', padding: '16px 0' }}>
               <BrandLogo size="lg" />
-              <p style={{ fontSize: 12.5, color: '#94A3B8', lineHeight: 1.5, marginTop: 12 }}>
-                OGold is the digital precious metals and lifestyle super app based in Dubai, UAE. We allow users to buy, sell, save, and spend physical 24K gold and .999 silver with the OGold Mastercard anywhere in the world.
+              <p style={{ fontSize: 12.5, color: '#64748B', lineHeight: 1.5, marginTop: 12 }}>
+                YASS Gold is the premier Dubai digital gold and physical bullion platform by YASS Group Dubai. We enable clients to buy 24K digital gold and receive physical minted coins and bars at their doorstep across the UAE.
               </p>
             </div>
 
             <div className="summary-row">
-              <span className="label">License</span>
-              <span className="value">Dubai Department of Economy and Tourism (DED)</span>
+              <span className="label">Headquarters</span>
+              <span className="value">Almas Tower, JLT & Gold Souk, Dubai</span>
             </div>
             <div className="summary-row">
-              <span className="label">Insurance</span>
-              <span className="value">Dubai National Insurance (DNI)</span>
+              <span className="label">Vault Custody</span>
+              <span className="value">Brink’s Global Services (DMCC)</span>
             </div>
             <div className="summary-row">
-              <span className="label">Depository</span>
-              <span className="value">Brink’s Global Services (DMCC Dubai)</span>
+              <span className="label">Independent Auditor</span>
+              <span className="value">BDO Chartered Accountants (Dubai)</span>
             </div>
             <div className="summary-row total">
-              <span className="label">Compliance</span>
-              <span className="value" style={{ color: '#10B981' }}>100% Shariah Compliant</span>
+              <span className="label">Tax Standard</span>
+              <span className="value" style={{ color: '#059669' }}>0% UAE VAT on 24K Gold</span>
             </div>
           </div>
         </div>
@@ -311,19 +310,19 @@ export const ProfileScreen: React.FC = () => {
         <div className="modal-overlay" onClick={() => setSubView('none')}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-              <h3 style={{ fontSize: 17, fontWeight: 800, color: '#FFFFFF' }}>UAE PASS KYC Verification</h3>
-              <button onClick={() => setSubView('none')} style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer' }}>
+              <h3 style={{ fontSize: 17, fontWeight: 800, color: '#0F172A' }}>UAE PASS KYC Status</h3>
+              <button onClick={() => setSubView('none')} style={{ background: 'none', border: 'none', color: '#64748B', cursor: 'pointer' }}>
                 <X size={18} />
               </button>
             </div>
 
-            <div style={{ textAlign: 'center', padding: '16px', background: 'rgba(16, 185, 129, 0.1)', borderRadius: 12, marginBottom: 14 }}>
-              <CheckCircle size={32} color="#10B981" style={{ margin: '0 auto 8px' }} />
-              <div style={{ fontSize: 15, fontWeight: 800, color: '#10B981' }}>
-                UAE PASS Qualified Signature
+            <div style={{ textAlign: 'center', padding: '16px', background: '#ECFDF5', borderRadius: 12, marginBottom: 14 }}>
+              <CheckCircle size={32} color="#059669" style={{ margin: '0 auto 8px' }} />
+              <div style={{ fontSize: 15, fontWeight: 800, color: '#059669' }}>
+                UAE PASS Level 3 Verified
               </div>
-              <div style={{ fontSize: 11.5, color: '#94A3B8', marginTop: 2 }}>
-                Emirates ID linked for unlimited digital precious metals operations
+              <div style={{ fontSize: 11.5, color: '#64748B', marginTop: 2 }}>
+                Emirates ID linked for unlimited digital gold & bullion delivery
               </div>
             </div>
 
@@ -336,8 +335,8 @@ export const ProfileScreen: React.FC = () => {
               <span className="value">{user.emiratesId}</span>
             </div>
             <div className="summary-row total">
-              <span className="label">Trading & Card Limit</span>
-              <span className="value" style={{ color: '#10B981' }}>Unlimited (DMCC Compliant)</span>
+              <span className="label">Bullion Trading Limit</span>
+              <span className="value" style={{ color: '#059669' }}>Unlimited (DMCC Compliant)</span>
             </div>
           </div>
         </div>
@@ -347,8 +346,8 @@ export const ProfileScreen: React.FC = () => {
         <div className="modal-overlay" onClick={() => setSubView('none')}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-              <h3 style={{ fontSize: 17, fontWeight: 800, color: '#FFFFFF' }}>Notification Preferences</h3>
-              <button onClick={() => setSubView('none')} style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer' }}>
+              <h3 style={{ fontSize: 17, fontWeight: 800, color: '#0F172A' }}>Notification Preferences</h3>
+              <button onClick={() => setSubView('none')} style={{ background: 'none', border: 'none', color: '#64748B', cursor: 'pointer' }}>
                 <X size={18} />
               </button>
             </div>
@@ -356,13 +355,13 @@ export const ProfileScreen: React.FC = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <div
                 onClick={() => toggleNotif('priceAlerts')}
-                style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid #1E293B', cursor: 'pointer' }}
+                style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', borderBottom: '1px solid #E2E8F0', cursor: 'pointer' }}
               >
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF' }}>Spot Price Alerts</div>
-                  <div style={{ fontSize: 11, color: '#94A3B8' }}>Gold & silver 24h market move notifications</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>Daily Dubai Gold Souk Rate Alert</div>
+                  <div style={{ fontSize: 11, color: '#64748B' }}>Morning benchmark spot price push</div>
                 </div>
-                <span style={{ fontSize: 11, fontWeight: 800, color: notifState.priceAlerts ? '#10B981' : '#64748B' }}>
+                <span style={{ fontSize: 11, fontWeight: 800, color: notifState.priceAlerts ? '#059669' : '#64748B' }}>
                   {notifState.priceAlerts ? 'ON' : 'OFF'}
                 </span>
               </div>
@@ -372,10 +371,10 @@ export const ProfileScreen: React.FC = () => {
                 style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 0', cursor: 'pointer' }}
               >
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF' }}>Mastercard Spend Alerts</div>
-                  <div style={{ fontSize: 11, color: '#94A3B8' }}>Instant POS notifications & receipt proofs</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>Bullion Dispatch & Courier Tracking</div>
+                  <div style={{ fontSize: 11, color: '#64748B' }}>Transguard delivery SMS & in-app alerts</div>
                 </div>
-                <span style={{ fontSize: 11, fontWeight: 800, color: notifState.transactionUpdates ? '#10B981' : '#64748B' }}>
+                <span style={{ fontSize: 11, fontWeight: 800, color: notifState.transactionUpdates ? '#059669' : '#64748B' }}>
                   {notifState.transactionUpdates ? 'ON' : 'OFF'}
                 </span>
               </div>
@@ -388,11 +387,11 @@ export const ProfileScreen: React.FC = () => {
       {showResetModal && (
         <div className="modal-overlay" onClick={() => setShowResetModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ fontSize: 17, fontWeight: 800, color: '#FFFFFF', marginBottom: 6 }}>
-              Reset Demo Data?
+            <h3 style={{ fontSize: 17, fontWeight: 800, color: '#0F172A', marginBottom: 6 }}>
+              Reset Demo Wallet?
             </h3>
-            <p style={{ fontSize: 12, color: '#94A3B8', marginBottom: 16 }}>
-              This will restore all gold and silver balances, OGold Mastercard status, and demo transactions to default.
+            <p style={{ fontSize: 12, color: '#64748B', marginBottom: 16 }}>
+              This will restore all demo gold holdings, deliveries, and transactions to default.
             </p>
             <div style={{ display: 'flex', gap: 10 }}>
               <button className="btn btn-secondary" onClick={() => setShowResetModal(false)}>
@@ -410,17 +409,17 @@ export const ProfileScreen: React.FC = () => {
       {showLogoutModal && (
         <div className="modal-overlay" onClick={() => setShowLogoutModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ fontSize: 17, fontWeight: 800, color: '#FFFFFF', marginBottom: 6 }}>
+            <h3 style={{ fontSize: 17, fontWeight: 800, color: '#0F172A', marginBottom: 6 }}>
               Log Out?
             </h3>
-            <p style={{ fontSize: 12, color: '#94A3B8', marginBottom: 16 }}>
-              Are you sure you want to log out of OGold Wallet?
+            <p style={{ fontSize: 12, color: '#64748B', marginBottom: 16 }}>
+              Are you sure you want to log out of YASS Gold?
             </p>
             <div style={{ display: 'flex', gap: 10 }}>
               <button className="btn btn-secondary" onClick={() => setShowLogoutModal(false)}>
                 Cancel
               </button>
-              <button className="btn btn-primary" onClick={handleLogout} style={{ background: '#EF4444', color: '#FFFFFF' }}>
+              <button className="btn btn-primary" onClick={handleLogout} style={{ background: '#DC2626', color: '#FFFFFF' }}>
                 Log Out
               </button>
             </div>

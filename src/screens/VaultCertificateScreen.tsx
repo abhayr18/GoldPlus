@@ -1,7 +1,7 @@
 // ============================================
-// OGold Wallet — Insured Vault Certificate & Depository Audit
-// Dubai National Insurance (DNI) & DMCC Brink's Vaults
-// App Store: id6504926022
+// YASS Gold & Bullion — Vault Certificate & Audit Screen
+// Official DMCC & Dubai Good Delivery Physical Allocation
+// White + Gold Clean Executive Theme
 // ============================================
 
 import React, { useState } from 'react';
@@ -12,19 +12,15 @@ import {
   Download,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
-import { OGoldMark } from '../components/BrandLogo';
-import { DEMO_GOLD_RATE, DEMO_SILVER_RATE } from '../constants';
+import { GoldEmblemMark } from '../components/BrandLogo';
+import { YASS_VAULT_AUDIT, DEMO_GOLD_RATE } from '../constants';
 
 export const VaultCertificateScreen: React.FC = () => {
   const { state, back, showToast } = useApp();
   const { user, holdings } = state;
   const [showInspectionModal, setShowInspectionModal] = useState(false);
 
-  const totalValuation = (
-    holdings.totalGrams * DEMO_GOLD_RATE +
-    holdings.silverGrams * DEMO_SILVER_RATE
-  ).toFixed(2);
-
+  const totalValuation = (holdings.totalGrams * DEMO_GOLD_RATE).toFixed(2);
   const formattedDate = new Date().toLocaleDateString('en-AE', {
     day: 'numeric',
     month: 'long',
@@ -32,12 +28,12 @@ export const VaultCertificateScreen: React.FC = () => {
   });
 
   const handleDownload = () => {
-    showToast('Vault Certificate downloaded (PDF signed by DNI & DMCC depository)', 'success');
+    showToast('Vault Certificate downloaded (PDF signed by DMCC depository)', 'success');
   };
 
   const handleScheduleVisit = () => {
     setShowInspectionModal(false);
-    showToast('Inspection request submitted. OGold VIP concierge will contact you.', 'success');
+    showToast('Inspection request submitted. YASS Bullion concierge will call you.', 'success');
   };
 
   return (
@@ -47,7 +43,7 @@ export const VaultCertificateScreen: React.FC = () => {
         <button className="screen-header-back" onClick={back} aria-label="Back">
           <ArrowLeft size={18} />
         </button>
-        <span className="screen-header-title">Vault Custody & Audit</span>
+        <span className="screen-header-title">Vault Audit & Certificate</span>
         <div style={{ width: 36 }} />
       </div>
 
@@ -55,8 +51,8 @@ export const VaultCertificateScreen: React.FC = () => {
         {/* Top Trust Notice */}
         <div
           style={{
-            background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(245, 158, 11, 0.12) 100%)',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
+            background: '#ECFDF5',
+            border: '1px solid #A7F3D0',
             borderRadius: 14,
             padding: '14px 16px',
             marginBottom: 16,
@@ -70,8 +66,8 @@ export const VaultCertificateScreen: React.FC = () => {
               width: 38,
               height: 38,
               borderRadius: '50%',
-              background: '#10B981',
-              color: '#0A0D14',
+              background: '#059669',
+              color: '#FFFFFF',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -81,127 +77,112 @@ export const VaultCertificateScreen: React.FC = () => {
             <ShieldCheck size={22} />
           </div>
           <div>
-            <div style={{ fontSize: 13, fontWeight: 800, color: '#10B981' }}>
-              100% Insured by Dubai National Insurance (DNI)
+            <div style={{ fontSize: 13, fontWeight: 800, color: '#059669' }}>
+              100% Physically Backed & Audited
             </div>
-            <div style={{ fontSize: 11.5, color: '#94A3B8', lineHeight: 1.4 }}>
-              Every fraction of gold and silver on OGold is held 1:1 in Brink’s & Transguard high-security vaults in Dubai.
+            <div style={{ fontSize: 11.5, color: '#334155', lineHeight: 1.4 }}>
+              Every milligram of gold is physically allocated and stored in Brink’s & Transguard vaults in Dubai.
             </div>
           </div>
         </div>
 
-        {/* ── Official Depository Certificate ─────────────────── */}
+        {/* ── Official Depository Certificate Card ───────────── */}
         <div
           style={{
-            background: '#161D2D',
-            borderRadius: 18,
-            border: '1.5px solid rgba(245, 158, 11, 0.45)',
-            boxShadow: '0 8px 30px rgba(0, 0, 0, 0.6)',
+            background: '#FFFFFF',
+            borderRadius: 16,
+            border: '1.5px solid #C59B27',
+            boxShadow: '0 4px 16px rgba(197, 155, 39, 0.1)',
             padding: '20px',
-            marginBottom: 20,
+            marginBottom: 16,
             position: 'relative',
-            color: '#FFFFFF',
           }}
         >
           {/* Certificate Header */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #1E293B', paddingBottom: 14 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #E2E8F0', paddingBottom: 14 }}>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <OGoldMark size={22} />
-                <span style={{ fontSize: 14, fontWeight: 900, color: '#F59E0B' }}>OGOLD</span>
-                <span style={{ fontSize: 10, color: '#94A3B8', fontWeight: 700 }}>PRECIOUS METALS</span>
+                <GoldEmblemMark size={22} />
+                <span style={{ fontSize: 14, fontWeight: 900, color: '#0F172A' }}>YASS GOLD</span>
+                <span style={{ fontSize: 10, color: '#8F6914', fontWeight: 700, background: '#FEFBF2', padding: '1px 5px', borderRadius: 4, border: '1px solid #EED8A1' }}>
+                  DMCC CUSTODY
+                </span>
               </div>
-              <div style={{ fontSize: 10, color: '#64748B', marginTop: 2 }}>
-                Regulated by Dubai Economic Department
+              <div style={{ fontSize: 10, color: '#64748B', marginTop: 3 }}>
+                Assay Certificate: {YASS_VAULT_AUDIT.assayCertificateId}
               </div>
             </div>
 
-            <div
+            <span
               style={{
-                background: 'rgba(245, 158, 11, 0.15)',
-                color: '#FBBF24',
-                padding: '3px 8px',
-                borderRadius: 6,
                 fontSize: 9.5,
                 fontWeight: 800,
-                border: '1px solid rgba(245, 158, 11, 0.3)',
+                color: '#059669',
+                background: '#ECFDF5',
+                padding: '3px 8px',
+                borderRadius: 4,
+                border: '1px solid #A7F3D0',
               }}
             >
-              DNI POLICY: DNI-AUAG-991
-            </div>
+              100% PHYSICAL
+            </span>
           </div>
 
           {/* Certificate Title */}
           <div style={{ textAlign: 'center', padding: '16px 0 12px' }}>
-            <h2 style={{ fontSize: 15, fontWeight: 800, color: '#FFFFFF', textTransform: 'uppercase', letterSpacing: 0.8 }}>
-              Certificate of Physical Bullion Custody
+            <h2 style={{ fontSize: 15, fontWeight: 800, color: '#0F172A', textTransform: 'uppercase', letterSpacing: 0.8 }}>
+              Certificate of Physical Bullion Allocation
             </h2>
-            <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 2 }}>
-              Issued on: {formattedDate} • Recipient: <strong style={{ color: '#FFFFFF' }}>{user?.fullName}</strong> (Emirates ID: {user?.emiratesId})
+            <div style={{ fontSize: 11, color: '#64748B', marginTop: 3 }}>
+              Issued on: {formattedDate} • Recipient: <strong style={{ color: '#0F172A' }}>{user?.fullName}</strong>
             </div>
           </div>
 
-          {/* Verified Allocated Amounts */}
+          {/* Holdings Highlight */}
           <div
             style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: 10,
-              background: '#0F1624',
+              background: '#FEFBF2',
+              border: '1px solid #EED8A1',
               borderRadius: 12,
-              padding: '12px',
-              border: '1px solid #1E293B',
+              padding: '14px',
+              textAlign: 'center',
               marginBottom: 16,
             }}
           >
-            <div>
-              <div style={{ fontSize: 10, color: '#94A3B8', textTransform: 'uppercase', fontWeight: 700 }}>
-                Allocated 24K Gold
-              </div>
-              <div style={{ fontSize: 18, fontWeight: 900, color: '#FBBF24', marginTop: 2 }}>
-                {holdings.totalGrams.toFixed(4)} g
-              </div>
-              <div style={{ fontSize: 10, color: '#10B981', marginTop: 1 }}>999.9 Dubai Good Delivery</div>
+            <div style={{ fontSize: 11, color: '#8F6914', textTransform: 'uppercase', fontWeight: 700, letterSpacing: 0.5 }}>
+              Total Physically Allocated 24K Gold
             </div>
-
-            <div>
-              <div style={{ fontSize: 10, color: '#94A3B8', textTransform: 'uppercase', fontWeight: 700 }}>
-                Allocated .999 Silver
-              </div>
-              <div style={{ fontSize: 18, fontWeight: 900, color: '#E2E8F0', marginTop: 2 }}>
-                {holdings.silverGrams.toFixed(1)} g
-              </div>
-              <div style={{ fontSize: 10, color: '#10B981', marginTop: 1 }}>.999 Pure Bullion Bar</div>
+            <div style={{ fontSize: 28, fontWeight: 900, color: '#0F172A', marginTop: 2 }}>
+              {holdings.totalGrams.toFixed(4)} grams
+            </div>
+            <div style={{ fontSize: 12, color: '#059669', fontWeight: 700, marginTop: 2 }}>
+              Valuation: AED {totalValuation} (999.9 Dubai Good Delivery)
             </div>
           </div>
 
-          {/* Summary Details */}
-          <div className="summary-row">
-            <span className="label">Total Valuation</span>
-            <span className="value" style={{ color: '#FBBF24' }}>AED {totalValuation}</span>
-          </div>
+          {/* Audit Details */}
           <div className="summary-row">
             <span className="label">Primary Depository</span>
-            <span className="value">Brink’s Global Services, Almas Tower (DMCC)</span>
+            <span className="value">Brink’s Global Services, Almas Tower (DMCC Dubai)</span>
           </div>
           <div className="summary-row">
-            <span className="label">Secondary Depository</span>
+            <span className="label">Secondary Vault</span>
             <span className="value">Transguard Vaults, Emirates Group HQ</span>
           </div>
           <div className="summary-row">
-            <span className="label">Independent Auditor</span>
+            <span className="label">Independent Custody Auditor</span>
             <span className="value">BDO Chartered Accountants (Dubai)</span>
           </div>
           <div className="summary-row">
-            <span className="label">Insurance Underwriter</span>
-            <span className="value" style={{ color: '#10B981' }}>Dubai National Insurance (DNI)</span>
+            <span className="label">Last Physical Bar Audit</span>
+            <span className="value">{YASS_VAULT_AUDIT.auditDate}</span>
           </div>
           <div className="summary-row total">
-            <span className="label">Verification Status</span>
-            <span className="value" style={{ color: '#10B981' }}>100% Backed (1:1 Ratio)</span>
+            <span className="label">Depository Backing Ratio</span>
+            <span className="value" style={{ color: '#059669' }}>100.0% Allocated Physical Ingot</span>
           </div>
 
-          {/* Download & QR Action */}
+          {/* Action Buttons */}
           <div style={{ display: 'flex', gap: 10, marginTop: 18 }}>
             <button
               className="btn btn-primary"
@@ -227,11 +208,11 @@ export const VaultCertificateScreen: React.FC = () => {
       {showInspectionModal && (
         <div className="modal-overlay" onClick={() => setShowInspectionModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ fontSize: 17, fontWeight: 800, color: '#FFFFFF', marginBottom: 6 }}>
-              Schedule Vault Inspection
+            <h3 style={{ fontSize: 17, fontWeight: 800, color: '#0F172A', marginBottom: 6 }}>
+              Schedule Brink’s Vault Inspection
             </h3>
-            <p style={{ fontSize: 12, color: '#94A3B8', lineHeight: 1.4, marginBottom: 14 }}>
-              OGold allows VIP holders holding over 50g of physical bullion to schedule an escorted audit inspection at Brink's DMCC in Almas Tower.
+            <p style={{ fontSize: 12, color: '#64748B', lineHeight: 1.4, marginBottom: 14 }}>
+              YASS Gold clients holding physical bullion allocations can request an escorted audit inspection at Brink’s DMCC Depository in Almas Tower, Dubai.
             </p>
 
             <div className="summary-row">
@@ -243,7 +224,7 @@ export const VaultCertificateScreen: React.FC = () => {
               <span className="value">Transguard Armed Security</span>
             </div>
             <div className="summary-row total">
-              <span className="label">ID Verification</span>
+              <span className="label">ID Required</span>
               <span className="value">Emirates ID Required</span>
             </div>
 

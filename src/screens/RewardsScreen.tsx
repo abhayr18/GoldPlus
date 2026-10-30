@@ -1,7 +1,7 @@
 // ============================================
-// OGold Wallet — Rewards & Lifestyle Super App Screen
-// Daily Spin & Win, XP Tiers, eSIMs & Gift Cards
-// App Store: id6504926022
+// YASS Gold — Rewards & Bullion Privileges Screen
+// Daily Spin & Win, Tier Benefits & Gold Gifting
+// A Product by YASS Group, Dubai
 // ============================================
 
 import React, { useState } from 'react';
@@ -19,14 +19,14 @@ import { LIFESTYLE_SERVICES, DEMO_GOLD_RATE } from '../constants';
 import type { LifestyleService } from '../types';
 
 const WHEEL_SEGMENTS = [
-  { label: '+10mg Gold', type: 'gold' as const, value: 10, color: '#F59E0B' },
-  { label: '+50mg Silver', type: 'silver' as const, value: 50, color: '#94A3B8' },
-  { label: '100 XP', type: 'xp' as const, value: 100, color: '#6366F1' },
-  { label: '+25mg Gold', type: 'gold' as const, value: 25, color: '#FBBF24' },
-  { label: '+100mg Silver', type: 'silver' as const, value: 100, color: '#CBD5E1' },
-  { label: '250 XP', type: 'xp' as const, value: 250, color: '#8B5CF6' },
-  { label: '+50mg Gold', type: 'gold' as const, value: 50, color: '#D97706' },
-  { label: '1g Silver Jackpot', type: 'silver' as const, value: 1000, color: '#E2E8F0' },
+  { label: '+10mg Gold', type: 'gold' as const, value: 10, color: '#B8860B' },
+  { label: '+50mg Silver', type: 'silver' as const, value: 50, color: '#64748B' },
+  { label: '100 XP', type: 'xp' as const, value: 100, color: '#4F46E5' },
+  { label: '+25mg Gold', type: 'gold' as const, value: 25, color: '#D4AF37' },
+  { label: '+100mg Silver', type: 'silver' as const, value: 100, color: '#475569' },
+  { label: '250 XP', type: 'xp' as const, value: 250, color: '#7C3AED' },
+  { label: '+50mg Gold', type: 'gold' as const, value: 50, color: '#92400E' },
+  { label: '1g Silver Jackpot', type: 'silver' as const, value: 1000, color: '#334155' },
 ];
 
 export const RewardsScreen: React.FC = () => {
@@ -48,10 +48,8 @@ export const RewardsScreen: React.FC = () => {
     if (spinsLeft <= 0 || isSpinning) return;
 
     setIsSpinning(true);
-    // Pick winning segment (e.g. index 3: +25mg Gold)
     const winningIndex = 3;
     const segmentAngle = 360 / WHEEL_SEGMENTS.length;
-    // 5 full rotations + landing on segment
     const randomExtraSpins = 5 * 360;
     const finalAngle = randomExtraSpins + (360 - winningIndex * segmentAngle - segmentAngle / 2);
 
@@ -61,7 +59,7 @@ export const RewardsScreen: React.FC = () => {
       setIsSpinning(false);
       const won = WHEEL_SEGMENTS[winningIndex];
       setState(spinWheelAction(state, won.type, won.value));
-      showToast(`🎉 Congratulations! You won ${won.label}! Added to your wallet.`, 'success');
+      showToast(`🎉 Congratulations! You won ${won.label}! Credited to your vault.`, 'success');
     }, 3800);
   };
 
@@ -85,21 +83,21 @@ export const RewardsScreen: React.FC = () => {
       {/* ── Top Header ─────────────────────────────────────── */}
       <div className="screen-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <Gift size={18} color="#F59E0B" />
-          <span className="screen-header-title">Rewards & Lifestyle</span>
+          <Gift size={18} color="#C59B27" />
+          <span className="screen-header-title">Rewards & Privileges</span>
         </div>
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             gap: 4,
-            background: 'rgba(245, 158, 11, 0.15)',
-            border: '1px solid rgba(245, 158, 11, 0.35)',
-            padding: '3px 8px',
+            background: '#FEFBF2',
+            border: '1px solid #EED8A1',
+            padding: '3px 10px',
             borderRadius: 12,
             fontSize: 11,
             fontWeight: 800,
-            color: '#FBBF24',
+            color: '#B8860B',
           }}
         >
           <Sparkles size={12} />
@@ -109,14 +107,14 @@ export const RewardsScreen: React.FC = () => {
 
       <div className="screen-content" style={{ paddingTop: 16 }}>
         {/* ── 1. Daily Spin & Win Game ────────────────────────── */}
-        <div className="card-gold-glow" style={{ marginBottom: 16, textAlign: 'center' }}>
+        <div className="card-gold" style={{ marginBottom: 16, textAlign: 'center' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span
               style={{
                 fontSize: 10,
                 fontWeight: 800,
-                color: '#0A0D14',
-                background: '#FBBF24',
+                color: '#FFFFFF',
+                background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)',
                 padding: '2px 8px',
                 borderRadius: 4,
                 letterSpacing: 0.5,
@@ -124,16 +122,16 @@ export const RewardsScreen: React.FC = () => {
             >
               DAILY LUCK
             </span>
-            <span style={{ fontSize: 11, color: '#94A3B8' }}>
+            <span style={{ fontSize: 11, color: '#64748B', fontWeight: 600 }}>
               {spinsLeft > 0 ? '1 Free Spin Available' : 'Next Spin in 14h 22m'}
             </span>
           </div>
 
-          <h3 style={{ fontSize: 18, fontWeight: 800, color: '#FFFFFF', marginTop: 8 }}>
-            Spin & Win Free Gold & Silver
+          <h3 style={{ fontSize: 18, fontWeight: 900, color: '#0F172A', marginTop: 8 }}>
+            Spin & Win Free Gold Bullion
           </h3>
-          <p style={{ fontSize: 11.5, color: '#94A3B8', marginTop: 2 }}>
-            Spin daily to earn free bullion milligrams, bonus XP, and exclusive perks
+          <p style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
+            Spin daily to earn free 24K gold milligrams, bonus XP, and VIP perks
           </p>
 
           {/* Interactive Wheel Graphic */}
@@ -144,11 +142,13 @@ export const RewardsScreen: React.FC = () => {
                 width: '100%',
                 height: '100%',
                 borderRadius: '50%',
-                background: 'conic-gradient(#1E293B 0deg 45deg, #161D2D 45deg 90deg, #1E293B 90deg 135deg, #161D2D 135deg 180deg, #1E293B 180deg 225deg, #161D2D 225deg 270deg, #1E293B 270deg 315deg, #161D2D 315deg 360deg)',
+                background: 'conic-gradient(#FEFBF2 0deg 45deg, #FFFDF7 45deg 90deg, #FEFBF2 90deg 135deg, #FFFDF7 135deg 180deg, #FEFBF2 180deg 225deg, #FFFDF7 225deg 270deg, #FEFBF2 270deg 315deg, #FFFDF7 315deg 360deg)',
+                border: '4px solid #EED8A1',
                 transform: `rotate(${rotationDegree}deg)`,
                 transition: isSpinning ? 'transform 3.8s cubic-bezier(0.15, 0.9, 0.25, 1)' : 'none',
                 position: 'relative',
                 overflow: 'hidden',
+                boxShadow: 'inset 0 0 16px rgba(212, 175, 55, 0.2)',
               }}
             >
               {WHEEL_SEGMENTS.map((seg, idx) => {
@@ -181,6 +181,9 @@ export const RewardsScreen: React.FC = () => {
               style={{
                 cursor: spinsLeft > 0 && !isSpinning ? 'pointer' : 'not-allowed',
                 opacity: spinsLeft > 0 && !isSpinning ? 1 : 0.6,
+                background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)',
+                color: '#FFFFFF',
+                boxShadow: '0 2px 10px rgba(212, 175, 55, 0.4)',
               }}
             >
               {isSpinning ? 'SPINNING' : spinsLeft > 0 ? 'SPIN' : 'CLAIMED'}
@@ -191,7 +194,7 @@ export const RewardsScreen: React.FC = () => {
             className="btn btn-primary"
             disabled={spinsLeft <= 0 || isSpinning}
             onClick={handleSpin}
-            style={{ height: 42, fontSize: 13 }}
+            style={{ height: 44, fontSize: 13 }}
           >
             {spinsLeft > 0 ? '🎡 Tap to Spin Wheel' : '✓ Daily Spin Used — Come Back Tomorrow'}
           </button>
@@ -201,17 +204,17 @@ export const RewardsScreen: React.FC = () => {
         <div className="card" style={{ marginBottom: 16 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Award size={18} color="#FBBF24" />
+              <Award size={18} color="#C59B27" />
               <div>
-                <div style={{ fontSize: 13, fontWeight: 800, color: '#FFFFFF' }}>
+                <div style={{ fontSize: 13.5, fontWeight: 800, color: '#0F172A' }}>
                   {user?.tier || 'Gold'} Member Tier
                 </div>
-                <div style={{ fontSize: 10.5, color: '#94A3B8' }}>
-                  Enjoy 0% making charges on 100g bars & higher card limits
+                <div style={{ fontSize: 11, color: '#64748B' }}>
+                  Enjoy 0% making charges on 100g bars & higher vault limits
                 </div>
               </div>
             </div>
-            <span style={{ fontSize: 12, fontWeight: 800, color: '#FBBF24' }}>
+            <span style={{ fontSize: 12, fontWeight: 900, color: '#B8860B' }}>
               {currentXP} / {nextTierXP} XP
             </span>
           </div>
@@ -220,7 +223,7 @@ export const RewardsScreen: React.FC = () => {
             style={{
               width: '100%',
               height: 6,
-              background: '#1E293B',
+              background: '#F1F5F9',
               borderRadius: 3,
               overflow: 'hidden',
               marginBottom: 6,
@@ -230,13 +233,13 @@ export const RewardsScreen: React.FC = () => {
               style={{
                 width: `${progressPercent}%`,
                 height: '100%',
-                background: 'linear-gradient(90deg, #F59E0B, #FBBF24)',
+                background: 'linear-gradient(90deg, #D4AF37, #B8860B)',
                 borderRadius: 3,
               }}
             />
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#64748B' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10.5, color: '#64748B' }}>
             <span>Gold Tier</span>
             <span>Platinum VIP (5,000 XP)</span>
           </div>
@@ -246,31 +249,32 @@ export const RewardsScreen: React.FC = () => {
         <div style={{ marginBottom: 16 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
             <div>
-              <div style={{ fontSize: 13.5, fontWeight: 800, color: '#FFFFFF' }}>
-                Lifestyle Super App Services
+              <div style={{ fontSize: 14, fontWeight: 800, color: '#0F172A' }}>
+                Lifestyle & Travel Privileges
               </div>
-              <div style={{ fontSize: 11, color: '#94A3B8' }}>
+              <div style={{ fontSize: 11.5, color: '#64748B' }}>
                 Purchase global travel eSIMs and gift cards directly with gold
               </div>
             </div>
           </div>
 
           {/* Category Tabs */}
-          <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
+          <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
             {(['all', 'esim', 'giftcard'] as const).map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
                 style={{
-                  padding: '6px 12px',
+                  padding: '7px 14px',
                   borderRadius: 8,
-                  border: 'none',
-                  background: selectedCategory === cat ? '#F59E0B' : '#161D2D',
-                  color: selectedCategory === cat ? '#0A0D14' : '#94A3B8',
+                  border: selectedCategory === cat ? '1px solid #C59B27' : '1px solid #E2E8F0',
+                  background: selectedCategory === cat ? 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)' : '#FFFFFF',
+                  color: selectedCategory === cat ? '#FFFFFF' : '#64748B',
                   fontSize: 11.5,
-                  fontWeight: 700,
+                  fontWeight: 800,
                   cursor: 'pointer',
                   textTransform: 'capitalize',
+                  transition: 'all 0.15s ease',
                 }}
               >
                 {cat === 'all' ? 'All Services' : cat === 'esim' ? 'Travel eSIMs' : 'Gift Cards'}
@@ -300,8 +304,9 @@ export const RewardsScreen: React.FC = () => {
                       width: 40,
                       height: 40,
                       borderRadius: 10,
-                      background: service.category === 'esim' ? 'rgba(59, 130, 246, 0.15)' : 'rgba(245, 158, 11, 0.15)',
-                      color: service.category === 'esim' ? '#60A5FA' : '#FBBF24',
+                      background: service.category === 'esim' ? '#EFF6FF' : '#FEFBF2',
+                      color: service.category === 'esim' ? '#3B82F6' : '#C59B27',
+                      border: `1px solid ${service.category === 'esim' ? '#BFDBFE' : '#F3E8C8'}`,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -312,33 +317,33 @@ export const RewardsScreen: React.FC = () => {
 
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                      <span style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF' }}>
+                      <span style={{ fontSize: 13.5, fontWeight: 800, color: '#0F172A' }}>
                         {service.title}
                       </span>
                       <span
                         style={{
-                          fontSize: 9,
+                          fontSize: 9.5,
                           fontWeight: 800,
-                          padding: '1px 5px',
+                          padding: '1px 6px',
                           borderRadius: 4,
-                          background: 'rgba(16, 185, 129, 0.15)',
-                          color: '#10B981',
+                          background: '#D1FAE5',
+                          color: '#059669',
                         }}
                       >
                         {service.tag}
                       </span>
                     </div>
-                    <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 2 }}>
+                    <div style={{ fontSize: 11.5, color: '#64748B', marginTop: 2 }}>
                       {service.provider}
                     </div>
                   </div>
                 </div>
 
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 13, fontWeight: 800, color: '#FBBF24' }}>
+                  <div style={{ fontSize: 13.5, fontWeight: 900, color: '#B8860B' }}>
                     AED {service.priceAED}
                   </div>
-                  <div style={{ fontSize: 10, color: '#64748B' }}>
+                  <div style={{ fontSize: 10.5, color: '#64748B' }}>
                     ≈ {service.goldEquivalentGrams}g 24K
                   </div>
                 </div>
@@ -349,41 +354,41 @@ export const RewardsScreen: React.FC = () => {
 
         {/* ── 4. Refer & Earn Free Gold ───────────────────────── */}
         <div
-          className="card"
+          className="card-gold"
           style={{
-            background: 'linear-gradient(135deg, #1E1B15 0%, #161D2D 100%)',
-            border: '1px solid rgba(245, 158, 11, 0.3)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             marginBottom: 20,
+            padding: '16px',
           }}
         >
           <div>
-            <div style={{ fontSize: 13, fontWeight: 800, color: '#FFFFFF' }}>
-              Gift & Refer in UAE
+            <div style={{ fontSize: 13.5, fontWeight: 900, color: '#0F172A' }}>
+              Gift & Invite across UAE
             </div>
-            <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 2 }}>
-              Get +50mg pure gold for every friend who joins & vaults on OGold
+            <div style={{ fontSize: 11.5, color: '#64748B', marginTop: 2 }}>
+              Get +50mg pure gold for every friend who vaults on YASS Gold
             </div>
           </div>
           <button
-            onClick={() => showToast('Referral link copied to clipboard: https://ogold.app/r/tariq', 'success')}
+            onClick={() => showToast('Referral link copied to clipboard: https://yassbullion.com/r/tariq', 'success')}
             style={{
-              background: '#F59E0B',
-              color: '#0A0D14',
+              background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)',
+              color: '#FFFFFF',
               border: 'none',
-              padding: '8px 14px',
+              padding: '9px 16px',
               borderRadius: 8,
-              fontSize: 11.5,
+              fontSize: 12,
               fontWeight: 800,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: 5,
+              gap: 6,
+              boxShadow: '0 2px 8px rgba(212, 175, 55, 0.25)',
             }}
           >
-            <Share2 size={13} />
+            <Share2 size={14} />
             <span>Share</span>
           </button>
         </div>
@@ -393,10 +398,10 @@ export const RewardsScreen: React.FC = () => {
       {selectedService && (
         <div className="modal-overlay" onClick={() => setSelectedService(null)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ fontSize: 17, fontWeight: 800, color: '#FFFFFF', marginBottom: 6 }}>
-              Confirm Redemption
+            <h3 style={{ fontSize: 17, fontWeight: 900, color: '#0F172A', marginBottom: 6 }}>
+              Confirm Privilege Redemption
             </h3>
-            <div style={{ fontSize: 12, color: '#94A3B8', marginBottom: 14 }}>
+            <div style={{ fontSize: 12, color: '#64748B', marginBottom: 14 }}>
               Pay instantly using your vaulted 24K gold balance
             </div>
 
@@ -410,7 +415,7 @@ export const RewardsScreen: React.FC = () => {
             </div>
             <div className="summary-row">
               <span className="label">Gold Deducted</span>
-              <span className="value" style={{ color: '#FBBF24' }}>
+              <span className="value" style={{ color: '#B8860B', fontWeight: 800 }}>
                 ≈ {selectedService.goldEquivalentGrams}g 24K Gold
               </span>
             </div>

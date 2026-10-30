@@ -1,7 +1,7 @@
 // ============================================
-// OGold Wallet — Buy Gold & Silver Screen
-// Buy 24K Gold & .999 Silver Instantly from AED 1
-// App Store: id6504926022
+// YASS Gold & Bullion — Buy Digital Gold Screen
+// White + Gold Clean Minimalist & Professional Flow
+// Real-time Dubai Gold Souk Benchmark
 // ============================================
 
 import React, { useState, useMemo, useEffect } from 'react';
@@ -14,18 +14,15 @@ import {
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
 import { buyMetalAction, generateTransactionId } from '../state/appState';
-import { DEMO_GOLD_RATE, DEMO_SILVER_RATE } from '../constants';
-import type { MetalType } from '../types';
+import { DEMO_GOLD_RATE } from '../constants';
 
 type FlowState = 'input' | 'review' | 'success';
 type InputMode = 'amount' | 'weight';
-type PaymentMethod = 'Apple Pay / Card' | 'Aani Instant Pay' | 'Emirates NBD Transfer';
+type PaymentMethod = 'Apple Pay / Card' | 'Aani Instant Pay' | 'Emirates NBD Bank';
 
 export const BuyGoldScreen: React.FC = () => {
   const { state, setState, navigate, back, showToast } = useApp();
 
-  // ---------- Local state ----------
-  const [metal, setMetal] = useState<MetalType>('gold');
   const [flowState, setFlowState] = useState<FlowState>('input');
   const [inputMode, setInputMode] = useState<InputMode>('amount');
   const [amountStr, setAmountStr] = useState<string>('500');
@@ -41,7 +38,7 @@ export const BuyGoldScreen: React.FC = () => {
     const timer = setInterval(() => {
       setSecondsRemaining((prev) => {
         if (prev <= 1) {
-          showToast('Spot rate refreshed to live Dubai benchmark', 'info');
+          showToast('Gold rate refreshed from Dubai Gold Souk benchmark', 'info');
           return 60;
         }
         return prev - 1;
@@ -51,9 +48,7 @@ export const BuyGoldScreen: React.FC = () => {
     return () => clearInterval(timer);
   }, [showToast]);
 
-  const activeRate = metal === 'gold' ? DEMO_GOLD_RATE : DEMO_SILVER_RATE;
-
-  // ---------- Derived values ----------
+  const activeRate = DEMO_GOLD_RATE;
   const amount = parseFloat(amountStr) || 0;
   const weight = parseFloat(weightStr) || 0;
 
@@ -62,13 +57,13 @@ export const BuyGoldScreen: React.FC = () => {
     return Math.round(weight * activeRate * 100) / 100;
   }, [inputMode, amount, weight, activeRate]);
 
-  const metalGrams = useMemo(() => {
+  const goldGrams = useMemo(() => {
     if (inputMode === 'weight') return weight;
     return Math.round((amount / activeRate) * 10000) / 10000;
   }, [inputMode, amount, weight, activeRate]);
 
   const isValid = useMemo(() => {
-    if (inputMode === 'amount') return amount >= 1; // OGold allows buying from 1 AED
+    if (inputMode === 'amount') return amount >= 10;
     return weight > 0;
   }, [inputMode, amount, weight]);
 
@@ -82,7 +77,7 @@ export const BuyGoldScreen: React.FC = () => {
     setAmountStr(value.toString());
   };
 
-  const quickAmounts = metal === 'gold' ? [100, 250, 500, 1000, 5000] : [50, 100, 250, 500, 1000];
+  const quickAmounts = [100, 250, 500, 1000, 5000];
 
   const handleProceed = () => {
     if (!isValid) return;
@@ -90,9 +85,9 @@ export const BuyGoldScreen: React.FC = () => {
   };
 
   const handleConfirm = () => {
-    setState(buyMetalAction(state, metal, effectiveAmount, paymentMethod));
+    setState(buyMetalAction(state, 'gold', effectiveAmount, paymentMethod));
     setFlowState('success');
-    showToast(`Successfully bought ${formatGrams(metalGrams)} of ${metal === 'gold' ? '24K Gold' : '.999 Silver'}!`, 'success');
+    showToast(`Successfully bought ${formatGrams(goldGrams)} of 24K Gold!`, 'success');
   };
 
   // ── 1. INPUT STATE ─────────────────────────────────────────
@@ -102,54 +97,30 @@ export const BuyGoldScreen: React.FC = () => {
         <button className="screen-header-back" onClick={back} aria-label="Back">
           <ArrowLeft size={18} />
         </button>
-        <span className="screen-header-title">Buy Precious Metals</span>
+        <span className="screen-header-title">Buy 24K Digital Gold</span>
         <div style={{ width: 36 }} />
       </div>
 
       <div className="screen-content" style={{ paddingTop: 14 }}>
-        {/* Metal Toggle: Gold vs Silver */}
-        <div className="metal-toggle-bar">
-          <button
-            className={`metal-toggle-btn ${metal === 'gold' ? 'active gold' : ''}`}
-            onClick={() => {
-              setMetal('gold');
-              setSelectedChip(500);
-              setAmountStr('500');
-            }}
-          >
-            <span>24K Gold (999.9)</span>
-          </button>
-          <button
-            className={`metal-toggle-btn ${metal === 'silver' ? 'active silver' : ''}`}
-            onClick={() => {
-              setMetal('silver');
-              setSelectedChip(250);
-              setAmountStr('250');
-            }}
-          >
-            <span>.999 Pure Silver</span>
-          </button>
-        </div>
-
-        {/* Live Spot Rate Banner with Timer */}
+        {/* Live Spot Rate Card */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '12px 14px',
+            padding: '14px 16px',
             borderRadius: 12,
-            background: '#161D2D',
-            border: `1px solid ${metal === 'gold' ? 'rgba(245, 158, 11, 0.3)' : 'rgba(148, 163, 184, 0.3)'}`,
+            background: '#FEFBF2',
+            border: '1px solid #EED8A1',
             marginBottom: 16,
           }}
         >
           <div>
-            <div style={{ fontSize: 10.5, color: '#94A3B8', textTransform: 'uppercase', fontWeight: 700, letterSpacing: 0.5 }}>
-              Live Dubai Spot Benchmark
+            <div style={{ fontSize: 10.5, color: '#64748B', textTransform: 'uppercase', fontWeight: 700, letterSpacing: 0.5 }}>
+              Dubai Gold Souk Benchmark (24K 999.9)
             </div>
-            <div style={{ fontSize: 18, fontWeight: 900, color: '#FFFFFF', marginTop: 2 }}>
-              {formatCurrency(activeRate)} <span style={{ fontSize: 12, color: '#94A3B8', fontWeight: 500 }}>/ gram</span>
+            <div style={{ fontSize: 19, fontWeight: 900, color: '#0F172A', marginTop: 2 }}>
+              {formatCurrency(activeRate)} <span style={{ fontSize: 12, color: '#64748B', fontWeight: 500 }}>/ gram</span>
             </div>
           </div>
 
@@ -160,8 +131,9 @@ export const BuyGoldScreen: React.FC = () => {
               gap: 5,
               fontSize: 11,
               fontWeight: 800,
-              color: '#FBBF24',
-              background: 'rgba(245, 158, 11, 0.15)',
+              color: '#8F6914',
+              background: '#FFFFFF',
+              border: '1px solid #EED8A1',
               padding: '4px 10px',
               borderRadius: 20,
             }}
@@ -171,7 +143,7 @@ export const BuyGoldScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Amount / Weight Input Mode Tabs */}
+        {/* Input Mode Selector */}
         <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
           <button
             onClick={() => setInputMode('amount')}
@@ -179,15 +151,16 @@ export const BuyGoldScreen: React.FC = () => {
               flex: 1,
               padding: '8px 12px',
               borderRadius: 8,
-              border: 'none',
-              background: inputMode === 'amount' ? '#F59E0B' : '#161D2D',
-              color: inputMode === 'amount' ? '#0A0D14' : '#94A3B8',
-              fontSize: 12,
+              border: '1px solid',
+              borderColor: inputMode === 'amount' ? '#C59B27' : '#E2E8F0',
+              background: inputMode === 'amount' ? '#FEFBF2' : '#FFFFFF',
+              color: inputMode === 'amount' ? '#8F6914' : '#64748B',
+              fontSize: 12.5,
               fontWeight: 700,
               cursor: 'pointer',
             }}
           >
-            Enter in AED (Cash)
+            Buy in AED (Cash)
           </button>
           <button
             onClick={() => setInputMode('weight')}
@@ -195,23 +168,24 @@ export const BuyGoldScreen: React.FC = () => {
               flex: 1,
               padding: '8px 12px',
               borderRadius: 8,
-              border: 'none',
-              background: inputMode === 'weight' ? '#F59E0B' : '#161D2D',
-              color: inputMode === 'weight' ? '#0A0D14' : '#94A3B8',
-              fontSize: 12,
+              border: '1px solid',
+              borderColor: inputMode === 'weight' ? '#C59B27' : '#E2E8F0',
+              background: inputMode === 'weight' ? '#FEFBF2' : '#FFFFFF',
+              color: inputMode === 'weight' ? '#8F6914' : '#64748B',
+              fontSize: 12.5,
               fontWeight: 700,
               cursor: 'pointer',
             }}
           >
-            Enter in Grams (Weight)
+            Buy in Grams (Weight)
           </button>
         </div>
 
-        {/* Input Card */}
+        {/* Amount Input Card */}
         <div className="card" style={{ marginBottom: 14 }}>
           {inputMode === 'amount' ? (
             <div>
-              <label className="form-label">How much would you like to invest?</label>
+              <label className="form-label">How much would you like to buy?</label>
               <div className="form-input-prefix">
                 <span className="prefix">AED</span>
                 <input
@@ -225,14 +199,14 @@ export const BuyGoldScreen: React.FC = () => {
                   autoFocus
                 />
               </div>
-              <div style={{ fontSize: 11.5, color: '#94A3B8', marginTop: 8 }}>
+              <div style={{ fontSize: 12, color: '#64748B', marginTop: 8 }}>
                 You will receive:{' '}
-                <strong style={{ color: '#FBBF24' }}>{formatGrams(metalGrams)}</strong> of {metal === 'gold' ? '24K 999.9 Gold' : '.999 Silver'}
+                <strong style={{ color: '#0F172A' }}>{formatGrams(goldGrams)}</strong> of pure 24K gold
               </div>
             </div>
           ) : (
             <div>
-              <label className="form-label">Weight of bullion to purchase:</label>
+              <label className="form-label">Weight of 24K gold to purchase:</label>
               <div className="form-input-prefix">
                 <span className="prefix">Grams</span>
                 <input
@@ -244,14 +218,14 @@ export const BuyGoldScreen: React.FC = () => {
                   autoFocus
                 />
               </div>
-              <div style={{ fontSize: 11.5, color: '#94A3B8', marginTop: 8 }}>
+              <div style={{ fontSize: 12, color: '#64748B', marginTop: 8 }}>
                 Total payable:{' '}
-                <strong style={{ color: '#FBBF24' }}>{formatCurrency(effectiveAmount)}</strong>
+                <strong style={{ color: '#0F172A' }}>{formatCurrency(effectiveAmount)}</strong>
               </div>
             </div>
           )}
 
-          {/* Quick Selection Chips */}
+          {/* Quick Amount Chips */}
           {inputMode === 'amount' && (
             <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 14 }}>
               {quickAmounts.map((amt) => (
@@ -262,9 +236,9 @@ export const BuyGoldScreen: React.FC = () => {
                     padding: '6px 12px',
                     borderRadius: 8,
                     border: '1px solid',
-                    borderColor: selectedChip === amt ? '#F59E0B' : '#1E293B',
-                    background: selectedChip === amt ? 'rgba(245, 158, 11, 0.15)' : '#121826',
-                    color: selectedChip === amt ? '#FBBF24' : '#94A3B8',
+                    borderColor: selectedChip === amt ? '#C59B27' : '#E2E8F0',
+                    background: selectedChip === amt ? '#FEFBF2' : '#FFFFFF',
+                    color: selectedChip === amt ? '#8F6914' : '#64748B',
                     fontSize: 12,
                     fontWeight: 700,
                     cursor: 'pointer',
@@ -277,26 +251,25 @@ export const BuyGoldScreen: React.FC = () => {
           )}
         </div>
 
-        {/* 0% VAT Notice & Shariah Shield */}
+        {/* 0% VAT Notice */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             gap: 8,
             padding: '10px 14px',
-            background: 'rgba(16, 185, 129, 0.08)',
-            border: '1px solid rgba(16, 185, 129, 0.25)',
+            background: '#ECFDF5',
+            border: '1px solid #A7F3D0',
             borderRadius: 10,
             marginBottom: 20,
           }}
         >
-          <ShieldCheck size={16} color="#10B981" />
-          <span style={{ fontSize: 11.5, color: '#10B981', fontWeight: 600 }}>
-            0% UAE VAT on Investment Grade Bullion • Instant Depository Credit
+          <ShieldCheck size={16} color="#059669" />
+          <span style={{ fontSize: 11.5, color: '#059669', fontWeight: 600 }}>
+            0% UAE VAT on Investment Grade Gold • Instant Brink's Vault Deposit
           </span>
         </div>
 
-        {/* Continue Button */}
         <button
           className="btn btn-primary"
           disabled={!isValid}
@@ -322,12 +295,12 @@ export const BuyGoldScreen: React.FC = () => {
 
       <div className="screen-content" style={{ paddingTop: 14 }}>
         <div className="card" style={{ marginBottom: 16 }}>
-          <div style={{ fontSize: 12, color: '#94A3B8' }}>Asset Details</div>
-          <div style={{ fontSize: 18, fontWeight: 800, color: '#FFFFFF', marginTop: 4 }}>
-            {formatGrams(metalGrams)} {metal === 'gold' ? '24K 999.9 Fine Gold' : '.999 Pure Silver'}
+          <div style={{ fontSize: 12, color: '#64748B' }}>Purchase Breakdown</div>
+          <div style={{ fontSize: 18, fontWeight: 800, color: '#0F172A', marginTop: 4 }}>
+            {formatGrams(goldGrams)} 24K 999.9 Fine Gold
           </div>
 
-          <div style={{ height: 1, background: '#1E293B', margin: '14px 0' }} />
+          <div style={{ height: 1, background: '#E2E8F0', margin: '14px 0' }} />
 
           <div className="summary-row">
             <span className="label">Spot Benchmark Rate</span>
@@ -335,15 +308,15 @@ export const BuyGoldScreen: React.FC = () => {
           </div>
           <div className="summary-row">
             <span className="label">Assay Purity Standard</span>
-            <span className="value">{metal === 'gold' ? '999.9 Dubai Good Delivery' : '.999 Fine Bullion'}</span>
+            <span className="value">999.9 Dubai Good Delivery</span>
           </div>
           <div className="summary-row">
-            <span className="label">Vault Custody & Insurance</span>
-            <span className="value" style={{ color: '#10B981' }}>FREE (DNI Insured)</span>
+            <span className="label">Brink’s DMCC Custody</span>
+            <span className="value" style={{ color: '#059669' }}>FREE</span>
           </div>
           <div className="summary-row">
-            <span className="label">UAE VAT (Investment Grade)</span>
-            <span className="value" style={{ color: '#10B981' }}>AED 0.00 (0% Exempt)</span>
+            <span className="label">UAE VAT (0% Exempt)</span>
+            <span className="value" style={{ color: '#059669' }}>AED 0.00</span>
           </div>
           <div className="summary-row total">
             <span className="label">Total Amount Payable</span>
@@ -351,13 +324,13 @@ export const BuyGoldScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Payment Method Selector */}
+        {/* Payment Methods */}
         <div className="card" style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF', marginBottom: 12 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: '#0F172A', marginBottom: 12 }}>
             Select Payment Method
           </div>
 
-          {(['Apple Pay / Card', 'Aani Instant Pay', 'Emirates NBD Transfer'] as const).map((method) => (
+          {(['Apple Pay / Card', 'Aani Instant Pay', 'Emirates NBD Bank'] as const).map((method) => (
             <div
               key={method}
               onClick={() => setPaymentMethod(method)}
@@ -368,29 +341,29 @@ export const BuyGoldScreen: React.FC = () => {
                 padding: '10px 12px',
                 borderRadius: 10,
                 border: '1px solid',
-                borderColor: paymentMethod === method ? '#F59E0B' : '#1E293B',
-                background: paymentMethod === method ? 'rgba(245, 158, 11, 0.1)' : '#121826',
+                borderColor: paymentMethod === method ? '#C59B27' : '#E2E8F0',
+                background: paymentMethod === method ? '#FEFBF2' : '#FFFFFF',
                 marginBottom: 8,
                 cursor: 'pointer',
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <CreditCard size={18} color={paymentMethod === method ? '#FBBF24' : '#94A3B8'} />
-                <span style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF' }}>{method}</span>
+                <CreditCard size={18} color={paymentMethod === method ? '#8F6914' : '#64748B'} />
+                <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>{method}</span>
               </div>
               <div
                 style={{
                   width: 18,
                   height: 18,
                   borderRadius: '50%',
-                  border: `2px solid ${paymentMethod === method ? '#F59E0B' : '#64748B'}`,
-                  background: paymentMethod === method ? '#F59E0B' : 'transparent',
+                  border: `2px solid ${paymentMethod === method ? '#C59B27' : '#CBD5E1'}`,
+                  background: paymentMethod === method ? '#C59B27' : 'transparent',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
-                {paymentMethod === method && <Check size={12} color="#0A0D14" strokeWidth={3} />}
+                {paymentMethod === method && <Check size={12} color="#FFFFFF" strokeWidth={3} />}
               </div>
             </div>
           ))}
@@ -414,7 +387,6 @@ export const BuyGoldScreen: React.FC = () => {
         justifyContent: 'center',
         padding: '32px 24px',
         textAlign: 'center',
-        background: '#0A0D14',
       }}
     >
       <div
@@ -422,54 +394,53 @@ export const BuyGoldScreen: React.FC = () => {
           width: 72,
           height: 72,
           borderRadius: '50%',
-          background: 'rgba(16, 185, 129, 0.15)',
-          border: '2px solid #10B981',
+          background: '#ECFDF5',
+          border: '2px solid #059669',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: '#10B981',
+          color: '#059669',
           marginBottom: 16,
-          boxShadow: '0 0 30px rgba(16, 185, 129, 0.3)',
         }}
       >
         <Check size={38} strokeWidth={3} />
       </div>
 
-      <h2 style={{ fontSize: 22, fontWeight: 900, color: '#FFFFFF', marginBottom: 6 }}>
-        Purchase Completed!
+      <h2 style={{ fontSize: 22, fontWeight: 900, color: '#0F172A', marginBottom: 6 }}>
+        Gold Purchase Completed!
       </h2>
-      <p style={{ fontSize: 13, color: '#94A3B8', maxWidth: 300, lineHeight: 1.5, marginBottom: 20 }}>
-        Your bullion is securely deposited into your Brink’s DMCC insured vault.
+      <p style={{ fontSize: 13, color: '#64748B', maxWidth: 300, lineHeight: 1.5, marginBottom: 20 }}>
+        Your pure 24K gold is securely allocated and stored in your Brink’s DMCC vault.
       </p>
 
       <div
         style={{
           padding: '16px 24px',
           borderRadius: 14,
-          background: '#161D2D',
-          border: '1px solid rgba(245, 158, 11, 0.3)',
+          background: '#FEFBF2',
+          border: '1px solid #EED8A1',
           marginBottom: 24,
           width: '100%',
           maxWidth: 320,
         }}
       >
-        <div style={{ fontSize: 22, fontWeight: 900, color: '#FBBF24' }}>
-          +{formatGrams(metalGrams)}
+        <div style={{ fontSize: 22, fontWeight: 900, color: '#8F6914' }}>
+          +{formatGrams(goldGrams)}
         </div>
-        <div style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>
-          {metal === 'gold' ? '24K 999.9 Fine Gold' : '.999 Pure Silver'}
+        <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
+          24K 999.9 Dubai Good Delivery Gold
         </div>
-        <div style={{ fontSize: 11, color: '#64748B', marginTop: 8 }}>
+        <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 8 }}>
           Ref: {reference}
         </div>
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 320 }}>
-        <button className="btn btn-primary" onClick={() => navigate('card')}>
-          View in OGold Mastercard
+        <button className="btn btn-primary" onClick={() => navigate('delivery')}>
+          Order Doorstep Physical Bullion
         </button>
         <button className="btn btn-secondary" onClick={() => navigate('dashboard')}>
-          Back to Wallet
+          Back to Home
         </button>
       </div>
     </div>

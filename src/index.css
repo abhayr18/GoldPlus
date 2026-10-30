@@ -1,64 +1,59 @@
 /* ============================================
-   OGold Wallet — Luxury Dark & 24K Gold Design System
-   The Precious Metals & Lifestyle Super App (Dubai, UAE)
-   App Store ID: 6504926022
+   White + Golden Clean Executive Design System
+   Standard, Minimalist, Professional Fintech UI
+   Focused on Digital Gold & Doorstep Physical Delivery
    ============================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* OGold Signature Dark & Metallic Gold Palette */
-  --bg-app: #0A0D14;
-  --bg-dark: #0E131F;
-  --bg-card: #151B2B;
-  --bg-card-hover: #1C243A;
-  --bg-input: #121826;
-  --bg-surface: #1E273D;
+  /* Pristine White Canvas & Card Surfaces */
+  --bg-app: #FFFFFF;
+  --bg-page: #F8FAFC;
+  --bg-subtle: #F9FAFB;
+  --bg-card: #FFFFFF;
+  --bg-input: #FFFFFF;
 
-  /* Metallic Gold */
-  --gold-primary: #F59E0B;
-  --gold-bright: #FBBF24;
-  --gold-dark: #D97706;
-  --gold-secondary: #E5C05B;
-  --gold-light: rgba(245, 158, 11, 0.12);
-  --gold-glow: rgba(245, 158, 11, 0.28);
-  --gold-gradient: linear-gradient(135deg, #FBBF24 0%, #D97706 100%);
-  --gold-card-gradient: linear-gradient(135deg, #2A2111 0%, #171510 50%, #0D0E14 100%);
+  /* Executive Dubai Bullion Gold */
+  --gold-primary: #C59B27;
+  --gold-secondary: #D4AF37;
+  --gold-dark: #A67C1E;
+  --gold-deep: #8F6914;
+  --gold-surface: #FEFBF2;
+  --gold-light: #FFFDF7;
+  --gold-border: #EED8A1;
+  --gold-border-subtle: #F3E8C8;
+  --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+  --gold-soft-gradient: linear-gradient(135deg, #FFFDF7 0%, #FEFBF0 100%);
 
-  /* Pure Silver (.999 Fine) */
-  --silver-primary: #94A3B8;
-  --silver-light: #E2E8F0;
-  --silver-glow: rgba(148, 163, 184, 0.2);
-  --silver-gradient: linear-gradient(135deg, #E2E8F0 0%, #94A3B8 100%);
+  /* High-Legibility Typography */
+  --text-main: #0F172A;
+  --text-body: #334155;
+  --text-secondary: #64748B;
+  --text-muted: #94A3B8;
 
-  /* Neutrals */
-  --text-main: #FFFFFF;
-  --text-secondary: #94A3B8;
-  --text-muted: #64748B;
-  --border: #1E293B;
-  --border-light: #2A364E;
-  --border-gold: rgba(245, 158, 11, 0.35);
+  /* Borders & Dividers */
+  --border: #E2E8F0;
+  --border-light: #F1F5F9;
 
   /* Functional Status */
-  --positive: #10B981;
-  --positive-bg: rgba(16, 185, 129, 0.14);
-  --negative: #EF4444;
-  --negative-bg: rgba(239, 68, 68, 0.14);
-  --streak-orange: #F97316;
-  --streak-bg: rgba(249, 115, 22, 0.14);
-  --yield-purple: #8B5CF6;
-  --yield-bg: rgba(139, 92, 246, 0.14);
+  --positive: #059669;
+  --positive-bg: #ECFDF5;
+  --positive-border: #A7F3D0;
+  --negative: #DC2626;
+  --negative-bg: #FEF2F2;
+  --negative-border: #FECACA;
 
-  /* Shadows & Radius */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.6);
-  --shadow-gold: 0 4px 16px rgba(245, 158, 11, 0.35);
+  /* Subtle Clean Shadows */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
+  --shadow-gold: 0 4px 14px rgba(197, 155, 39, 0.22);
 
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
-  --radius-xl: 22px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
 
   --max-app-width: 480px;
@@ -75,7 +70,7 @@ html, body, #root {
   width: 100%;
   margin: 0;
   padding: 0;
-  background-color: #05070B; /* Deep outer canvas for desktop */
+  background-color: var(--bg-page);
   font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--text-main);
   -webkit-font-smoothing: antialiased;
@@ -83,7 +78,7 @@ html, body, #root {
 }
 
 /* ============================================
-   Responsive App Shell (No Fake Device Hardware Borders)
+   Clean Mobile Container (No Fake Device Hardware Borders)
    ============================================ */
 
 .app-viewport {
@@ -91,7 +86,7 @@ html, body, #root {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  background-color: #05070B;
+  background-color: var(--bg-page);
 }
 
 .app-container {
@@ -102,7 +97,7 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   position: relative;
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 30px rgba(15, 23, 42, 0.04);
   border-left: 1px solid var(--border);
   border-right: 1px solid var(--border);
 }
@@ -130,7 +125,7 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   background-color: var(--bg-app);
-  padding-bottom: 96px; /* Spacing for anchored bottom tab bar */
+  padding-bottom: 84px; /* Space for bottom tab bar */
 }
 
 .screen-content {
@@ -139,7 +134,7 @@ html, body, #root {
 }
 
 /* ============================================
-   Screen Header
+   Screen Header (Clean & Minimal)
    ============================================ */
 
 .screen-header {
@@ -147,7 +142,7 @@ html, body, #root {
   align-items: center;
   justify-content: space-between;
   padding: 14px 16px;
-  background: var(--bg-app);
+  background: #FFFFFF;
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
@@ -157,7 +152,7 @@ html, body, #root {
 .screen-header-title {
   font-size: 16px;
   font-weight: 700;
-  color: #FFFFFF;
+  color: var(--text-main);
   text-align: center;
 }
 
@@ -165,9 +160,9 @@ html, body, #root {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: var(--bg-card);
+  background: #F8FAFC;
   border: 1px solid var(--border);
-  color: #FFFFFF;
+  color: var(--text-main);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -176,12 +171,12 @@ html, body, #root {
 }
 
 .screen-header-back:hover {
-  background: var(--bg-card-hover);
+  background: #F1F5F9;
   border-color: var(--gold-primary);
 }
 
 /* ============================================
-   Bottom Navigation Bar (5 OGold Super App Tabs)
+   Bottom Navigation Bar (5 Clean Tabs)
    ============================================ */
 
 .app-bottom-nav {
@@ -189,16 +184,16 @@ html, body, #root {
   bottom: 0;
   width: 100%;
   max-width: var(--max-app-width);
-  height: 68px;
-  background: rgba(14, 19, 31, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  height: 64px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--border);
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   align-items: center;
   z-index: 50;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 -2px 10px rgba(15, 23, 42, 0.03);
 }
 
 .nav-tab-item {
@@ -209,7 +204,7 @@ html, body, #root {
   gap: 3px;
   background: none;
   border: none;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   cursor: pointer;
   height: 100%;
   position: relative;
@@ -219,11 +214,10 @@ html, body, #root {
 .nav-tab-item span {
   font-size: 10.5px;
   font-weight: 600;
-  letter-spacing: 0.1px;
 }
 
 .nav-tab-item.active {
-  color: var(--gold-bright);
+  color: var(--gold-dark);
 }
 
 .nav-tab-item.active::before {
@@ -231,188 +225,33 @@ html, body, #root {
   position: absolute;
   top: 0;
   width: 28px;
-  height: 3px;
+  height: 2.5px;
   background: var(--gold-primary);
-  border-radius: 0 0 3px 3px;
-  box-shadow: 0 2px 8px var(--gold-glow);
-}
-
-.nav-badge {
-  position: absolute;
-  top: 6px;
-  right: 14px;
-  background: var(--gold-primary);
-  color: #0A0D14;
-  font-size: 8px;
-  font-weight: 800;
-  padding: 1px 4px;
-  border-radius: 4px;
+  border-radius: 0 0 2px 2px;
 }
 
 /* ============================================
-   Cards & Surfaces
+   Cards & Surfaces (Clean White + Gold Touch)
    ============================================ */
 
 .card {
-  background: var(--bg-card);
+  background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 16px;
-  box-shadow: var(--shadow-sm);
-  color: #FFFFFF;
+  box-shadow: var(--shadow-xs);
+  color: var(--text-main);
+  transition: border-color 0.15s ease;
 }
 
-.card-gold-glow {
-  background: linear-gradient(145deg, #1A2234 0%, #121724 100%);
-  border: 1.5px solid var(--border-gold);
-  border-radius: var(--radius-xl);
-  padding: 20px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 24px rgba(245, 158, 11, 0.15);
+.card-gold {
+  background: var(--gold-soft-gradient);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  box-shadow: 0 2px 8px rgba(197, 155, 39, 0.08);
   position: relative;
   overflow: hidden;
-}
-
-/* ============================================
-   OGold Mastercard (Signature Feature)
-   ============================================ */
-
-.ogold-card-container {
-  width: 100%;
-  perspective: 1000px;
-  margin-bottom: 18px;
-}
-
-.ogold-mastercard {
-  width: 100%;
-  height: 210px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #1E1B15 0%, #0F1219 40%, #0A0D14 100%);
-  border: 1.5px solid rgba(245, 158, 11, 0.45);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 30px rgba(245, 158, 11, 0.2);
-  padding: 20px 22px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  overflow: hidden;
-  color: #FFFFFF;
-}
-
-.ogold-mastercard::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at 75% 25%, rgba(245, 158, 11, 0.18) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-.mastercard-chip {
-  width: 40px;
-  height: 30px;
-  background: linear-gradient(135deg, #E5C05B 0%, #B8860B 100%);
-  border-radius: 6px;
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.6), 0 2px 4px rgba(0,0,0,0.4);
-  position: relative;
-}
-
-.mastercard-chip::after {
-  content: '';
-  position: absolute;
-  top: 7px;
-  left: 6px;
-  right: 6px;
-  bottom: 7px;
-  border: 1px solid rgba(0,0,0,0.3);
-  border-radius: 2px;
-}
-
-.mastercard-circles {
-  display: flex;
-  align-items: center;
-}
-
-.mastercard-circle-red {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: #EB001B;
-}
-
-.mastercard-circle-yellow {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: #F79E1B;
-  margin-left: -10px;
-  opacity: 0.95;
-}
-
-.apple-wallet-btn {
-  background: #000000;
-  color: #FFFFFF;
-  border: 1px solid #333333;
-  border-radius: 12px;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
-  transition: transform 0.15s ease, background 0.15s ease;
-}
-
-.apple-wallet-btn:hover {
-  background: #111111;
-  transform: translateY(-1px);
-}
-
-/* ============================================
-   Dual Metal Switcher (Gold vs Silver)
-   ============================================ */
-
-.metal-toggle-bar {
-  display: flex;
-  background: var(--bg-input);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 4px;
-  gap: 4px;
-  margin-bottom: 16px;
-}
-
-.metal-toggle-btn {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 9px 12px;
-  border-radius: 9px;
-  border: none;
-  background: transparent;
-  color: var(--text-secondary);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.metal-toggle-btn.active.gold {
-  background: var(--gold-primary);
-  color: #0A0D14;
-  box-shadow: 0 2px 8px var(--gold-glow);
-}
-
-.metal-toggle-btn.active.silver {
-  background: var(--silver-primary);
-  color: #0A0D14;
-  box-shadow: 0 2px 8px var(--silver-glow);
 }
 
 /* ============================================
@@ -425,7 +264,7 @@ html, body, #root {
   justify-content: center;
   gap: 8px;
   width: 100%;
-  padding: 14px 20px;
+  padding: 13px 20px;
   border-radius: var(--radius-md);
   font-size: 14px;
   font-weight: 700;
@@ -437,34 +276,34 @@ html, body, #root {
 
 .btn-primary {
   background: var(--gold-gradient);
-  color: #0A0D14;
+  color: #FFFFFF;
   box-shadow: var(--shadow-gold);
 }
 
 .btn-primary:hover:not(:disabled) {
-  filter: brightness(1.08);
+  filter: brightness(1.05);
   transform: translateY(-1px);
 }
 
 .btn-primary:disabled {
-  opacity: 0.45;
+  opacity: 0.5;
   cursor: not-allowed;
   box-shadow: none;
 }
 
 .btn-secondary {
-  background: var(--bg-card);
-  color: #FFFFFF;
+  background: #FFFFFF;
+  color: var(--text-main);
   border: 1px solid var(--border);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: var(--bg-card-hover);
+  background: #F8FAFC;
   border-color: var(--gold-primary);
 }
 
 /* ============================================
-   Inputs & Form Controls
+   Forms & Inputs
    ============================================ */
 
 .form-group {
@@ -481,41 +320,42 @@ html, body, #root {
 
 .form-input {
   width: 100%;
-  padding: 13px 14px;
-  background: var(--bg-input);
+  padding: 12px 14px;
+  background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   font-size: 14px;
-  color: #FFFFFF;
+  color: var(--text-main);
   outline: none;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .form-input:focus {
   border-color: var(--gold-primary);
-  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+  box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.12);
 }
 
 .form-input-prefix {
   display: flex;
   align-items: center;
-  background: var(--bg-input);
+  background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   overflow: hidden;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .form-input-prefix:focus-within {
   border-color: var(--gold-primary);
-  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+  box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.12);
 }
 
 .form-input-prefix .prefix {
   padding: 0 14px;
   font-size: 13px;
   font-weight: 700;
-  color: var(--gold-primary);
-  background: rgba(245, 158, 11, 0.08);
+  color: var(--gold-dark);
+  background: var(--gold-surface);
   border-right: 1px solid var(--border);
   height: 44px;
   display: flex;
@@ -529,7 +369,7 @@ html, body, #root {
   border: none;
   font-size: 15px;
   font-weight: 700;
-  color: #FFFFFF;
+  color: var(--text-main);
   outline: none;
 }
 
@@ -541,9 +381,9 @@ html, body, #root {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 9px 0;
+  padding: 8px 0;
   font-size: 13px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid #F1F5F9;
 }
 
 .summary-row:last-child {
@@ -555,7 +395,7 @@ html, body, #root {
 }
 
 .summary-row .value {
-  color: #FFFFFF;
+  color: var(--text-main);
   font-weight: 600;
 }
 
@@ -568,11 +408,11 @@ html, body, #root {
 }
 
 .summary-row.total .value {
-  color: var(--gold-bright);
+  color: var(--gold-dark);
 }
 
 /* ============================================
-   Product & Delivery Cards
+   Product Delivery Cards
    ============================================ */
 
 .product-card {
@@ -580,7 +420,7 @@ html, body, #root {
   align-items: center;
   gap: 14px;
   padding: 14px;
-  background: var(--bg-card);
+  background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   margin-bottom: 10px;
@@ -589,13 +429,13 @@ html, body, #root {
 }
 
 .product-card:hover {
-  border-color: var(--border-light);
+  border-color: var(--gold-border);
 }
 
 .product-card.selected {
   border-color: var(--gold-primary);
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, var(--bg-card) 100%);
-  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.15);
+  background: var(--gold-surface);
+  box-shadow: 0 2px 8px rgba(197, 155, 39, 0.12);
 }
 
 /* ============================================
@@ -607,7 +447,7 @@ html, body, #root {
   align-items: center;
   gap: 12px;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid #F1F5F9;
   cursor: pointer;
 }
 
@@ -616,8 +456,8 @@ html, body, #root {
 }
 
 .txn-icon {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -635,29 +475,24 @@ html, body, #root {
   color: var(--negative);
 }
 
+.txn-icon.redemption {
+  background: var(--gold-surface);
+  color: var(--gold-dark);
+}
+
 .txn-icon.sip {
-  background: rgba(245, 158, 11, 0.15);
-  color: var(--gold-bright);
-}
-
-.txn-icon.card_spend {
-  background: rgba(139, 92, 246, 0.18);
-  color: #A78BFA;
-}
-
-.txn-icon.spin_reward {
-  background: rgba(249, 115, 22, 0.18);
-  color: #FB923C;
+  background: #EFF6FF;
+  color: #2563EB;
 }
 
 .txn-icon.lease {
-  background: rgba(99, 102, 241, 0.18);
-  color: #818CF8;
+  background: #F5F3FF;
+  color: #7C3AED;
 }
 
 .txn-icon.gift {
-  background: rgba(236, 72, 153, 0.18);
-  color: #F472B6;
+  background: #FFF1F2;
+  color: #E11D48;
 }
 
 .txn-details {
@@ -668,12 +503,12 @@ html, body, #root {
 .txn-type {
   font-size: 13.5px;
   font-weight: 700;
-  color: #FFFFFF;
+  color: var(--text-main);
 }
 
 .txn-date {
   font-size: 11px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-top: 2px;
 }
 
@@ -691,110 +526,66 @@ html, body, #root {
 }
 
 .txn-grams.negative {
-  color: #FFFFFF;
+  color: var(--text-main);
 }
 
 .txn-rupees {
   font-size: 11px;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   margin-top: 2px;
 }
 
 /* ============================================
-   Spin & Win Wheel (Interactive Super App)
+   Status Badges
    ============================================ */
 
-.spin-wheel-container {
-  width: 260px;
-  height: 260px;
-  margin: 16px auto;
-  position: relative;
-  border-radius: 50%;
-  border: 4px solid var(--gold-primary);
-  box-shadow: 0 0 30px var(--gold-glow);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.status-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.spin-pointer {
-  position: absolute;
-  top: -14px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 14px solid transparent;
-  border-right: 14px solid transparent;
-  border-top: 20px solid var(--gold-bright);
-  z-index: 20;
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+.status-badge.completed,
+.status-badge.delivered,
+.status-badge.active {
+  background: var(--positive-bg);
+  color: var(--positive);
 }
 
-.spin-center-hub {
-  position: absolute;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: #0A0D14;
-  border: 3px solid var(--gold-bright);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--gold-bright);
-  font-weight: 900;
-  font-size: 14px;
-  z-index: 10;
-  box-shadow: 0 0 16px var(--gold-glow);
+.status-badge.processing,
+.status-badge.dispatched {
+  background: var(--gold-surface);
+  color: var(--gold-dark);
+}
+
+.status-badge.pending {
+  background: #F1F5F9;
+  color: var(--text-secondary);
 }
 
 /* ============================================
-   Modals & Overlays
+   Profile Menu Items
    ============================================ */
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(5, 7, 11, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  z-index: 100;
-}
-
-.modal-content {
-  width: 100%;
-  max-width: var(--max-app-width);
-  background: var(--bg-card);
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-  border: 1px solid var(--border);
-  border-bottom: none;
-  padding: 24px 20px 36px;
-  color: #FFFFFF;
-  max-height: 85vh;
-  overflow-y: auto;
-}
-
-/* Profile Menu Items */
 .profile-menu-item {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 13px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid #F1F5F9;
   cursor: pointer;
-  color: #FFFFFF;
+  color: var(--text-main);
 }
 
 .profile-menu-icon {
   width: 36px;
   height: 36px;
-  border-radius: 10px;
-  background: var(--bg-surface);
-  color: var(--gold-primary);
+  border-radius: 8px;
+  background: #F8FAFC;
+  color: var(--gold-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -811,27 +602,33 @@ html, body, #root {
   color: var(--text-muted);
 }
 
-/* Status Badges */
-.status-badge {
-  font-size: 10px;
-  font-weight: 800;
-  padding: 3px 8px;
-  border-radius: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+/* ============================================
+   Modal & Overlays
+   ============================================ */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 100;
 }
 
-.status-badge.completed, .status-badge.delivered, .status-badge.active {
-  background: var(--positive-bg);
-  color: var(--positive);
-}
-
-.status-badge.processing, .status-badge.dispatched {
-  background: rgba(245, 158, 11, 0.15);
-  color: var(--gold-bright);
-}
-
-.status-badge.pending {
-  background: rgba(148, 163, 184, 0.15);
-  color: var(--text-secondary);
+.modal-content {
+  width: 100%;
+  max-width: var(--max-app-width);
+  background: #FFFFFF;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  padding: 24px 20px 32px;
+  color: var(--text-main);
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 -8px 25px rgba(15, 23, 42, 0.12);
 }

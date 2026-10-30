@@ -1,15 +1,14 @@
 // ============================================
-// OGold Wallet — App Shell with 5 Core Super App Tabs
-// Home/Wallet, OGold Card, Earn, Rewards, Profile
-// App Store: id6504926022
+// YASS Gold & Bullion — Executive App Shell
+// Clean White + Gold Minimalist Layout
 // ============================================
 
 import React from 'react';
 import {
-  Wallet,
-  CreditCard,
-  TrendingUp,
-  Gift,
+  Home,
+  PlusCircle,
+  Package,
+  ShieldCheck,
   User,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
@@ -34,54 +33,52 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           {children}
         </main>
 
-        {/* 5 OGold Super App Tabs */}
+        {/* 5 Clean Professional Navigation Tabs */}
         {!isAuthScreen && (
           <nav className="app-bottom-nav">
-            {/* 1. Wallet / Home */}
+            {/* 1. Home */}
             <button
-              className={`nav-tab-item ${isCurrent('dashboard') || isCurrent('buy') || isCurrent('sell') ? 'active' : ''}`}
+              className={`nav-tab-item ${isCurrent('dashboard') ? 'active' : ''}`}
               onClick={() => navigate('dashboard')}
             >
-              <Wallet size={19} className="nav-icon" strokeWidth={isCurrent('dashboard') ? 2.4 : 1.8} />
-              <span>Wallet</span>
+              <Home size={19} strokeWidth={isCurrent('dashboard') ? 2.3 : 1.75} />
+              <span>Home</span>
             </button>
 
-            {/* 2. OGold Mastercard */}
+            {/* 2. Buy Gold */}
             <button
-              className={`nav-tab-item ${isCurrent('card') ? 'active' : ''}`}
-              onClick={() => navigate('card')}
+              className={`nav-tab-item ${isCurrent('buy') ? 'active' : ''}`}
+              onClick={() => navigate('buy')}
             >
-              <CreditCard size={19} className="nav-icon" strokeWidth={isCurrent('card') ? 2.4 : 1.8} />
-              <span>Card</span>
+              <PlusCircle size={19} strokeWidth={isCurrent('buy') ? 2.3 : 1.75} />
+              <span>Buy Gold</span>
             </button>
 
-            {/* 3. Earn (Wakala & SIP) */}
+            {/* 3. Physical Bullion Delivery (Core Client Feature) */}
             <button
-              className={`nav-tab-item ${isCurrent('lease') || isCurrent('sip') ? 'active' : ''}`}
-              onClick={() => navigate('lease')}
+              className={`nav-tab-item ${isCurrent('delivery') ? 'active' : ''}`}
+              onClick={() => navigate('delivery')}
             >
-              <span className="nav-badge">4.8%</span>
-              <TrendingUp size={19} className="nav-icon" strokeWidth={isCurrent('lease') ? 2.4 : 1.8} />
-              <span>Earn</span>
+              <Package size={19} strokeWidth={isCurrent('delivery') ? 2.3 : 1.75} />
+              <span>Delivery</span>
             </button>
 
-            {/* 4. Rewards & Lifestyle */}
+            {/* 4. Vault & Custody Certificate */}
             <button
-              className={`nav-tab-item ${isCurrent('rewards') ? 'active' : ''}`}
-              onClick={() => navigate('rewards')}
+              className={`nav-tab-item ${isCurrent('vaultProof') || isCurrent('portfolio') ? 'active' : ''}`}
+              onClick={() => navigate('vaultProof')}
             >
-              {state.user?.spinsAvailable ? <span className="nav-badge">SPIN</span> : null}
-              <Gift size={19} className="nav-icon" strokeWidth={isCurrent('rewards') ? 2.4 : 1.8} />
-              <span>Rewards</span>
+              <ShieldCheck size={19} strokeWidth={isCurrent('vaultProof') || isCurrent('portfolio') ? 2.3 : 1.75} />
+              <span>Vault</span>
             </button>
 
-            {/* 5. Profile */}
+            {/* 5. Account / Profile */}
             <button
-              className={`nav-tab-item ${isCurrent('profile') || isCurrent('portfolio') || isCurrent('vaultProof') ? 'active' : ''}`}
+              className={`nav-tab-item ${isCurrent('profile') || isCurrent('settings') ? 'active' : ''}`}
               onClick={() => navigate('profile')}
             >
-              <User size={19} className="nav-icon" strokeWidth={isCurrent('profile') ? 2.4 : 1.8} />
-              <span>Profile</span>
+              <User size={19} strokeWidth={isCurrent('profile') || isCurrent('settings') ? 2.3 : 1.75} />
+              <span>Account</span>
             </button>
           </nav>
         )}

@@ -96,10 +96,10 @@ const GiftGoldScreen: React.FC = () => {
             style={{
               padding: '20px',
               borderRadius: 16,
-              background: 'linear-gradient(135deg, #2E2718 0%, #15181D 100%)',
-              border: '1.5px solid rgba(232, 182, 63, 0.4)',
-              color: '#fff',
-              boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
+              background: 'linear-gradient(135deg, #FEFBF2 0%, #FFFDF7 100%)',
+              border: '1.5px solid #EED8A1',
+              color: '#0F172A',
+              boxShadow: '0 4px 16px rgba(212, 175, 55, 0.12)',
               marginBottom: 20,
               position: 'relative',
               overflow: 'hidden',
@@ -111,27 +111,27 @@ const GiftGoldScreen: React.FC = () => {
                   fontSize: 11,
                   padding: '4px 10px',
                   borderRadius: 999,
-                  background: 'rgba(232,182,63,0.15)',
-                  color: COLORS.secondaryGold,
-                  fontWeight: 700,
+                  background: '#FEF08A',
+                  color: '#854D0E',
+                  fontWeight: 800,
                   textTransform: 'uppercase',
                   letterSpacing: 0.8,
                 }}
               >
                 {OCCASIONS.find((o) => o.id === occasion)?.label}
               </span>
-              <span style={{ fontSize: 13, color: COLORS.secondaryGold, fontWeight: 700 }}>
+              <span style={{ fontSize: 13, color: '#B8860B', fontWeight: 800 }}>
                 {grams.toFixed(4)} g (24K 999.9)
               </span>
             </div>
 
-            <div style={{ fontSize: 18, fontWeight: 800, color: '#fff', margin: '8px 0' }}>
+            <div style={{ fontSize: 18, fontWeight: 900, color: '#0F172A', margin: '8px 0' }}>
               To: {recipientName || 'Recipient Name'}
             </div>
-            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.8)', fontStyle: 'italic', lineHeight: 1.5 }}>
+            <p style={{ fontSize: 13, color: '#475569', fontStyle: 'italic', lineHeight: 1.5 }}>
               "{message}"
             </p>
-            <div style={{ textAlign: 'right', marginTop: 12, fontSize: 12, color: COLORS.primaryGold }}>
+            <div style={{ textAlign: 'right', marginTop: 12, fontSize: 12, color: '#B8860B', fontWeight: 700 }}>
               — From {state.user?.fullName || 'Tariq Al Mansoori'} (YASS Bullion Vault)
             </div>
           </div>

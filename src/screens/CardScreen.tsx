@@ -1,7 +1,7 @@
 // ============================================
-// OGold Wallet — OGold Platinum Mastercard Hub
-// Spend your Gold & Silver anywhere globally
-// App Store: id6504926022 Signature Feature
+// YASS Gold — Platinum Bullion Card Hub
+// Spend your physical vaulted gold globally
+// A Product by YASS Group, Dubai
 // ============================================
 
 import React, { useState } from 'react';
@@ -19,7 +19,7 @@ import {
   ShoppingBag,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
-import { OGoldMark } from '../components/BrandLogo';
+import { BrandLogo } from '../components/BrandLogo';
 import { DEMO_GOLD_RATE, DEMO_SILVER_RATE } from '../constants';
 import {
   toggleCardFreeze,
@@ -61,13 +61,13 @@ export const CardScreen: React.FC = () => {
   // Switch Asset
   const handleSwitchAsset = (asset: MetalType) => {
     setState(switchCardAsset(state, asset));
-    showToast(`Mastercard spending switched to ${asset === 'gold' ? '24K Gold' : '.999 Silver'}.`, 'success');
+    showToast(`Card spending switched to ${asset === 'gold' ? '24K Gold' : '.999 Silver'}.`, 'success');
   };
 
   // Add to Apple Wallet
   const handleAppleWallet = () => {
     setState(addCardToAppleWallet(state));
-    showToast('OGold Mastercard added to Apple Wallet! ✨', 'success');
+    showToast('YASS Gold Card added to Apple Wallet! ✨', 'success');
   };
 
   // Save Limit
@@ -79,7 +79,7 @@ export const CardScreen: React.FC = () => {
   // Simulate Instant Spend (e.g. Dubai Mall)
   const handleSimulateSpend = (amount: number, merchant: string) => {
     if (card.isFrozen) {
-      showToast('Cannot spend: OGold Mastercard is currently frozen.', 'error');
+      showToast('Cannot spend: YASS Gold Card is currently frozen.', 'error');
       return;
     }
     const neededGrams = amount / activeRate;
@@ -104,17 +104,17 @@ export const CardScreen: React.FC = () => {
       {/* ── Top Header ─────────────────────────────────────── */}
       <div className="screen-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <CreditCard size={18} color="#F59E0B" />
-          <span className="screen-header-title">OGold Mastercard</span>
+          <CreditCard size={18} color="#C59B27" />
+          <span className="screen-header-title">YASS Bullion Card</span>
         </div>
         <span
           style={{
             fontSize: 10,
             fontWeight: 800,
-            background: 'rgba(245, 158, 11, 0.15)',
-            color: '#F59E0B',
-            border: '1px solid rgba(245, 158, 11, 0.35)',
-            padding: '2px 8px',
+            background: '#FEFBF2',
+            color: '#B8860B',
+            border: '1px solid #EED8A1',
+            padding: '3px 8px',
             borderRadius: 6,
             textTransform: 'uppercase',
           }}
@@ -124,7 +124,7 @@ export const CardScreen: React.FC = () => {
       </div>
 
       <div className="screen-content" style={{ paddingTop: 16 }}>
-        {/* ── 1. The OGold Luxury Metallic Mastercard ────────── */}
+        {/* ── 1. The Luxury Metallic Card ────────── */}
         <div className="ogold-card-container">
           <div
             className="ogold-mastercard"
@@ -139,7 +139,7 @@ export const CardScreen: React.FC = () => {
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'rgba(10, 13, 20, 0.75)',
+                  background: 'rgba(15, 23, 42, 0.85)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -149,7 +149,7 @@ export const CardScreen: React.FC = () => {
                 }}
               >
                 <Lock size={22} color="#EF4444" />
-                <span style={{ fontSize: 16, fontWeight: 800, color: '#EF4444', letterSpacing: 1 }}>
+                <span style={{ fontSize: 15, fontWeight: 800, color: '#EF4444', letterSpacing: 1 }}>
                   CARD TEMPORARILY FROZEN
                 </span>
               </div>
@@ -157,12 +157,9 @@ export const CardScreen: React.FC = () => {
 
             {/* Card Top Row: Brand & Contactless */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 5 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <OGoldMark size={24} />
-                <span style={{ fontSize: 14, fontWeight: 900, color: '#F59E0B', letterSpacing: 0.5 }}>
-                  OGOLD
-                </span>
-                <span style={{ fontSize: 9.5, fontWeight: 700, color: '#94A3B8', letterSpacing: 1 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <BrandLogo size="sm" />
+                <span style={{ fontSize: 9.5, fontWeight: 800, color: '#E2E8F0', letterSpacing: 1 }}>
                   PLATINUM
                 </span>
               </div>
@@ -178,9 +175,9 @@ export const CardScreen: React.FC = () => {
                   fontWeight: 800,
                   padding: '3px 8px',
                   borderRadius: 6,
-                  background: card.spendingAsset === 'gold' ? 'rgba(245, 158, 11, 0.2)' : 'rgba(148, 163, 184, 0.2)',
-                  color: card.spendingAsset === 'gold' ? '#FBBF24' : '#E2E8F0',
-                  border: `1px solid ${card.spendingAsset === 'gold' ? 'rgba(245, 158, 11, 0.4)' : 'rgba(148, 163, 184, 0.4)'}`,
+                  background: card.spendingAsset === 'gold' ? 'rgba(212, 175, 55, 0.25)' : 'rgba(255, 255, 255, 0.15)',
+                  color: '#FFFFFF',
+                  border: `1px solid rgba(255, 255, 255, 0.3)`,
                   letterSpacing: 0.5,
                 }}
               >
@@ -193,7 +190,7 @@ export const CardScreen: React.FC = () => {
               <div
                 style={{
                   fontFamily: 'monospace',
-                  fontSize: 19,
+                  fontSize: 18,
                   fontWeight: 700,
                   letterSpacing: 2.5,
                   color: '#FFFFFF',
@@ -207,7 +204,7 @@ export const CardScreen: React.FC = () => {
             {/* Bottom Row: Holder, Expiry, CVV & Mastercard Circles */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', zIndex: 5 }}>
               <div>
-                <div style={{ fontSize: 8.5, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.8 }}>
+                <div style={{ fontSize: 8.5, color: '#E2E8F0', textTransform: 'uppercase', letterSpacing: 0.8 }}>
                   Cardholder
                 </div>
                 <div style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF', letterSpacing: 0.8, marginTop: 1 }}>
@@ -217,14 +214,14 @@ export const CardScreen: React.FC = () => {
 
               <div style={{ display: 'flex', gap: 16 }}>
                 <div>
-                  <div style={{ fontSize: 8.5, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.8 }}>
+                  <div style={{ fontSize: 8.5, color: '#E2E8F0', textTransform: 'uppercase', letterSpacing: 0.8 }}>
                     Expires
                   </div>
                   <div style={{ fontSize: 12, fontWeight: 700, color: '#FFFFFF' }}>{card.expiry}</div>
                 </div>
 
                 <div>
-                  <div style={{ fontSize: 8.5, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.8 }}>
+                  <div style={{ fontSize: 8.5, color: '#E2E8F0', textTransform: 'uppercase', letterSpacing: 0.8 }}>
                     CVV
                   </div>
                   <div
@@ -232,7 +229,7 @@ export const CardScreen: React.FC = () => {
                     style={{
                       fontSize: 12,
                       fontWeight: 700,
-                      color: '#F59E0B',
+                      color: '#FBBF24',
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
@@ -273,12 +270,12 @@ export const CardScreen: React.FC = () => {
         <div className="card" style={{ marginBottom: 14 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF' }}>Primary Spending Metal</div>
-              <div style={{ fontSize: 11, color: '#94A3B8' }}>
+              <div style={{ fontSize: 13.5, fontWeight: 800, color: '#0F172A' }}>Primary Spending Bullion</div>
+              <div style={{ fontSize: 11, color: '#64748B' }}>
                 Auto-converted into fiat AED in real-time upon point-of-sale tap
               </div>
             </div>
-            <Sparkles size={16} color="#F59E0B" />
+            <Sparkles size={16} color="#C59B27" />
           </div>
 
           <div className="metal-toggle-bar">
@@ -300,16 +297,16 @@ export const CardScreen: React.FC = () => {
             style={{
               padding: '10px 12px',
               borderRadius: 8,
-              background: 'rgba(245, 158, 11, 0.08)',
-              border: '1px solid rgba(245, 158, 11, 0.2)',
+              background: '#FEFBF2',
+              border: '1px solid #F3E8C8',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              fontSize: 11.5,
+              fontSize: 12,
             }}
           >
-            <span style={{ color: '#94A3B8' }}>Available Spending Power:</span>
-            <span style={{ color: '#FBBF24', fontWeight: 800 }}>
+            <span style={{ color: '#64748B', fontWeight: 600 }}>Available Spending Power:</span>
+            <span style={{ color: '#B8860B', fontWeight: 900 }}>
               AED {activeBalanceAED.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
           </div>
@@ -317,7 +314,7 @@ export const CardScreen: React.FC = () => {
 
         {/* ── 4. Security & Controls ───────────────────────────── */}
         <div className="card" style={{ marginBottom: 14 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF', marginBottom: 12 }}>
+          <div style={{ fontSize: 13.5, fontWeight: 800, color: '#0F172A', marginBottom: 12 }}>
             Security & Controls
           </div>
 
@@ -329,18 +326,18 @@ export const CardScreen: React.FC = () => {
               alignItems: 'center',
               justifyContent: 'space-between',
               padding: '10px 0',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+              borderBottom: '1px solid #F1F5F9',
               cursor: 'pointer',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div
                 style={{
-                  width: 34,
-                  height: 34,
+                  width: 36,
+                  height: 36,
                   borderRadius: 8,
-                  background: card.isFrozen ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.15)',
-                  color: card.isFrozen ? '#EF4444' : '#10B981',
+                  background: card.isFrozen ? '#FEF2F2' : '#ECFDF5',
+                  color: card.isFrozen ? '#EF4444' : '#059669',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -349,10 +346,10 @@ export const CardScreen: React.FC = () => {
                 {card.isFrozen ? <Lock size={17} /> : <Unlock size={17} />}
               </div>
               <div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF' }}>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>
                   {card.isFrozen ? 'Unfreeze Card' : 'Freeze Card'}
                 </div>
-                <div style={{ fontSize: 11, color: '#94A3B8' }}>
+                <div style={{ fontSize: 11, color: '#64748B' }}>
                   {card.isFrozen ? 'Tap to reactivate transactions' : 'Instantly block all card transactions'}
                 </div>
               </div>
@@ -361,11 +358,11 @@ export const CardScreen: React.FC = () => {
             <span
               style={{
                 fontSize: 11,
-                fontWeight: 700,
-                color: card.isFrozen ? '#EF4444' : '#10B981',
+                fontWeight: 800,
+                color: card.isFrozen ? '#DC2626' : '#059669',
                 padding: '3px 8px',
                 borderRadius: 6,
-                background: card.isFrozen ? 'rgba(239, 68, 68, 0.12)' : 'rgba(16, 185, 129, 0.12)',
+                background: card.isFrozen ? '#FEE2E2' : '#D1FAE5',
               }}
             >
               {card.isFrozen ? 'FROZEN' : 'ACTIVE'}
@@ -380,18 +377,18 @@ export const CardScreen: React.FC = () => {
               alignItems: 'center',
               justifyContent: 'space-between',
               padding: '10px 0',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+              borderBottom: '1px solid #F1F5F9',
               cursor: 'pointer',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div
                 style={{
-                  width: 34,
-                  height: 34,
+                  width: 36,
+                  height: 36,
                   borderRadius: 8,
-                  background: 'rgba(245, 158, 11, 0.12)',
-                  color: '#F59E0B',
+                  background: '#FEFBF2',
+                  color: '#C59B27',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -400,16 +397,19 @@ export const CardScreen: React.FC = () => {
                 <Globe size={17} />
               </div>
               <div>
-                <div style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF' }}>Online Purchases</div>
-                <div style={{ fontSize: 11, color: '#94A3B8' }}>Allow e-commerce and app payments</div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>Online Purchases</div>
+                <div style={{ fontSize: 11, color: '#64748B' }}>Allow e-commerce and app payments</div>
               </div>
             </div>
 
             <span
               style={{
                 fontSize: 11,
-                fontWeight: 700,
-                color: card.isOnlineEnabled ? '#10B981' : '#64748B',
+                fontWeight: 800,
+                color: card.isOnlineEnabled ? '#059669' : '#64748B',
+                padding: '3px 8px',
+                borderRadius: 6,
+                background: card.isOnlineEnabled ? '#D1FAE5' : '#F1F5F9',
               }}
             >
               {card.isOnlineEnabled ? 'ENABLED' : 'DISABLED'}
@@ -420,10 +420,10 @@ export const CardScreen: React.FC = () => {
           <div style={{ paddingTop: 12 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <Sliders size={15} color="#F59E0B" />
-                <span style={{ fontSize: 12.5, fontWeight: 700, color: '#FFFFFF' }}>Monthly Spending Limit</span>
+                <Sliders size={15} color="#C59B27" />
+                <span style={{ fontSize: 12.5, fontWeight: 700, color: '#0F172A' }}>Monthly Spending Limit</span>
               </div>
-              <span style={{ fontSize: 13, fontWeight: 800, color: '#FBBF24' }}>
+              <span style={{ fontSize: 13, fontWeight: 800, color: '#B8860B' }}>
                 AED {sliderLimit.toLocaleString()}
               </span>
             </div>
@@ -439,11 +439,11 @@ export const CardScreen: React.FC = () => {
               onTouchEnd={handleSaveLimit}
               style={{
                 width: '100%',
-                accentColor: '#F59E0B',
+                accentColor: '#C59B27',
                 cursor: 'pointer',
               }}
             />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#64748B', marginTop: 2 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10.5, color: '#64748B', marginTop: 2 }}>
               <span>AED 1,000</span>
               <span>AED 50,000</span>
             </div>
@@ -454,46 +454,46 @@ export const CardScreen: React.FC = () => {
         <div className="card" style={{ marginBottom: 14 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <Truck size={17} color="#10B981" />
-              <span style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF' }}>Physical Metal Card</span>
+              <Truck size={17} color="#059669" />
+              <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>Physical Metal Card</span>
             </div>
             <span
               style={{
-                fontSize: 10,
+                fontSize: 10.5,
                 fontWeight: 800,
-                padding: '2px 7px',
-                borderRadius: 5,
-                background: 'rgba(16, 185, 129, 0.15)',
-                color: '#10B981',
+                padding: '2px 8px',
+                borderRadius: 6,
+                background: '#D1FAE5',
+                color: '#059669',
               }}
             >
               SHIPPED
             </span>
           </div>
-          <div style={{ fontSize: 11.5, color: '#94A3B8', lineHeight: 1.4 }}>
-            Your heavyweight physical metal card is dispatched via Transguard Armoured Courier.
-            Expected delivery: Tomorrow by 2:00 PM.
+          <div style={{ fontSize: 11.5, color: '#64748B', lineHeight: 1.4 }}>
+            Your custom engraved metal card is dispatched via Transguard Armoured Courier.
+            Expected doorstep delivery: Tomorrow by 2:00 PM across UAE.
           </div>
         </div>
 
         {/* ── 6. Live POS Spend Simulator (Interactive Test) ─── */}
         <div
           style={{
-            background: 'linear-gradient(135deg, #1C243A 0%, #101522 100%)',
-            border: '1px solid rgba(245, 158, 11, 0.3)',
+            background: '#FEFBF2',
+            border: '1px solid #EED8A1',
             borderRadius: 14,
             padding: '14px 16px',
             marginBottom: 20,
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-            <ShoppingBag size={16} color="#F59E0B" />
-            <span style={{ fontSize: 12.5, fontWeight: 700, color: '#FFFFFF' }}>
-              Test Spend at Real-World Merchant
+            <ShoppingBag size={16} color="#C59B27" />
+            <span style={{ fontSize: 13, fontWeight: 800, color: '#0F172A' }}>
+              Test Real-World Merchant Checkout
             </span>
           </div>
-          <div style={{ fontSize: 11, color: '#94A3B8', marginBottom: 10 }}>
-            Simulate an instant point-of-sale checkout at Dubai Mall Starbucks (AED 28.50)
+          <div style={{ fontSize: 11.5, color: '#64748B', marginBottom: 10 }}>
+            Simulate an instant point-of-sale tap at Dubai Mall Starbucks (AED 28.50)
           </div>
 
           <button
@@ -505,11 +505,13 @@ export const CardScreen: React.FC = () => {
               fontSize: 12.5,
               fontWeight: 700,
               gap: 6,
-              background: '#0F1624',
+              background: '#FFFFFF',
+              borderColor: '#E2E8F0',
+              color: '#0F172A',
             }}
           >
             {isSimulating ? (
-              <span>Authorizing via Mastercard POS...</span>
+              <span>Authorizing via Visa / Mastercard POS...</span>
             ) : (
               <>
                 <span>💳 Tap to Pay AED 28.50 (Starbucks Coffee)</span>

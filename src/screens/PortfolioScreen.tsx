@@ -1,7 +1,7 @@
 // ============================================
-// OGold Wallet — Portfolio & Vault Assets Screen
-// Dual Precious Metals: 24K Gold & .999 Silver
-// App Store: id6504926022
+// YASS Gold — Vault Portfolio Screen
+// DMCC 24K 999.9 Good Delivery Digital Gold
+// A Product by YASS Group, Dubai
 // ============================================
 
 import React, { useState } from 'react';
@@ -49,70 +49,70 @@ export const PortfolioScreen: React.FC = () => {
       <div className="screen-content" style={{ paddingTop: 16 }}>
         {/* Header */}
         <div style={{ paddingBottom: 14 }}>
-          <h1 style={{ fontSize: 20, fontWeight: 900, color: '#FFFFFF' }}>
+          <h1 style={{ fontSize: 20, fontWeight: 900, color: '#0F172A' }}>
             Vault Portfolio
           </h1>
-          <p style={{ fontSize: 12, color: '#94A3B8', marginTop: 2 }}>
-            Real-time valuation of your DNI-insured 24K gold and .999 silver
+          <p style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
+            Real-time valuation of your DMCC-audited 24K 999.9 fine gold
           </p>
         </div>
 
         {/* Top Summary Card */}
-        <div className="card-gold-glow" style={{ marginBottom: 16 }}>
+        <div className="card-gold" style={{ marginBottom: 16, padding: '20px 18px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
-              <div style={{ fontSize: 10.5, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.8, fontWeight: 700 }}>
+              <div style={{ fontSize: 11, color: '#854D0E', textTransform: 'uppercase', letterSpacing: 0.8, fontWeight: 800 }}>
                 Total Vault Valuation
               </div>
-              <div style={{ fontSize: 26, fontWeight: 900, color: '#FFFFFF', marginTop: 4 }}>
+              <div style={{ fontSize: 26, fontWeight: 900, color: '#0F172A', marginTop: 4 }}>
                 {formatCurrency(totalValuation)}
               </div>
             </div>
 
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: 10.5, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.8, fontWeight: 700 }}>
+              <div style={{ fontSize: 11, color: '#854D0E', textTransform: 'uppercase', letterSpacing: 0.8, fontWeight: 800 }}>
                 Net Gain
               </div>
-              <div style={{ fontSize: 15, fontWeight: 800, color: '#10B981', marginTop: 4, display: 'flex', alignItems: 'center', gap: 3 }}>
-                <TrendingUp size={14} />
+              <div style={{ fontSize: 15, fontWeight: 800, color: '#059669', marginTop: 4, display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 3 }}>
+                <TrendingUp size={15} />
                 <span>+{gainPercentage.toFixed(2)}%</span>
               </div>
             </div>
           </div>
 
-          <div style={{ height: 1, background: 'rgba(255, 255, 255, 0.08)', margin: '14px 0' }} />
+          <div style={{ height: 1, background: '#F1E1B8', margin: '14px 0' }} />
 
           {/* Metal Split */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
             <div>
-              <div style={{ fontSize: 10, color: '#94A3B8', textTransform: 'uppercase', fontWeight: 700 }}>
+              <div style={{ fontSize: 11, color: '#64748B', textTransform: 'uppercase', fontWeight: 700 }}>
                 24K Gold Vault
               </div>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#FBBF24', marginTop: 2 }}>
+              <div style={{ fontSize: 15, fontWeight: 900, color: '#B8860B', marginTop: 2 }}>
                 {formatGrams(totalGrams)}
               </div>
-              <div style={{ fontSize: 11, color: '#94A3B8' }}>{formatCurrency(goldValuation)}</div>
+              <div style={{ fontSize: 12, color: '#64748B', fontWeight: 600 }}>{formatCurrency(goldValuation)}</div>
             </div>
 
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: 10, color: '#94A3B8', textTransform: 'uppercase', fontWeight: 700 }}>
+              <div style={{ fontSize: 11, color: '#64748B', textTransform: 'uppercase', fontWeight: 700 }}>
                 .999 Silver Vault
               </div>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#E2E8F0', marginTop: 2 }}>
+              <div style={{ fontSize: 15, fontWeight: 900, color: '#475569', marginTop: 2 }}>
                 {silverGrams.toFixed(1)} g
               </div>
-              <div style={{ fontSize: 11, color: '#94A3B8' }}>{formatCurrency(silverValuation)}</div>
+              <div style={{ fontSize: 12, color: '#64748B', fontWeight: 600 }}>{formatCurrency(silverValuation)}</div>
             </div>
           </div>
         </div>
 
-        {/* DNI Vault Proof Banner */}
+        {/* DMCC Vault Proof Banner */}
         <div
           onClick={() => navigate('vaultProof')}
           style={{
-            background: 'rgba(16, 185, 129, 0.1)',
-            border: '1px solid rgba(16, 185, 129, 0.25)',
-            borderRadius: 12,
+            background: '#ECFDF5',
+            border: '1px solid #A7F3D0',
+            borderRadius: 14,
             padding: '12px 14px',
             marginBottom: 16,
             display: 'flex',
@@ -122,33 +122,35 @@ export const PortfolioScreen: React.FC = () => {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <ShieldCheck size={18} color="#10B981" />
+            <ShieldCheck size={20} color="#059669" />
             <div>
-              <div style={{ fontSize: 12, fontWeight: 800, color: '#10B981' }}>
-                DNI Insured Physical Depository
+              <div style={{ fontSize: 12.5, fontWeight: 800, color: '#065F46' }}>
+                DMCC Accredited Physical Depository
               </div>
-              <div style={{ fontSize: 10.5, color: '#94A3B8' }}>
+              <div style={{ fontSize: 11, color: '#047857' }}>
                 Allocated 1:1 at Brink's DMCC in Almas Tower, Dubai
               </div>
             </div>
           </div>
-          <ChevronRight size={16} color="#10B981" />
+          <ChevronRight size={16} color="#059669" />
         </div>
 
         {/* Tab Selector */}
-        <div style={{ display: 'flex', gap: 6, marginBottom: 14 }}>
+        <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
           <button
             onClick={() => setActiveTab('holdings')}
             style={{
               flex: 1,
-              padding: '8px 12px',
-              borderRadius: 8,
-              border: 'none',
-              background: activeTab === 'holdings' ? '#F59E0B' : '#161D2D',
-              color: activeTab === 'holdings' ? '#0A0D14' : '#94A3B8',
+              padding: '9px 12px',
+              borderRadius: 10,
+              border: activeTab === 'holdings' ? '1px solid #C59B27' : '1px solid #E2E8F0',
+              background: activeTab === 'holdings' ? 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)' : '#FFFFFF',
+              color: activeTab === 'holdings' ? '#FFFFFF' : '#64748B',
               fontSize: 12.5,
               fontWeight: 800,
               cursor: 'pointer',
+              boxShadow: activeTab === 'holdings' ? '0 2px 8px rgba(212, 175, 55, 0.25)' : 'none',
+              transition: 'all 0.2s ease',
             }}
           >
             Vault Breakdown
@@ -157,14 +159,16 @@ export const PortfolioScreen: React.FC = () => {
             onClick={() => setActiveTab('transactions')}
             style={{
               flex: 1,
-              padding: '8px 12px',
-              borderRadius: 8,
-              border: 'none',
-              background: activeTab === 'transactions' ? '#F59E0B' : '#161D2D',
-              color: activeTab === 'transactions' ? '#0A0D14' : '#94A3B8',
+              padding: '9px 12px',
+              borderRadius: 10,
+              border: activeTab === 'transactions' ? '1px solid #C59B27' : '1px solid #E2E8F0',
+              background: activeTab === 'transactions' ? 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)' : '#FFFFFF',
+              color: activeTab === 'transactions' ? '#FFFFFF' : '#64748B',
               fontSize: 12.5,
               fontWeight: 800,
               cursor: 'pointer',
+              boxShadow: activeTab === 'transactions' ? '0 2px 8px rgba(212, 175, 55, 0.25)' : 'none',
+              transition: 'all 0.2s ease',
             }}
           >
             Ledger ({transactions.length})
@@ -174,7 +178,7 @@ export const PortfolioScreen: React.FC = () => {
         {/* HOLDINGS TAB */}
         {activeTab === 'holdings' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {/* OGold Mastercard Ready Power */}
+            {/* YASS Gold Spending Power */}
             <div
               className="card"
               onClick={() => navigate('card')}
@@ -183,11 +187,12 @@ export const PortfolioScreen: React.FC = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <div
                   style={{
-                    width: 38,
-                    height: 38,
+                    width: 40,
+                    height: 40,
                     borderRadius: 10,
-                    background: 'rgba(245, 158, 11, 0.15)',
-                    color: '#FBBF24',
+                    background: '#FEFBF2',
+                    border: '1px solid #F3E8C8',
+                    color: '#C59B27',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -196,15 +201,15 @@ export const PortfolioScreen: React.FC = () => {
                   <CreditCard size={18} />
                 </div>
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 800, color: '#FFFFFF' }}>
-                    OGold Mastercard Spending Power
+                  <div style={{ fontSize: 13.5, fontWeight: 800, color: '#0F172A' }}>
+                    YASS Gold Visa Platinum Power
                   </div>
-                  <div style={{ fontSize: 11, color: '#94A3B8' }}>
+                  <div style={{ fontSize: 11.5, color: '#64748B' }}>
                     Instant POS conversion for {state.card.spendingAsset.toUpperCase()}
                   </div>
                 </div>
               </div>
-              <ChevronRight size={16} color="#64748B" />
+              <ChevronRight size={16} color="#94A3B8" />
             </div>
 
             {/* Wakala Yield Holdings */}
@@ -216,11 +221,12 @@ export const PortfolioScreen: React.FC = () => {
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                 <div
                   style={{
-                    width: 38,
-                    height: 38,
+                    width: 40,
+                    height: 40,
                     borderRadius: 10,
-                    background: 'rgba(139, 92, 246, 0.15)',
-                    color: '#A78BFA',
+                    background: '#F5F3FF',
+                    border: '1px solid #DDD6FE',
+                    color: '#7C3AED',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -229,22 +235,22 @@ export const PortfolioScreen: React.FC = () => {
                   <Percent size={18} />
                 </div>
                 <div>
-                  <div style={{ fontSize: 13, fontWeight: 800, color: '#FFFFFF' }}>
-                    Wakala Earn ({formatGrams(leasedGrams)})
+                  <div style={{ fontSize: 13.5, fontWeight: 800, color: '#0F172A' }}>
+                    Wakala Bullion Earn ({formatGrams(leasedGrams)})
                   </div>
-                  <div style={{ fontSize: 11, color: '#94A3B8' }}>
-                    Earning 4.8% APR pure gold yield
+                  <div style={{ fontSize: 11.5, color: '#64748B' }}>
+                    Earning 4.8% APR pure physical gold yield
                   </div>
                 </div>
               </div>
-              <ChevronRight size={16} color="#64748B" />
+              <ChevronRight size={16} color="#94A3B8" />
             </div>
           </div>
         )}
 
         {/* LEDGER TAB */}
         {activeTab === 'transactions' && (
-          <div className="card" style={{ padding: '4px 14px' }}>
+          <div className="card" style={{ padding: '6px 14px' }}>
             {transactions.map((txn) => (
               <div
                 key={txn.id}
@@ -253,13 +259,13 @@ export const PortfolioScreen: React.FC = () => {
               >
                 <div className={`txn-icon ${txn.type}`}>
                   {txn.type === 'buy' ? (
-                    <ArrowDownCircle size={17} />
+                    <ArrowDownCircle size={18} />
                   ) : txn.type === 'card_spend' ? (
-                    <CreditCard size={17} />
+                    <CreditCard size={18} />
                   ) : txn.type === 'spin_reward' ? (
-                    <Sparkles size={17} />
+                    <Sparkles size={18} />
                   ) : (
-                    <ArrowUpCircle size={17} />
+                    <ArrowUpCircle size={18} />
                   )}
                 </div>
 
@@ -268,7 +274,7 @@ export const PortfolioScreen: React.FC = () => {
                     {txn.meta || txn.type}
                   </div>
                   <div className="txn-date">
-                    {new Date(txn.date).toLocaleDateString('en-AE', { day: 'numeric', month: 'short' })}
+                    {new Date(txn.date).toLocaleDateString('en-AE', { day: 'numeric', month: 'short', year: 'numeric' })}
                   </div>
                 </div>
 

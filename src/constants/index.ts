@@ -1,80 +1,66 @@
 // ============================================
-// OGold Wallet — Design Tokens & Brand Constants
-// The Precious Metals & Lifestyle Super App (Dubai, UAE)
-// Buy, Sell, Save, Spend Gold & Silver with OGold Mastercard
+// YASS Gold & Bullion — Design Tokens & Constants
+// A product by YASS Group, Dubai
+// DMCC Accredited Precious Metals Depository
+// White + Gold Clean Executive Theme
 // ============================================
 
+import type { OGoldCard, LifestyleService } from '../types';
+
 export const BRAND = {
-  parentCompany: 'O Gold Precious Metals Trading L.L.C.',
-  name: 'OGold Wallet',
-  appTitle: 'OGold: Buy Gold & Silver',
-  descriptor: 'Gold & Silver Digital Wallet & Mastercard Super App',
-  tagline: 'Buy, Sell, Save & Spend Physical Gold & Silver in UAE',
-  heading: 'Turn Your Gold & Silver into Real Spending Power',
-  subheading: 'Hold 100% insured physical bullion vaulted in Dubai. Spend gold globally with the OGold Mastercard.',
-  attribution: 'O Gold Precious Metals Trading L.L.C. • Regulated in Dubai, UAE',
-  headquarters: 'Downtown Dubai & DMCC Precious Metals Free Zone, Dubai, UAE',
-  certification: 'Shariah-Compliant • Dubai Economic Department Licensed • DNI Insured',
+  parentCompany: 'YASS Group Dubai',
+  name: 'YASS Gold',
+  bullionBrand: 'YASS Bullion',
+  descriptor: 'Dubai Digital Gold & Doorstep Physical Bullion Delivery',
+  tagline: 'The Gold Standard of Dubai. Save, Trade & Receive Bullion.',
+  heading: 'Buy 24K Digital Gold. Receive Minted Bullion at Your Doorstep.',
+  subheading: '100% physically backed 24K 999.9 gold vaulted at Brink’s DMCC with tamper-proof assay delivery across the UAE.',
+  attribution: 'A product by YASS Group, Dubai • DMCC Member Depository',
+  headquarters: 'Almas Tower, JLT & Gold Souk, Deira, Dubai, UAE',
+  certification: 'Dubai Good Delivery (DGD) 999.9 Purity • BDO Dubai Audited',
   currency: 'AED',
   currencySymbol: 'AED ',
 } as const;
 
 export const COLORS = {
-  // OGold Signature Luxury Obsidian & Metallic Gold Palette
-  bgBlack: '#0A0D14',
-  bgDark: '#101522',
-  bgCard: '#161D2D',
-  bgCardHover: '#1D263B',
-  bgInput: '#131927',
-  
-  // Metallic 24K Gold Accents
-  primaryGold: '#F59E0B',
-  secondaryGold: '#E5C05B',
-  goldMetallic: '#D4AF37',
-  goldBright: '#FBBF24',
-  goldLight: '#FEF3C7',
-  goldGlow: 'rgba(245, 158, 11, 0.25)',
-  goldGradient: 'linear-gradient(135deg, #FBBF24 0%, #D97706 100%)',
-  goldCardGradient: 'linear-gradient(135deg, #2A2210 0%, #171510 50%, #0D0E12 100%)',
+  // White + Golden Clean Executive Palette
+  bgApp: '#FFFFFF',
+  bgPage: '#F8FAFC',
+  bgSubtle: '#F9FAFB',
+  cardBg: '#FFFFFF',
+  ivoryBg: '#FFFFFF',
+  bgInput: '#FFFFFF',
 
-  // Silver Accents (.999 Fine)
-  silverAccent: '#94A3B8',
-  silverLight: '#E2E8F0',
-  silverGlow: 'rgba(148, 163, 184, 0.2)',
-  silverGradient: 'linear-gradient(135deg, #E2E8F0 0%, #94A3B8 100%)',
+  // Dubai Executive Bullion Gold
+  primaryGold: '#C59B27',
+  secondaryGold: '#D4AF37',
+  goldDark: '#A67C1E',
+  goldSurface: '#FEFBF2',
+  goldBorder: '#EED8A1',
+  goldGradient: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)',
+  goldCardGradient: 'linear-gradient(135deg, #FFFDF7 0%, #FEFBF0 100%)',
 
-  // Master Neutrals
-  white: '#FFFFFF',
-  textMuted: '#64748B',
-  textDim: '#94A3B8',
-  borderDark: '#1E293B',
-  borderGold: 'rgba(245, 158, 11, 0.3)',
-  
-  // Functional
-  positive: '#10B981',
-  positiveBg: 'rgba(16, 185, 129, 0.15)',
-  negative: '#EF4444',
-  negativeBg: 'rgba(239, 68, 68, 0.15)',
+  // High-legibility neutrals
+  darkCharcoal: '#0F172A',
+  deepNavy: '#0F172A',
+  mainText: '#0F172A',
+  secondaryText: '#64748B',
+  mutedText: '#94A3B8',
+  border: '#E2E8F0',
+  borderLight: '#F1F5F9',
 
-  // Legacy mappings for existing screens
-  darkCharcoal: '#0A0D14',
-  deepNavy: '#101522',
-  navyGradient: 'linear-gradient(135deg, #101522 0%, #161D2D 100%)',
-  ivoryBg: '#0A0D14',
-  cardBg: '#161D2D',
-  mainText: '#FFFFFF',
-  secondaryText: '#94A3B8',
-  mutedText: '#64748B',
-  border: '#1E293B',
-  borderLight: '#26334A',
-  streakOrange: '#F97316',
-  streakBg: 'rgba(249, 115, 22, 0.15)',
-  yieldPurple: '#8B5CF6',
-  yieldBg: 'rgba(139, 92, 246, 0.15)',
-  darkOverlay: 'rgba(10, 13, 20, 0.85)',
+  // Functional Status
+  positive: '#059669',
+  positiveBg: '#ECFDF5',
+  negative: '#DC2626',
+  negativeBg: '#FEF2F2',
+  streakOrange: '#EA580C',
+  streakBg: '#FFF7ED',
+  yieldPurple: '#6366F1',
+  yieldBg: '#EEF2FF',
 } as const;
 
-// Live Dubai Precious Metals Spot Benchmark Rates (AED per gram)
+// Live Dubai Gold Souk & DMCC Spot Benchmark Rates (AED per gram)
 export const DUBAI_MARKET_RATES = {
   rate24K: 318.50,
   rate22K: 295.20,
@@ -83,17 +69,17 @@ export const DUBAI_MARKET_RATES = {
   rateSilver999: 3.85,
   dailyChangeGold: '+0.75%',
   dailyChangeSilver: '+1.20%',
-  marketStatus: 'Live (Updated every 1s)',
+  marketStatus: 'Open (Live Souk Rate)',
 };
 
-export const DEMO_GOLD_RATE = DUBAI_MARKET_RATES.rate24K; // AED per gram 24K Gold
-export const DEMO_SILVER_RATE = DUBAI_MARKET_RATES.rateSilver999; // AED per gram .999 Silver
+export const DEMO_GOLD_RATE = DUBAI_MARKET_RATES.rate24K; // AED 318.50 per gram
+export const DEMO_SILVER_RATE = DUBAI_MARKET_RATES.rateSilver999;
 
 export const DEMO_USER = {
   fullName: 'Tariq Al Mansoori',
   mobile: '501234567',
   countryCode: '+971',
-  email: 'tariq.mansoori@ogold.app',
+  email: 'tariq.mansoori@yassgroup.ae',
   kycStatus: 'verified' as const,
   emiratesId: '784-1988-1234567-1',
   savingsStreakDays: 6,
@@ -105,137 +91,52 @@ export const DEMO_USER = {
 };
 
 export const DEMO_INITIAL_HOLDINGS = {
-  totalGrams: 39.1209, // ~AED 12,460 Gold
-  silverGrams: 425.5000, // ~AED 1,638 Silver
-  totalInvested: 13500,
-  leasedGrams: 10.0000, // In Wakala Yield pool
+  totalGrams: 39.1209, // ~AED 12,460.00
+  silverGrams: 425.5000,
+  totalInvested: 11500,
+  leasedGrams: 10.0000,
   leasedSilverGrams: 100.0000,
   yieldEarnedGrams: 0.1300,
   yieldEarnedSilverGrams: 2.1500,
 };
 
-export const DEMO_OGOLD_CARD = {
-  cardNumber: '5412 8899 3421 9081',
-  cardHolder: 'TARIQ AL MANSOORI',
-  expiry: '08/29',
-  cvv: '824',
-  isFrozen: false,
-  isOnlineEnabled: true,
-  isAtmEnabled: true,
-  spendingLimitMonthly: 25000,
-  spendingAsset: 'gold' as const,
-  physicalCardStatus: 'shipped' as const,
-  appleWalletAdded: true,
-};
-
-// Sharia-Compliant Wakala Yield Pools
-export const OGOLD_WAKALA_POOLS = [
-  {
-    id: 'gold-wakala-6m',
-    metal: 'gold' as const,
-    name: 'OGold 24K Bullion Pool',
-    partner: 'DMCC Insured Depository',
-    annualYield: '4.8% APR',
-    tenure: '6 Months',
-    insurance: '100% Insured by Dubai National Insurance (DNI)',
-    minDeposit: '1 Gram',
-  },
-  {
-    id: 'silver-wakala-12m',
-    metal: 'silver' as const,
-    name: 'OGold Pure Silver Reserve',
-    partner: 'Emirates Precious Metals Depository',
-    annualYield: '5.2% APR',
-    tenure: '12 Months',
-    insurance: '100% Insured by Dubai National Insurance (DNI)',
-    minDeposit: '50 Grams',
-  },
-];
-
 // Depository Custody & Independent Audit
-export const OGOLD_VAULT_AUDIT = {
-  auditor: 'BDO Chartered Accountants & DNI',
+export const YASS_VAULT_AUDIT = {
+  auditor: 'BDO Chartered Accountants (Dubai)',
   auditDate: '30 October 2026',
   vaultLocation: 'Brink’s Global Services, Almas Tower, JLT Dubai',
   secondaryVault: 'Transguard Vaults, Emirates Group HQ Dubai',
-  insuranceProvider: 'Dubai National Insurance (DNI)',
-  totalPhysicalGoldKg: 1840.50,
-  totalPhysicalSilverKg: 14250.00,
+  totalPhysicalBarsKg: 2540.85,
+  digitalGoldIssuedKg: 2540.85,
   backingRatio: '100.0% Physical Bullion Custody',
-  assayCertificateId: 'DED-OGOLD-2026-VAL-AUAG',
+  assayCertificateId: 'DMCC-DGD-2026-9999-AU',
 };
 
-// Lifestyle Super App Services (spend with gold / silver)
-export const LIFESTYLE_SERVICES = [
-  {
-    id: 'esim-uae-gcc',
-    category: 'esim' as const,
-    title: '5GB Regional eSIM (UAE & GCC)',
-    provider: 'OGold Roam (Breeze / 1Global)',
-    priceAED: 65,
-    goldEquivalentGrams: 0.204,
-    tag: 'Instant Activation',
-    image: 'globe',
-  },
-  {
-    id: 'esim-global-10gb',
-    category: 'esim' as const,
-    title: '10GB Global Travel eSIM (160 Countries)',
-    provider: 'OGold Roam Global',
-    priceAED: 120,
-    goldEquivalentGrams: 0.377,
-    tag: 'Bestseller',
-    image: 'plane',
-  },
-  {
-    id: 'giftcard-amazon-100',
-    category: 'giftcard' as const,
-    title: 'Amazon.ae AED 100 e-Gift Card',
-    provider: 'Amazon UAE',
-    priceAED: 100,
-    goldEquivalentGrams: 0.314,
-    tag: 'Digital Code',
-    image: 'shopping-bag',
-  },
-  {
-    id: 'giftcard-noon-250',
-    category: 'giftcard' as const,
-    title: 'Noon.com AED 250 e-Voucher',
-    provider: 'Noon UAE',
-    priceAED: 250,
-    goldEquivalentGrams: 0.785,
-    tag: 'Supermall',
-    image: 'shopping-bag',
-  },
-];
+export const OGOLD_VAULT_AUDIT = YASS_VAULT_AUDIT;
 
-// Physical Delivery Products for Gold & Silver
+// Doorstep Physical Bullion Delivery Catalog (24K 999.9 Certified Assay)
 export const DELIVERY_PRODUCTS = {
   coins: [
     { weight: 1, metal: 'gold' as const, purity: '24K (999.9 Fine)', type: 'coin' as const, makingCharges: 35, deliveryCharges: 25 },
     { weight: 5, metal: 'gold' as const, purity: '24K (999.9 Fine)', type: 'coin' as const, makingCharges: 65, deliveryCharges: 25 },
     { weight: 10, metal: 'gold' as const, purity: '24K (999.9 Fine)', type: 'coin' as const, makingCharges: 110, deliveryCharges: 30 },
-    { weight: 31.1, metal: 'silver' as const, purity: '.999 Fine Silver (1 oz)', type: 'coin' as const, makingCharges: 20, deliveryCharges: 25 },
-    { weight: 100, metal: 'silver' as const, purity: '.999 Fine Silver', type: 'coin' as const, makingCharges: 35, deliveryCharges: 25 },
+    { weight: 20, metal: 'gold' as const, purity: '24K (999.9 Fine)', type: 'coin' as const, makingCharges: 180, deliveryCharges: 35 },
+    { weight: 50, metal: 'gold' as const, purity: '24K (999.9 Fine)', type: 'coin' as const, makingCharges: 350, deliveryCharges: 50 },
   ],
   bars: [
     { weight: 1, metal: 'gold' as const, purity: '24K (999.9 Fine)', type: 'bar' as const, makingCharges: 30, deliveryCharges: 25 },
     { weight: 5, metal: 'gold' as const, purity: '24K (999.9 Fine)', type: 'bar' as const, makingCharges: 55, deliveryCharges: 25 },
     { weight: 10, metal: 'gold' as const, purity: '24K (999.9 Fine)', type: 'bar' as const, makingCharges: 95, deliveryCharges: 30 },
+    { weight: 20, metal: 'gold' as const, purity: '24K (999.9 Fine)', type: 'bar' as const, makingCharges: 160, deliveryCharges: 35 },
     { weight: 50, metal: 'gold' as const, purity: '24K (999.9 Fine)', type: 'bar' as const, makingCharges: 300, deliveryCharges: 50 },
     { weight: 100, metal: 'gold' as const, purity: '24K (999.9 Fine)', type: 'bar' as const, makingCharges: 550, deliveryCharges: 60 },
-    { weight: 250, metal: 'silver' as const, purity: '.999 Fine Cast Bar', type: 'bar' as const, makingCharges: 50, deliveryCharges: 30 },
-    { weight: 1000, metal: 'silver' as const, purity: '.999 Fine 1kg Bullion Bar', type: 'bar' as const, makingCharges: 120, deliveryCharges: 40 },
+    { weight: 1000, metal: 'gold' as const, purity: '24K (999.9 Fine 1kg Bar)', type: 'bar' as const, makingCharges: 1500, deliveryCharges: 100 },
   ],
 };
 
-// Aliases for compatibility
-export const YASS_LEASE_PARTNERS = OGOLD_WAKALA_POOLS;
-export const YASS_VAULT_AUDIT = OGOLD_VAULT_AUDIT;
-
 export const INITIAL_TRANSACTIONS = [
   {
-    id: 'TXN-OGOLD-20250410-001',
+    id: 'TXN-YASS-20250410-001',
     type: 'buy' as const,
     metal: 'gold' as const,
     date: '2025-04-10T10:30:00',
@@ -244,46 +145,117 @@ export const INITIAL_TRANSACTIONS = [
     rate: 318.50,
     status: 'completed' as const,
     paymentMethod: 'Apple Pay (Emirates NBD)',
-    reference: 'OGOLD-AU-88912',
+    reference: 'YASS-AU-88912',
     meta: 'Direct Purchase 24K 999.9',
   },
   {
-    id: 'TXN-OGOLD-20250414-002',
-    type: 'card_spend' as const,
+    id: 'TXN-YASS-20250414-002',
+    type: 'redemption' as const,
     metal: 'gold' as const,
-    date: '2025-04-14T18:45:00',
-    goldGrams: 0.785,
-    amount: 250.00,
+    date: '2025-04-14T14:30:00',
+    goldGrams: 10.0000,
+    amount: 3185.00,
     rate: 318.50,
     status: 'completed' as const,
-    paymentMethod: 'OGold Platinum Mastercard',
-    reference: 'POS-DUBAI-MALL-STARBUCKS',
-    meta: 'Automatic Gold Liquidation at POS',
+    paymentMethod: 'Physical Bullion Redemption',
+    reference: 'DEL-YASS-7891',
+    meta: '10g 24K Minted Gold Bar Dispatched',
   },
   {
-    id: 'TXN-OGOLD-20250418-003',
+    id: 'TXN-YASS-20250418-003',
     type: 'buy' as const,
-    metal: 'silver' as const,
+    metal: 'gold' as const,
     date: '2025-04-18T12:15:00',
-    goldGrams: 200.0000, // 200g silver
-    amount: 770.00,
-    rate: 3.85,
+    goldGrams: 3.1400,
+    amount: 1000.00,
+    rate: 318.50,
     status: 'completed' as const,
     paymentMethod: 'Aani Instant Pay',
-    reference: 'OGOLD-AG-23190',
-    meta: 'Purchased 200g .999 Silver',
+    reference: 'YASS-AU-23190',
+    meta: '24K Gold Vault Accumulation',
+  },
+];
+
+export const DEMO_OGOLD_CARD: OGoldCard = {
+  cardNumber: '5412 8899 3421 9081',
+  cardHolder: 'TARIQ AL MANSOORI',
+  expiry: '09/29',
+  cvv: '882',
+  isFrozen: false,
+  isOnlineEnabled: true,
+  isAtmEnabled: true,
+  spendingLimitMonthly: 25000,
+  spendingAsset: 'gold',
+  physicalCardStatus: 'shipped',
+  appleWalletAdded: true,
+};
+
+export const OGOLD_WAKALA_POOLS = [
+  {
+    id: 'pool-brinks-30',
+    name: "Brink's 30-Day Liquidity Pool",
+    metal: 'gold' as const,
+    tenure: '30 Days',
+    insurance: "100% Brink's DMCC Insured",
+    annualYield: '4.8% APR',
   },
   {
-    id: 'TXN-OGOLD-20250422-004',
-    type: 'spin_reward' as const,
+    id: 'pool-emirates-90',
+    name: 'Emirates Gold 90-Day Yield Pool',
     metal: 'gold' as const,
-    date: '2025-04-22T08:00:00',
-    goldGrams: 0.050,
-    amount: 15.92,
-    rate: 318.50,
-    status: 'completed' as const,
-    paymentMethod: 'Daily Spin & Win Bonus',
-    reference: 'SPIN-WIN-DAILY-991',
-    meta: 'Credited 50mg Pure Gold',
+    tenure: '90 Days',
+    insurance: '100% Vault Insured',
+    annualYield: '5.2% APR',
+  },
+  {
+    id: 'pool-silver-60',
+    name: 'Dubai Souk Silver Reserve Pool',
+    metal: 'silver' as const,
+    tenure: '60 Days',
+    insurance: 'Transguard Protected',
+    annualYield: '5.5% APR',
+  },
+];
+
+export const LIFESTYLE_SERVICES: LifestyleService[] = [
+  {
+    id: 'esim-uae-gcc',
+    category: 'esim',
+    title: 'GCC Regional 10GB Data eSIM',
+    provider: 'Breeze eSIM / e& (Etisalat)',
+    priceAED: 95.0,
+    goldEquivalentGrams: 0.298,
+    tag: 'GCC ROAMING',
+    image: '',
+  },
+  {
+    id: 'esim-europe-usa',
+    category: 'esim',
+    title: 'Global Traveler 20GB Unlimited',
+    provider: 'Airalo Global / Du',
+    priceAED: 180.0,
+    goldEquivalentGrams: 0.565,
+    tag: 'GLOBAL 120+ COUNTRIES',
+    image: '',
+  },
+  {
+    id: 'gift-noon',
+    category: 'giftcard',
+    title: 'Noon UAE AED 250 Shopping Card',
+    provider: 'Noon E-Commerce',
+    priceAED: 250.0,
+    goldEquivalentGrams: 0.785,
+    tag: 'INSTANT E-CODE',
+    image: '',
+  },
+  {
+    id: 'gift-amazon-ae',
+    category: 'giftcard',
+    title: 'Amazon.ae AED 500 Gift Card',
+    provider: 'Amazon UAE',
+    priceAED: 500.0,
+    goldEquivalentGrams: 1.570,
+    tag: 'DIGITAL DELIVERY',
+    image: '',
   },
 ];

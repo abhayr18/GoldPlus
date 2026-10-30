@@ -1,7 +1,7 @@
 // ============================================
-// OGold Wallet — OGold Earn (Wakala Yield Pools)
+// YASS Gold — Wakala Bullion Yield Pools Screen
 // Shariah-Compliant Precious Metals Depository Yield
-// App Store: id6504926022
+// A Product by YASS Group, Dubai
 // ============================================
 
 import React, { useState } from 'react';
@@ -51,47 +51,44 @@ export const GoldLeaseScreen: React.FC = () => {
         <button className="screen-header-back" onClick={back} aria-label="Back">
           <ArrowLeft size={18} />
         </button>
-        <span className="screen-header-title">OGold Earn (Wakala)</span>
+        <span className="screen-header-title">YASS Bullion Earn (Wakala)</span>
         <div style={{ width: 36 }} />
       </div>
 
       <div className="screen-content" style={{ paddingTop: 14 }}>
         {/* Top Hero Banner */}
-        <div
-          className="card-gold-glow"
-          style={{ marginBottom: 16 }}
-        >
+        <div className="card-gold" style={{ marginBottom: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-            <Sparkles size={18} color="#FBBF24" />
-            <span style={{ fontSize: 11, fontWeight: 800, color: '#FBBF24', textTransform: 'uppercase', letterSpacing: 0.8 }}>
+            <Sparkles size={18} color="#C59B27" />
+            <span style={{ fontSize: 11, fontWeight: 800, color: '#854D0E', textTransform: 'uppercase', letterSpacing: 0.8 }}>
               Shariah-Compliant Wakala Yield
             </span>
           </div>
-          <h3 style={{ fontSize: 20, fontWeight: 900, color: '#FFFFFF', margin: '4px 0' }}>
-            Earn up to 5.2% APR in Precious Metals
+          <h3 style={{ fontSize: 20, fontWeight: 900, color: '#0F172A', margin: '4px 0' }}>
+            Earn up to 5.2% APR in Physical Bullion
           </h3>
-          <p style={{ fontSize: 12, color: '#94A3B8', lineHeight: 1.5, marginTop: 4 }}>
-            Deposit idle gold or silver into insured liquidity reserve pools in Dubai. Earn passive metal yield credited to your wallet monthly.
+          <p style={{ fontSize: 12, color: '#64748B', lineHeight: 1.5, marginTop: 4 }}>
+            Deposit idle gold or silver into insured DMCC liquidity pools in Dubai. Earn passive metal yield credited to your wallet monthly.
           </p>
 
           <div
             style={{
               display: 'flex',
-              gap: 16,
+              gap: 20,
               marginTop: 14,
               paddingTop: 12,
-              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+              borderTop: '1px solid #F1E1B8',
             }}
           >
             <div>
-              <div style={{ fontSize: 10.5, color: '#94A3B8' }}>Available to Deposit</div>
-              <div style={{ fontSize: 16, fontWeight: 800, color: '#FBBF24' }}>
+              <div style={{ fontSize: 11, color: '#64748B' }}>Available to Deposit</div>
+              <div style={{ fontSize: 16, fontWeight: 900, color: '#B8860B', marginTop: 2 }}>
                 {formatGrams(availableGrams)}
               </div>
             </div>
             <div>
-              <div style={{ fontSize: 10.5, color: '#94A3B8' }}>Active in Wakala</div>
-              <div style={{ fontSize: 16, fontWeight: 800, color: '#10B981' }}>
+              <div style={{ fontSize: 11, color: '#64748B' }}>Active in Wakala</div>
+              <div style={{ fontSize: 16, fontWeight: 900, color: '#059669', marginTop: 2 }}>
                 {formatGrams(state.holdings.leasedGrams)}
               </div>
             </div>
@@ -100,7 +97,7 @@ export const GoldLeaseScreen: React.FC = () => {
 
         {/* Pool Selector */}
         <div style={{ marginBottom: 16 }}>
-          <div style={{ fontSize: 12.5, fontWeight: 700, color: '#FFFFFF', marginBottom: 8 }}>
+          <div style={{ fontSize: 13, fontWeight: 800, color: '#0F172A', marginBottom: 8 }}>
             Select Wakala Reserve Pool
           </div>
 
@@ -114,41 +111,42 @@ export const GoldLeaseScreen: React.FC = () => {
                   style={{
                     padding: '12px 14px',
                     borderRadius: 12,
-                    border: '1px solid',
-                    borderColor: isSelected ? '#F59E0B' : '#1E293B',
-                    background: isSelected ? 'rgba(245, 158, 11, 0.1)' : '#161D2D',
+                    border: isSelected ? '1.5px solid #C59B27' : '1px solid #E2E8F0',
+                    background: isSelected ? '#FEFBF2' : '#FFFFFF',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
+                    boxShadow: isSelected ? '0 2px 8px rgba(212, 175, 55, 0.15)' : 'none',
+                    transition: 'all 0.15s ease',
                   }}
                 >
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                      <span style={{ fontSize: 13, fontWeight: 800, color: '#FFFFFF' }}>{pool.name}</span>
+                      <span style={{ fontSize: 13.5, fontWeight: 800, color: '#0F172A' }}>{pool.name}</span>
                       <span
                         style={{
-                          fontSize: 9,
+                          fontSize: 9.5,
                           fontWeight: 800,
-                          padding: '1px 5px',
+                          padding: '1px 6px',
                           borderRadius: 4,
-                          background: 'rgba(16, 185, 129, 0.15)',
-                          color: '#10B981',
+                          background: '#D1FAE5',
+                          color: '#059669',
                         }}
                       >
                         SHARIAH CERTIFIED
                       </span>
                     </div>
-                    <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 2 }}>
+                    <div style={{ fontSize: 11.5, color: '#64748B', marginTop: 2 }}>
                       {pool.tenure} lock • {pool.insurance}
                     </div>
                   </div>
 
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: 14, fontWeight: 900, color: '#FBBF24' }}>
+                    <div style={{ fontSize: 15, fontWeight: 900, color: '#B8860B' }}>
                       {pool.annualYield}
                     </div>
-                    <div style={{ fontSize: 10, color: '#64748B' }}>
+                    <div style={{ fontSize: 10.5, color: '#64748B' }}>
                       Monthly Payouts
                     </div>
                   </div>
@@ -181,16 +179,16 @@ export const GoldLeaseScreen: React.FC = () => {
                 marginTop: 12,
                 padding: '10px 12px',
                 borderRadius: 8,
-                background: 'rgba(16, 185, 129, 0.1)',
-                border: '1px solid rgba(16, 185, 129, 0.25)',
+                background: '#ECFDF5',
+                border: '1px solid #A7F3D0',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 fontSize: 12,
               }}
             >
-              <span style={{ color: '#94A3B8' }}>Est. Annual Earnings:</span>
-              <span style={{ color: '#10B981', fontWeight: 800 }}>
+              <span style={{ color: '#047857', fontWeight: 600 }}>Est. Annual Earnings:</span>
+              <span style={{ color: '#065F46', fontWeight: 800 }}>
                 +{formatGrams(annualYieldGrams)} ({formatCurrency(annualYieldAED)})
               </span>
             </div>
@@ -201,7 +199,7 @@ export const GoldLeaseScreen: React.FC = () => {
           className="btn btn-primary"
           disabled={!isValid}
           onClick={() => setShowConfirmModal(true)}
-          style={{ height: 46, fontSize: 14 }}
+          style={{ height: 48, fontSize: 14 }}
         >
           Deposit into {selectedPool.name}
         </button>
@@ -211,11 +209,11 @@ export const GoldLeaseScreen: React.FC = () => {
       {showConfirmModal && (
         <div className="modal-overlay" onClick={() => setShowConfirmModal(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ fontSize: 17, fontWeight: 800, color: '#FFFFFF', marginBottom: 6 }}>
+            <h3 style={{ fontSize: 17, fontWeight: 900, color: '#0F172A', marginBottom: 6 }}>
               Confirm Wakala Pool Deposit
             </h3>
-            <div style={{ fontSize: 12, color: '#94A3B8', marginBottom: 14 }}>
-              Your deposit is 100% physically insured and audited by DNI
+            <div style={{ fontSize: 12, color: '#64748B', marginBottom: 14 }}>
+              Your deposit is 100% physically insured and audited by Brink's DMCC
             </div>
 
             <div className="summary-row">
@@ -228,7 +226,7 @@ export const GoldLeaseScreen: React.FC = () => {
             </div>
             <div className="summary-row">
               <span className="label">Expected APR Yield</span>
-              <span className="value" style={{ color: '#10B981' }}>{selectedPool.annualYield}</span>
+              <span className="value" style={{ color: '#059669' }}>{selectedPool.annualYield}</span>
             </div>
             <div className="summary-row">
               <span className="label">Tenure</span>
@@ -236,7 +234,7 @@ export const GoldLeaseScreen: React.FC = () => {
             </div>
             <div className="summary-row total">
               <span className="label">Insurance</span>
-              <span className="value">100% Dubai National Insurance</span>
+              <span className="value">100% Dubai Depository Insured</span>
             </div>
 
             <div style={{ display: 'flex', gap: 10, marginTop: 18 }}>

@@ -1,13 +1,15 @@
 // ============================================
-// OGold Wallet — Physical Bullion Redemption & Delivery
-// 24K Gold & .999 Silver Minted Coins & Bars
-// App Store: id6504926022
+// YASS Gold & Bullion — Physical Bullion Redemption & Delivery
+// White + Gold Clean Executive Catalog & Order Tracking
+// Core Feature: 24K 999.9 Minted Coins & Bars
 // ============================================
 
 import React, { useState } from 'react';
 import {
   ArrowLeft,
   Check,
+  Truck,
+  Shield,
   MapPin,
   AlertCircle,
 } from 'lucide-react';
@@ -17,7 +19,7 @@ import { DELIVERY_PRODUCTS } from '../constants';
 import type { DeliveryAddress, MetalType } from '../types';
 
 type FlowState = 'catalog' | 'address' | 'review' | 'success' | 'orders';
-type Category = 'coins' | 'bars';
+type Category = 'bars' | 'coins';
 
 interface ProductItem {
   weight: number;
@@ -31,15 +33,15 @@ interface ProductItem {
 const formatCurrency = (val: number): string =>
   'AED ' + val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-const PhysicalDeliveryScreen: React.FC = () => {
+export const PhysicalDeliveryScreen: React.FC = () => {
   const { state, setState, navigate, showToast } = useApp();
 
   const [flowState, setFlowState] = useState<FlowState>(
     state.deliveryOrders.length > 0 ? 'orders' : 'catalog'
   );
-  const [category, setCategory] = useState<Category>('coins');
+  const [category, setCategory] = useState<Category>('bars');
   const [selectedProduct, setSelectedProduct] = useState<ProductItem>(
-    DELIVERY_PRODUCTS.coins[0]
+    DELIVERY_PRODUCTS.bars[0]
   );
 
   // Address form (Dubai / UAE default)
@@ -53,8 +55,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
     pinCode: 'PO Box 12345',
   });
 
-  const availableGrams =
-    selectedProduct.metal === 'gold' ? state.holdings.totalGrams : state.holdings.silverGrams;
+  const availableGrams = state.holdings.totalGrams;
   const isBalanceSufficient = availableGrams >= selectedProduct.weight;
   const totalCharges = selectedProduct.makingCharges + selectedProduct.deliveryCharges;
 
@@ -66,7 +67,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
 
   const handleConfirmOrder = () => {
     if (!isBalanceSufficient) {
-      showToast('Insufficient precious metal balance for this bullion product', 'error');
+      showToast('Insufficient gold balance for this bullion product', 'error');
       return;
     }
 
@@ -82,7 +83,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
     );
 
     setState(newState);
-    showToast('Delivery order placed successfully! Transguard will dispatch soon.', 'success');
+    showToast('Delivery order placed! Transguard will dispatch your bullion.', 'success');
     setFlowState('success');
   };
 
@@ -106,75 +107,59 @@ const PhysicalDeliveryScreen: React.FC = () => {
 
       <div className="screen-content" style={{ paddingTop: 14 }}>
         {state.deliveryOrders.length > 0 && (
-          <div style={{ marginBottom: 14, textAlign: 'right' }}>
+          <div style={{ marginBottom: 12, textAlign: 'right' }}>
             <button
               onClick={() => setFlowState('orders')}
               style={{
                 background: 'none',
                 border: 'none',
-                color: '#F59E0B',
-                fontSize: 13,
+                color: '#A67C1E',
+                fontSize: 12.5,
                 fontWeight: 700,
                 cursor: 'pointer',
               }}
             >
-              ← Track Orders ({state.deliveryOrders.length})
+              ← Track Active Deliveries ({state.deliveryOrders.length})
             </button>
           </div>
         )}
 
-        {/* Available Balances Pill */}
+        {/* Available Vault Balance Banner */}
         <div
           style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             padding: '12px 16px',
-            background: '#161D2D',
+            background: '#FEFBF2',
             borderRadius: 12,
             marginBottom: 16,
-            border: '1px solid #1E293B',
+            border: '1px solid #EED8A1',
           }}
         >
           <div>
-            <div style={{ fontSize: 11, color: '#94A3B8' }}>Vaulted Gold: <strong style={{ color: '#FBBF24' }}>{state.holdings.totalGrams.toFixed(2)}g</strong></div>
-            <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 2 }}>Vaulted Silver: <strong style={{ color: '#E2E8F0' }}>{state.holdings.silverGrams.toFixed(1)}g</strong></div>
+            <div style={{ fontSize: 11, color: '#64748B' }}>Available in Vault</div>
+            <div style={{ fontSize: 16, fontWeight: 800, color: '#0F172A' }}>
+              {availableGrams.toFixed(4)} g
+            </div>
           </div>
           <span
             style={{
               fontSize: 10,
               padding: '3px 8px',
               borderRadius: 6,
-              background: 'rgba(16, 185, 129, 0.15)',
-              color: '#10B981',
+              background: '#FFFFFF',
+              border: '1px solid #EED8A1',
+              color: '#8F6914',
               fontWeight: 800,
             }}
           >
-            CERTIFIED ASSAY
+            24K 999.9 FINE GOLD
           </span>
         </div>
 
-        {/* Category: Coins vs Bars */}
+        {/* Category Tabs: Bars vs Coins */}
         <div style={{ display: 'flex', gap: 6, marginBottom: 14 }}>
-          <button
-            onClick={() => {
-              setCategory('coins');
-              setSelectedProduct(DELIVERY_PRODUCTS.coins[0]);
-            }}
-            style={{
-              flex: 1,
-              padding: '8px 12px',
-              borderRadius: 8,
-              border: 'none',
-              background: category === 'coins' ? '#F59E0B' : '#161D2D',
-              color: category === 'coins' ? '#0A0D14' : '#94A3B8',
-              fontSize: 12.5,
-              fontWeight: 700,
-              cursor: 'pointer',
-            }}
-          >
-            Bullion Coins
-          </button>
           <button
             onClick={() => {
               setCategory('bars');
@@ -182,54 +167,71 @@ const PhysicalDeliveryScreen: React.FC = () => {
             }}
             style={{
               flex: 1,
-              padding: '8px 12px',
+              padding: '9px 12px',
               borderRadius: 8,
-              border: 'none',
-              background: category === 'bars' ? '#F59E0B' : '#161D2D',
-              color: category === 'bars' ? '#0A0D14' : '#94A3B8',
-              fontSize: 12.5,
+              border: '1px solid',
+              borderColor: category === 'bars' ? '#C59B27' : '#E2E8F0',
+              background: category === 'bars' ? '#FEFBF2' : '#FFFFFF',
+              color: category === 'bars' ? '#8F6914' : '#64748B',
+              fontSize: 13,
               fontWeight: 700,
               cursor: 'pointer',
+              transition: 'all 0.15s ease',
             }}
           >
-            Minted Bullion Bars
+            Minted Gold Bars
+          </button>
+          <button
+            onClick={() => {
+              setCategory('coins');
+              setSelectedProduct(DELIVERY_PRODUCTS.coins[0]);
+            }}
+            style={{
+              flex: 1,
+              padding: '9px 12px',
+              borderRadius: 8,
+              border: '1px solid',
+              borderColor: category === 'coins' ? '#C59B27' : '#E2E8F0',
+              background: category === 'coins' ? '#FEFBF2' : '#FFFFFF',
+              color: category === 'coins' ? '#8F6914' : '#64748B',
+              fontSize: 13,
+              fontWeight: 700,
+              cursor: 'pointer',
+              transition: 'all 0.15s ease',
+            }}
+          >
+            Gold Coins
           </button>
         </div>
 
-        {/* Product List */}
-        <div style={{ marginBottom: 20 }}>
+        {/* Product Catalog List */}
+        <div style={{ marginBottom: 16 }}>
           {DELIVERY_PRODUCTS[category].map((prod) => {
             const isSelected =
               selectedProduct.weight === prod.weight &&
-              selectedProduct.type === prod.type &&
-              selectedProduct.metal === prod.metal;
-            const userMetalBalance =
-              prod.metal === 'gold' ? state.holdings.totalGrams : state.holdings.silverGrams;
-            const canAfford = userMetalBalance >= prod.weight;
+              selectedProduct.type === prod.type;
+            const canAfford = availableGrams >= prod.weight;
 
             return (
               <div
-                key={`${prod.metal}-${prod.type}-${prod.weight}`}
+                key={`${prod.type}-${prod.weight}`}
                 className={`product-card ${isSelected ? 'selected' : ''}`}
                 onClick={() => setSelectedProduct(prod)}
                 style={{ opacity: canAfford ? 1 : 0.6 }}
               >
                 <div
                   style={{
-                    width: 48,
-                    height: 48,
+                    width: 46,
+                    height: 46,
                     borderRadius: prod.type === 'coin' ? '50%' : 8,
-                    background:
-                      prod.metal === 'gold'
-                        ? 'linear-gradient(135deg, #FBBF24 0%, #D97706 100%)'
-                        : 'linear-gradient(135deg, #E2E8F0 0%, #94A3B8 100%)',
+                    background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#0A0D14',
+                    color: '#FFFFFF',
                     fontWeight: 900,
                     fontSize: 13,
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
+                    boxShadow: '0 2px 6px rgba(197, 155, 39, 0.25)',
                     flexShrink: 0,
                   }}
                 >
@@ -237,14 +239,14 @@ const PhysicalDeliveryScreen: React.FC = () => {
                 </div>
 
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: '#FFFFFF' }}>
-                    {prod.weight}g {prod.purity} {prod.metal.toUpperCase()} {prod.type === 'coin' ? 'Coin' : 'Bar'}
+                  <div style={{ fontSize: 14, fontWeight: 700, color: '#0F172A' }}>
+                    {prod.weight}g 24K Gold {prod.type === 'coin' ? 'Coin' : 'Minted Bar'}
                   </div>
-                  <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 2 }}>
-                    Tamper-proof certicard with QR verification
+                  <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>
+                    Tamper-proof certified assay packaging
                   </div>
-                  <div style={{ fontSize: 11.5, color: '#FBBF24', fontWeight: 700, marginTop: 4 }}>
-                    Minting & Insured Shipping: {formatCurrency(prod.makingCharges + prod.deliveryCharges)}
+                  <div style={{ fontSize: 11.5, color: '#8F6914', fontWeight: 700, marginTop: 4 }}>
+                    Minting & Insured Courier: {formatCurrency(prod.makingCharges + prod.deliveryCharges)}
                   </div>
                 </div>
 
@@ -253,21 +255,21 @@ const PhysicalDeliveryScreen: React.FC = () => {
                     width: 20,
                     height: 20,
                     borderRadius: '50%',
-                    border: `2px solid ${isSelected ? '#F59E0B' : '#64748B'}`,
-                    background: isSelected ? '#F59E0B' : 'transparent',
+                    border: `2px solid ${isSelected ? '#C59B27' : '#CBD5E1'}`,
+                    background: isSelected ? '#C59B27' : 'transparent',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}
                 >
-                  {isSelected && <Check size={12} color="#0A0D14" strokeWidth={3} />}
+                  {isSelected && <Check size={12} color="#FFFFFF" strokeWidth={3} />}
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Warning if insufficient balance */}
+        {/* Insufficient Balance Notice */}
         {!isBalanceSufficient && (
           <div
             style={{
@@ -275,18 +277,41 @@ const PhysicalDeliveryScreen: React.FC = () => {
               gap: 8,
               padding: '10px 12px',
               borderRadius: 10,
-              background: 'rgba(239, 68, 68, 0.1)',
-              border: '1px solid rgba(239, 68, 68, 0.3)',
+              background: '#FEF2F2',
+              border: '1px solid #FECACA',
               marginBottom: 16,
               alignItems: 'center',
             }}
           >
-            <AlertCircle size={16} color="#EF4444" style={{ flexShrink: 0 }} />
-            <div style={{ fontSize: 11.5, color: '#EF4444' }}>
-              You need {selectedProduct.weight}g {selectedProduct.metal}. Your vault holds {availableGrams.toFixed(2)}g.
+            <AlertCircle size={16} color="#DC2626" style={{ flexShrink: 0 }} />
+            <div style={{ fontSize: 12, color: '#DC2626' }}>
+              You need {selectedProduct.weight}g gold in your vault. Current balance: {availableGrams.toFixed(4)}g.
             </div>
           </div>
         )}
+
+        {/* Security Trust Badges */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 10,
+            padding: '12px',
+            background: '#F8FAFC',
+            borderRadius: 10,
+            border: '1px solid #E2E8F0',
+            marginBottom: 16,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11.5, color: '#0F172A', fontWeight: 600 }}>
+            <Shield size={16} color="#059669" />
+            <span>100% Insured Delivery</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11.5, color: '#0F172A', fontWeight: 600 }}>
+            <Truck size={16} color="#059669" />
+            <span>Dispatched in 48h</span>
+          </div>
+        </div>
 
         <button
           className="btn btn-primary"
@@ -336,7 +361,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
         </div>
 
         <div className="form-group">
-          <label className="form-label">Address Line (Building, Apt, Villa)</label>
+          <label className="form-label">Address Line (Flat / Villa / Building)</label>
           <input
             className="form-input"
             value={address.addressLine1}
@@ -346,7 +371,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
         </div>
 
         <div className="form-group">
-          <label className="form-label">Street / Landmark</label>
+          <label className="form-label">Street / Area Landmark</label>
           <input
             className="form-input"
             value={address.addressLine2 || ''}
@@ -357,7 +382,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           <div className="form-group">
-            <label className="form-label">City</label>
+            <label className="form-label">City / Emirate</label>
             <input
               className="form-input"
               value={address.city}
@@ -366,7 +391,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
             />
           </div>
           <div className="form-group">
-            <label className="form-label">PO Box / Area Code</label>
+            <label className="form-label">PO Box</label>
             <input
               className="form-input"
               value={address.pinCode}
@@ -395,45 +420,45 @@ const PhysicalDeliveryScreen: React.FC = () => {
         <button className="screen-header-back" onClick={() => setFlowState('address')} aria-label="Back">
           <ArrowLeft size={18} />
         </button>
-        <span className="screen-header-title">Review Delivery Order</span>
+        <span className="screen-header-title">Review Bullion Order</span>
         <div style={{ width: 36 }} />
       </div>
 
       <div className="screen-content" style={{ paddingTop: 14 }}>
         <div className="card" style={{ marginBottom: 16 }}>
-          <div style={{ fontSize: 12, color: '#94A3B8' }}>Selected Bullion</div>
-          <div style={{ fontSize: 17, fontWeight: 800, color: '#FFFFFF', marginTop: 4 }}>
-            {selectedProduct.weight}g {selectedProduct.purity} {selectedProduct.metal.toUpperCase()} {selectedProduct.type === 'coin' ? 'Coin' : 'Bar'}
+          <div style={{ fontSize: 12, color: '#64748B' }}>Selected Bullion Product</div>
+          <div style={{ fontSize: 17, fontWeight: 800, color: '#0F172A', marginTop: 4 }}>
+            {selectedProduct.weight}g 24K Gold {selectedProduct.type === 'coin' ? 'Coin' : 'Minted Bar'}
           </div>
 
-          <div style={{ height: 1, background: '#1E293B', margin: '14px 0' }} />
+          <div style={{ height: 1, background: '#E2E8F0', margin: '14px 0' }} />
 
           <div className="summary-row">
-            <span className="label">Vault Deduction</span>
-            <span className="value" style={{ color: '#EF4444' }}>
-              -{selectedProduct.weight}.0000 g {selectedProduct.metal}
+            <span className="label">Vault Gold Deducted</span>
+            <span className="value" style={{ color: '#DC2626' }}>
+              -{selectedProduct.weight}.0000 g
             </span>
           </div>
           <div className="summary-row">
-            <span className="label">Assay Minting Charges</span>
+            <span className="label">Minting & Assay Certicard</span>
             <span className="value">{formatCurrency(selectedProduct.makingCharges)}</span>
           </div>
           <div className="summary-row">
-            <span className="label">Insured Transguard Courier</span>
+            <span className="label">Insured Transguard Logistics</span>
             <span className="value">{formatCurrency(selectedProduct.deliveryCharges)}</span>
           </div>
           <div className="summary-row total">
-            <span className="label">Payable Charges</span>
+            <span className="label">Total Charges Payable</span>
             <span className="value">{formatCurrency(totalCharges)}</span>
           </div>
         </div>
 
         <div className="card" style={{ marginBottom: 20 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
-            <MapPin size={16} color="#F59E0B" />
-            <span style={{ fontSize: 13, fontWeight: 700, color: '#FFFFFF' }}>Destination</span>
+            <MapPin size={16} color="#A67C1E" />
+            <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>Destination</span>
           </div>
-          <div style={{ fontSize: 12, color: '#94A3B8', lineHeight: 1.4 }}>
+          <div style={{ fontSize: 12, color: '#64748B', lineHeight: 1.4 }}>
             {address.recipientName} ({address.mobile})<br />
             {address.addressLine1}, {address.city} — {address.pinCode}
           </div>
@@ -454,23 +479,23 @@ const PhysicalDeliveryScreen: React.FC = () => {
           width: 68,
           height: 68,
           borderRadius: '50%',
-          background: 'rgba(16, 185, 129, 0.15)',
-          border: '2px solid #10B981',
+          background: '#ECFDF5',
+          border: '2px solid #059669',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: '#10B981',
+          color: '#059669',
           margin: '0 auto 16px',
         }}
       >
         <Check size={36} strokeWidth={3} />
       </div>
 
-      <h2 style={{ fontSize: 22, fontWeight: 900, color: '#FFFFFF', marginBottom: 6 }}>
+      <h2 style={{ fontSize: 22, fontWeight: 900, color: '#0F172A', marginBottom: 6 }}>
         Delivery Order Placed!
       </h2>
-      <p style={{ fontSize: 13, color: '#94A3B8', maxWidth: 300, margin: '0 auto 20px', lineHeight: 1.5 }}>
-        Your certified bullion will be packaged in a sealed tamper-proof assay certicard and dispatched via Transguard.
+      <p style={{ fontSize: 13, color: '#64748B', maxWidth: 300, margin: '0 auto 20px', lineHeight: 1.5 }}>
+        Your certified 24K gold is being packaged into a sealed tamper-proof assay certicard and will be dispatched via Transguard.
       </p>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 280, margin: '0 auto' }}>
@@ -478,7 +503,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
           Track Courier Status
         </button>
         <button className="btn btn-secondary" onClick={() => navigate('dashboard')}>
-          Back to Wallet
+          Back to Dashboard
         </button>
       </div>
     </div>
@@ -497,7 +522,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
 
       <div className="screen-content" style={{ paddingTop: 14 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
-          <span style={{ fontSize: 12, color: '#94A3B8' }}>
+          <span style={{ fontSize: 12, color: '#64748B' }}>
             Active Orders ({state.deliveryOrders.length})
           </span>
           <button
@@ -505,7 +530,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
             style={{
               background: 'none',
               border: 'none',
-              color: '#F59E0B',
+              color: '#A67C1E',
               fontSize: 12.5,
               fontWeight: 700,
               cursor: 'pointer',
@@ -519,8 +544,8 @@ const PhysicalDeliveryScreen: React.FC = () => {
           <div key={ord.id} className="card" style={{ marginBottom: 14 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
               <div>
-                <div style={{ fontSize: 15, fontWeight: 800, color: '#FFFFFF' }}>
-                  {ord.weight}g {ord.purity} {ord.metal.toUpperCase()} {ord.productType === 'coin' ? 'Coin' : 'Bar'}
+                <div style={{ fontSize: 15, fontWeight: 800, color: '#0F172A' }}>
+                  {ord.weight}g 24K Gold {ord.productType === 'coin' ? 'Coin' : 'Minted Bar'}
                 </div>
                 <div style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>
                   Order: {ord.id} • {new Date(ord.createdAt).toLocaleDateString('en-AE')}
@@ -529,7 +554,7 @@ const PhysicalDeliveryScreen: React.FC = () => {
               <span className={`status-badge ${ord.status}`}>{ord.status}</span>
             </div>
 
-            <div style={{ fontSize: 11.5, color: '#94A3B8', marginTop: 10 }}>
+            <div style={{ fontSize: 11.5, color: '#64748B', marginTop: 10 }}>
               Courier: Transguard Armoured Bullion Logistics<br />
               Delivering to: {ord.address.city}, UAE (Est. {ord.estimatedDelivery})
             </div>

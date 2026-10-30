@@ -1,27 +1,23 @@
 // ============================================
-// OGold Wallet — Executive Home & Dual Metal Dashboard
-// The Precious Metals & Lifestyle Super App (Dubai, UAE)
-// App Store ID: 6504926022
+// YASS Gold & Bullion — Executive Dashboard
+// White + Gold Standard & Clean Professional UI
+// Core Focus: Digital Gold & Doorstep Physical Delivery
 // ============================================
 
 import React, { useMemo } from 'react';
 import {
   ArrowDownCircle,
   ArrowUpCircle,
-  Send,
   Package,
-  CreditCard,
-  Percent,
-  Sparkles,
   ShieldCheck,
   TrendingUp,
   ChevronRight,
-  Gift,
-  RefreshCw,
+  Truck,
+  CheckCircle2,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
 import { GoldBarIllustration } from '../components/BrandLogo';
-import { DUBAI_MARKET_RATES, DEMO_GOLD_RATE, DEMO_SILVER_RATE } from '../constants';
+import { DUBAI_MARKET_RATES, DEMO_GOLD_RATE } from '../constants';
 import type { Transaction } from '../types';
 
 function formatCurrency(value: number): string {
@@ -57,34 +53,27 @@ export const DashboardScreen: React.FC = () => {
   const userName = state.user?.fullName || 'Tariq Al Mansoori';
   const firstName = userName.split(' ')[0];
 
-  const goldValueAED = useMemo(
+  const totalVaultValue = useMemo(
     () => state.holdings.totalGrams * DEMO_GOLD_RATE,
     [state.holdings.totalGrams]
   );
 
-  const silverValueAED = useMemo(
-    () => state.holdings.silverGrams * DEMO_SILVER_RATE,
-    [state.holdings.silverGrams]
-  );
-
-  const totalPortfolioAED = goldValueAED + silverValueAED;
-
   const recentTransactions = useMemo(
-    () => state.holdings.transactions.slice(0, 5),
+    () => state.holdings.transactions.slice(0, 4),
     [state.holdings.transactions]
   );
 
   return (
     <div className="screen-container">
-      {/* ── 1. Top App Header ───────────────────────────────── */}
+      {/* ── 1. Clean Top Header ──────────────────────────────── */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '12px 16px',
-          background: '#0A0D14',
-          borderBottom: '1px solid #1E293B',
+          background: '#FFFFFF',
+          borderBottom: '1px solid #E2E8F0',
           position: 'sticky',
           top: 0,
           zIndex: 40,
@@ -98,14 +87,14 @@ export const DashboardScreen: React.FC = () => {
               width: 38,
               height: 38,
               borderRadius: '50%',
-              background: '#161D2D',
-              color: '#F59E0B',
+              background: '#FEFBF2',
+              color: '#A67C1E',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               fontWeight: 800,
               fontSize: 13,
-              border: '2px solid rgba(245, 158, 11, 0.4)',
+              border: '1.5px solid #EED8A1',
               cursor: 'pointer',
               flexShrink: 0,
             }}
@@ -114,36 +103,37 @@ export const DashboardScreen: React.FC = () => {
           </button>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <span style={{ fontSize: 13.5, fontWeight: 700, color: '#FFFFFF' }}>
+              <span style={{ fontSize: 14, fontWeight: 700, color: '#0F172A' }}>
                 Hi, {firstName} 👋
               </span>
               <span
                 style={{
-                  background: 'rgba(16, 185, 129, 0.15)',
-                  color: '#10B981',
+                  background: '#ECFDF5',
+                  color: '#059669',
                   fontSize: 9.5,
                   fontWeight: 800,
                   padding: '1px 6px',
-                  borderRadius: 6,
+                  borderRadius: 4,
+                  border: '1px solid #A7F3D0',
                 }}
               >
                 UAE PASS
               </span>
             </div>
-            <div style={{ fontSize: 10.5, color: '#94A3B8', fontWeight: 500 }}>
-              OGold Wallet Dubai
+            <div style={{ fontSize: 11, color: '#64748B', fontWeight: 500 }}>
+              YASS Gold & Bullion Dubai
             </div>
           </div>
         </div>
 
-        {/* Live Spot Rates Pill */}
+        {/* Live Dubai Souk Benchmark Pill */}
         <div
           onClick={() => navigate('goldPriceDetail')}
           style={{
-            background: '#161D2D',
-            border: '1px solid #1E293B',
+            background: '#FEFBF2',
+            border: '1px solid #EED8A1',
             borderRadius: 20,
-            padding: '5px 10px',
+            padding: '5px 11px',
             display: 'flex',
             alignItems: 'center',
             gap: 6,
@@ -155,426 +145,270 @@ export const DashboardScreen: React.FC = () => {
               width: 6,
               height: 6,
               borderRadius: '50%',
-              background: '#10B981',
-              boxShadow: '0 0 6px #10B981',
+              background: '#059669',
             }}
           />
-          <div style={{ display: 'flex', gap: 8, fontSize: 10, fontWeight: 700 }}>
-            <span style={{ color: '#FBBF24' }}>
-              AU AED {DUBAI_MARKET_RATES.rate24K.toFixed(1)}
-            </span>
-            <span style={{ color: '#94A3B8' }}>
-              AG AED {DUBAI_MARKET_RATES.rateSilver999.toFixed(2)}
-            </span>
-          </div>
+          <span style={{ fontSize: 11, fontWeight: 800, color: '#8F6914' }}>
+            24K AED {DUBAI_MARKET_RATES.rate24K.toFixed(2)}
+          </span>
         </div>
       </div>
 
       <div className="screen-content" style={{ paddingTop: 14 }}>
-        {/* ── 2. Dual-Metal Executive Wealth Card ─────────────── */}
-        <div className="card-gold-glow" style={{ marginBottom: 14 }}>
-          {/* Top Row: Portfolio Title & DMCC Purity */}
+        {/* ── 2. Clean Executive Gold Vault Wealth Card ─────────── */}
+        <div className="card-gold" style={{ marginBottom: 16 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: 11, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 0.8, fontWeight: 700 }}>
-              Total Precious Metals Vault
+            <span style={{ fontSize: 11, color: '#64748B', textTransform: 'uppercase', letterSpacing: 0.6, fontWeight: 700 }}>
+              Total Vaulted Wealth
             </span>
             <span
               style={{
-                background: 'rgba(245, 158, 11, 0.15)',
-                color: '#FBBF24',
-                fontSize: 9.5,
+                background: '#FFFFFF',
+                color: '#8F6914',
+                fontSize: 10,
                 fontWeight: 800,
-                padding: '2px 7px',
+                padding: '2px 8px',
                 borderRadius: 6,
-                border: '1px solid rgba(245, 158, 11, 0.3)',
+                border: '1px solid #EED8A1',
               }}
             >
-              100% DNI INSURED
+              24K 999.9 FINE GOLD
             </span>
           </div>
 
-          {/* Big Portfolio Balance */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 8 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 10 }}>
             <div>
-              <div style={{ fontSize: 29, fontWeight: 900, color: '#FFFFFF', letterSpacing: -0.5 }}>
-                {formatCurrency(totalPortfolioAED)}
+              <div style={{ fontSize: 30, fontWeight: 900, color: '#0F172A', letterSpacing: -0.5 }}>
+                {formatCurrency(totalVaultValue)}
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
-                <span style={{ fontSize: 11.5, color: '#10B981', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 3 }}>
+                <span style={{ fontSize: 15, fontWeight: 700, color: '#A67C1E' }}>
+                  {state.holdings.totalGrams.toFixed(4)} grams
+                </span>
+                <span style={{ color: '#CBD5E1' }}>•</span>
+                <span style={{ fontSize: 12, color: '#059669', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 2 }}>
                   <TrendingUp size={13} />
-                  <span>+0.85% today across metals</span>
+                  <span>+0.75% today</span>
                 </span>
               </div>
             </div>
 
-            <div style={{ width: 52, height: 52, flexShrink: 0 }}>
-              <GoldBarIllustration size={52} />
+            <div style={{ width: 60, height: 60, flexShrink: 0 }}>
+              <GoldBarIllustration size={60} />
             </div>
           </div>
 
-          {/* Dual Metal Vault Breakdown */}
+          {/* Quick Stats Footnote */}
           <div
             style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: 8,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
               marginTop: 14,
               paddingTop: 12,
-              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+              borderTop: '1px solid #EED8A1',
+              fontSize: 11.5,
+              color: '#64748B',
             }}
           >
-            {/* Gold Vault */}
-            <div
-              onClick={() => navigate('buy')}
-              style={{
-                background: 'rgba(245, 158, 11, 0.08)',
-                border: '1px solid rgba(245, 158, 11, 0.25)',
-                borderRadius: 10,
-                padding: '8px 10px',
-                cursor: 'pointer',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: 10, fontWeight: 800, color: '#FBBF24', letterSpacing: 0.5 }}>
-                  24K GOLD
-                </span>
-                <span style={{ fontSize: 9.5, color: '#10B981', fontWeight: 700 }}>+0.75%</span>
-              </div>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#FFFFFF', marginTop: 3 }}>
-                {state.holdings.totalGrams.toFixed(4)} g
-              </div>
-              <div style={{ fontSize: 10.5, color: '#94A3B8', marginTop: 1 }}>
-                {formatCurrency(goldValueAED)}
-              </div>
-            </div>
-
-            {/* Silver Vault */}
-            <div
-              onClick={() => navigate('buy')}
-              style={{
-                background: 'rgba(148, 163, 184, 0.08)',
-                border: '1px solid rgba(148, 163, 184, 0.25)',
-                borderRadius: 10,
-                padding: '8px 10px',
-                cursor: 'pointer',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: 10, fontWeight: 800, color: '#E2E8F0', letterSpacing: 0.5 }}>
-                  .999 SILVER
-                </span>
-                <span style={{ fontSize: 9.5, color: '#10B981', fontWeight: 700 }}>+1.20%</span>
-              </div>
-              <div style={{ fontSize: 14, fontWeight: 800, color: '#FFFFFF', marginTop: 3 }}>
-                {state.holdings.silverGrams.toFixed(1)} g
-              </div>
-              <div style={{ fontSize: 10.5, color: '#94A3B8', marginTop: 1 }}>
-                {formatCurrency(silverValueAED)}
-              </div>
-            </div>
+            <span>Physically Allocated: <strong>100% Backed</strong></span>
+            <span>Vault: <strong>Brink’s DMCC Dubai</strong></span>
           </div>
         </div>
 
-        {/* ── 3. The 4 Big Core Action Buttons ────────────────── */}
+        {/* ── 3. The 3 Core Action Buttons (Digital Gold & Physical) ─ */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 8,
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 10,
             marginBottom: 16,
           }}
         >
-          {/* Buy */}
+          {/* Buy Gold */}
           <button
             onClick={() => navigate('buy')}
             style={{
-              background: '#161D2D',
-              border: '1px solid #1E293B',
+              background: '#FFFFFF',
+              border: '1px solid #E2E8F0',
               borderRadius: 14,
-              padding: '12px 6px',
+              padding: '14px 8px',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: 6,
+              gap: 8,
               cursor: 'pointer',
+              boxShadow: '0 1px 3px rgba(15, 23, 42, 0.04)',
+              transition: 'border-color 0.15s ease',
             }}
           >
             <div
               style={{
-                width: 38,
-                height: 38,
+                width: 40,
+                height: 40,
                 borderRadius: 10,
-                background: 'rgba(16, 185, 129, 0.15)',
-                color: '#10B981',
+                background: '#ECFDF5',
+                color: '#059669',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <ArrowDownCircle size={20} />
+              <ArrowDownCircle size={22} />
             </div>
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#FFFFFF' }}>Buy Metal</span>
+            <span style={{ fontSize: 12, fontWeight: 700, color: '#0F172A' }}>Buy Gold</span>
           </button>
 
-          {/* Sell */}
-          <button
-            onClick={() => navigate('sell')}
-            style={{
-              background: '#161D2D',
-              border: '1px solid #1E293B',
-              borderRadius: 14,
-              padding: '12px 6px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 6,
-              cursor: 'pointer',
-            }}
-          >
-            <div
-              style={{
-                width: 38,
-                height: 38,
-                borderRadius: 10,
-                background: 'rgba(239, 68, 68, 0.15)',
-                color: '#EF4444',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <ArrowUpCircle size={20} />
-            </div>
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#FFFFFF' }}>Sell Cash</span>
-          </button>
-
-          {/* Send / Transfer */}
-          <button
-            onClick={() => navigate('gift')}
-            style={{
-              background: '#161D2D',
-              border: '1px solid #1E293B',
-              borderRadius: 14,
-              padding: '12px 6px',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: 6,
-              cursor: 'pointer',
-            }}
-          >
-            <div
-              style={{
-                width: 38,
-                height: 38,
-                borderRadius: 10,
-                background: 'rgba(245, 158, 11, 0.15)',
-                color: '#F59E0B',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Send size={18} />
-            </div>
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#FFFFFF' }}>Transfer</span>
-          </button>
-
-          {/* Redeem Physical */}
+          {/* Physical Delivery (Core Client Feature) */}
           <button
             onClick={() => navigate('delivery')}
             style={{
-              background: '#161D2D',
-              border: '1px solid #1E293B',
+              background: '#FEFBF2',
+              border: '1.5px solid #EED8A1',
               borderRadius: 14,
-              padding: '12px 6px',
+              padding: '14px 8px',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: 6,
+              gap: 8,
               cursor: 'pointer',
+              boxShadow: '0 2px 8px rgba(197, 155, 39, 0.1)',
             }}
           >
             <div
               style={{
-                width: 38,
-                height: 38,
+                width: 40,
+                height: 40,
                 borderRadius: 10,
-                background: 'rgba(139, 92, 246, 0.15)',
-                color: '#A78BFA',
+                background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)',
+                color: '#FFFFFF',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <Package size={18} />
+              <Package size={22} />
             </div>
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#FFFFFF' }}>Bullion</span>
+            <span style={{ fontSize: 12, fontWeight: 800, color: '#8F6914' }}>Get Bullion</span>
+          </button>
+
+          {/* Sell to Cash */}
+          <button
+            onClick={() => navigate('sell')}
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid #E2E8F0',
+              borderRadius: 14,
+              padding: '14px 8px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 8,
+              cursor: 'pointer',
+              boxShadow: '0 1px 3px rgba(15, 23, 42, 0.04)',
+              transition: 'border-color 0.15s ease',
+            }}
+          >
+            <div
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 10,
+                background: '#FEF2F2',
+                color: '#DC2626',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <ArrowUpCircle size={22} />
+            </div>
+            <span style={{ fontSize: 12, fontWeight: 700, color: '#0F172A' }}>Sell to Cash</span>
           </button>
         </div>
 
-        {/* ── 4. Signature OGold Mastercard Spend Widget ───────── */}
+        {/* ── 4. Main Client Feature: Physical Bullion Delivery Banner ── */}
         <div
-          onClick={() => navigate('card')}
+          onClick={() => navigate('delivery')}
           style={{
-            background: 'linear-gradient(135deg, #1C1810 0%, #121824 100%)',
-            border: '1.5px solid rgba(245, 158, 11, 0.4)',
-            borderRadius: 16,
-            padding: '14px 16px',
-            marginBottom: 14,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            boxShadow: '0 4px 18px rgba(0,0,0,0.4)',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <div
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: 12,
-                background: 'linear-gradient(135deg, #FBBF24 0%, #D97706 100%)',
-                color: '#0A0D14',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-                boxShadow: '0 2px 8px rgba(245, 158, 11, 0.3)',
-              }}
-            >
-              <CreditCard size={22} />
-            </div>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span style={{ fontSize: 13.5, fontWeight: 800, color: '#FFFFFF' }}>
-                  OGold Platinum Mastercard
-                </span>
-                <span
-                  style={{
-                    background: 'rgba(245, 158, 11, 0.15)',
-                    color: '#FBBF24',
-                    fontSize: 8.5,
-                    fontWeight: 800,
-                    padding: '2px 5px',
-                    borderRadius: 4,
-                  }}
-                >
-                  ACTIVE
-                </span>
-              </div>
-              <div style={{ fontSize: 11, color: '#94A3B8', marginTop: 2 }}>
-                Spend gold globally with Apple Pay & auto-conversion
-              </div>
-            </div>
-          </div>
-
-          <ChevronRight size={18} color="#94A3B8" />
-        </div>
-
-        {/* ── 5. Wakala Sharia Yield Banner (4.8% APR) ────────── */}
-        <div
-          onClick={() => navigate('lease')}
-          style={{
-            background: 'linear-gradient(135deg, #182238 0%, #101522 100%)',
-            border: '1px solid #1E293B',
+            background: '#FFFFFF',
+            border: '1.5px solid #EED8A1',
             borderRadius: 14,
-            padding: '12px 14px',
-            marginBottom: 14,
+            padding: '16px',
+            marginBottom: 16,
             cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            boxShadow: '0 2px 6px rgba(15, 23, 42, 0.04)',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 10,
-                background: 'rgba(139, 92, 246, 0.15)',
-                color: '#A78BFA',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}
-            >
-              <Percent size={18} />
-            </div>
-            <div>
-              <div style={{ fontSize: 13, fontWeight: 800, color: '#FFFFFF' }}>
-                OGold Earn (Wakala Pools)
-              </div>
-              <div style={{ fontSize: 11, color: '#94A3B8' }}>
-                Earn 4.8% APR in pure 24K gold grams • Monthly payouts
-              </div>
-            </div>
-          </div>
-
-          <span
-            style={{
-              background: '#8B5CF6',
-              color: '#FFFFFF',
-              fontSize: 10.5,
-              fontWeight: 800,
-              padding: '3px 8px',
-              borderRadius: 6,
-            }}
-          >
-            4.8% APR
-          </span>
-        </div>
-
-        {/* ── 6. Daily Spin & Win Quick Card ──────────────────── */}
-        {state.user?.spinsAvailable ? (
-          <div
-            onClick={() => navigate('rewards')}
-            style={{
-              background: 'linear-gradient(135deg, #241D12 0%, #161D2D 100%)',
-              border: '1px solid rgba(245, 158, 11, 0.35)',
-              borderRadius: 14,
-              padding: '12px 14px',
-              marginBottom: 14,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', gap: 12 }}>
               <div
                 style={{
-                  width: 36,
-                  height: 36,
+                  width: 42,
+                  height: 42,
                   borderRadius: 10,
-                  background: 'rgba(245, 158, 11, 0.2)',
-                  color: '#FBBF24',
+                  background: '#FEFBF2',
+                  border: '1px solid #EED8A1',
+                  color: '#A67C1E',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   flexShrink: 0,
                 }}
               >
-                <Sparkles size={18} />
+                <Truck size={22} />
               </div>
               <div>
-                <div style={{ fontSize: 13, fontWeight: 800, color: '#FBBF24' }}>
-                  🎡 1 Daily Spin Ready!
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <h3 style={{ fontSize: 14, fontWeight: 800, color: '#0F172A', margin: 0 }}>
+                    Doorstep Bullion Delivery
+                  </h3>
+                  <span
+                    style={{
+                      background: '#ECFDF5',
+                      color: '#059669',
+                      fontSize: 9.5,
+                      fontWeight: 800,
+                      padding: '1px 6px',
+                      borderRadius: 4,
+                    }}
+                  >
+                    100% INSURED
+                  </span>
                 </div>
-                <div style={{ fontSize: 11, color: '#94A3B8' }}>
-                  Spin the lucky wheel now to win free gold & silver
-                </div>
+                <p style={{ fontSize: 11.5, color: '#64748B', lineHeight: 1.4, marginTop: 4 }}>
+                  Convert your digital gold into certified 24K minted coins & bars. Sealed in tamper-proof assay certicards delivered via Transguard armoured logistics.
+                </p>
               </div>
             </div>
-
-            <ChevronRight size={18} color="#FBBF24" />
+            <ChevronRight size={18} color="#A67C1E" />
           </div>
-        ) : null}
 
-        {/* ── 7. Depository & DNI Insurance Proof ─────────────── */}
+          <div
+            style={{
+              display: 'flex',
+              gap: 12,
+              marginTop: 12,
+              paddingTop: 10,
+              borderTop: '1px solid #F1F5F9',
+              fontSize: 11,
+              color: '#059669',
+              fontWeight: 600,
+            }}
+          >
+            <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+              <CheckCircle2 size={13} /> 1g to 1kg Minted Bars
+            </span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+              <CheckCircle2 size={13} /> Tamper-Proof Certicard
+            </span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+              <CheckCircle2 size={13} /> UAE Wide 48h
+            </span>
+          </div>
+        </div>
+
+        {/* ── 5. Vault Custody & Certificate Verification ──────── */}
         <div
           onClick={() => navigate('vaultProof')}
           className="card"
@@ -590,34 +424,34 @@ export const DashboardScreen: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div
               style={{
-                width: 34,
-                height: 34,
+                width: 36,
+                height: 36,
                 borderRadius: 8,
-                background: 'rgba(16, 185, 129, 0.15)',
-                color: '#10B981',
+                background: '#ECFDF5',
+                color: '#059669',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
               }}
             >
-              <ShieldCheck size={18} />
+              <ShieldCheck size={20} />
             </div>
             <div>
-              <div style={{ fontSize: 12.5, fontWeight: 700, color: '#FFFFFF' }}>
-                100% Physical Custody at Brink's DMCC
+              <div style={{ fontSize: 12.5, fontWeight: 700, color: '#0F172A' }}>
+                100% Physically Vaulted at Brink's DMCC
               </div>
-              <div style={{ fontSize: 10.5, color: '#94A3B8' }}>
-                Insured by Dubai National Insurance (DNI) • BDO Audited
+              <div style={{ fontSize: 10.5, color: '#64748B' }}>
+                Quarterly independent physical audit by BDO Dubai • Verified 1:1
               </div>
             </div>
           </div>
           <ChevronRight size={16} color="#64748B" />
         </div>
 
-        {/* ── 8. Recent Activity ──────────────────────────────── */}
+        {/* ── 6. Recent Activity ──────────────────────────────── */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-          <h3 style={{ fontSize: 13.5, fontWeight: 700, color: '#FFFFFF', margin: 0 }}>
+          <h3 style={{ fontSize: 13.5, fontWeight: 700, color: '#0F172A', margin: 0 }}>
             Recent Activity
           </h3>
           <button
@@ -625,7 +459,7 @@ export const DashboardScreen: React.FC = () => {
             style={{
               background: 'none',
               border: 'none',
-              color: '#F59E0B',
+              color: '#A67C1E',
               fontSize: 12,
               fontWeight: 700,
               cursor: 'pointer',
@@ -650,7 +484,7 @@ export const DashboardScreen: React.FC = () => {
 };
 
 const TransactionRow: React.FC<{ txn: Transaction; onClick?: () => void }> = ({ txn, onClick }) => {
-  const isCredit = txn.type === 'buy' || txn.type === 'sip' || txn.type === 'spin_reward';
+  const isCredit = txn.type === 'buy' || txn.type === 'sip';
 
   const getIcon = () => {
     switch (txn.type) {
@@ -658,35 +492,23 @@ const TransactionRow: React.FC<{ txn: Transaction; onClick?: () => void }> = ({ 
         return ArrowDownCircle;
       case 'sell':
         return ArrowUpCircle;
-      case 'sip':
-        return RefreshCw;
-      case 'card_spend':
-        return CreditCard;
-      case 'spin_reward':
-        return Sparkles;
-      case 'gift':
-        return Gift;
-      default:
+      case 'redemption':
         return Package;
+      default:
+        return ArrowDownCircle;
     }
   };
 
   const getLabel = () => {
     switch (txn.type) {
       case 'buy':
-        return `Bought ${txn.metal === 'gold' ? '24K Gold' : '.999 Silver'}`;
+        return '24K Gold Purchase';
       case 'sell':
-        return `Sold ${txn.metal === 'gold' ? 'Gold' : 'Silver'}`;
-      case 'card_spend':
-        return 'Mastercard Spend';
-      case 'spin_reward':
-        return 'Spin & Win Reward';
-      case 'sip':
-        return 'Auto-Invest Deposit';
-      case 'gift':
-        return 'Transferred Gold';
+        return 'Gold Sold to Bank';
+      case 'redemption':
+        return 'Physical Bullion Dispatched';
       default:
-        return 'Bullion Delivery';
+        return txn.meta || 'Transaction';
     }
   };
 
