@@ -1,32 +1,60 @@
-﻿// ============================================
+// ============================================
 // YASS Gold & Bullion - Executive Dashboard
-// High-End Mobile UI with SafeGold, Gullak & OGold Features
-// A Product by YASS Group, Dubai
+// Clean, Visual Financial Dashboard
+// Focus: Vault Valuation, Interactive Spot Chart, Physical Delivery
 // ============================================
 
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   ArrowDownCircle,
   ArrowUpCircle,
   Package,
-  ShieldCheck,
   TrendingUp,
   ChevronRight,
   Truck,
-  CheckCircle2,
   Calendar,
   Percent,
   Target,
   Gift,
-  Sparkles,
-  CreditCard,
   Bell,
-  Flame,
 } from 'lucide-react';
 import { useApp } from '../components/AppProvider';
 import { GoldBarIllustration } from '../components/BrandLogo';
 import { DUBAI_MARKET_RATES, DEMO_GOLD_RATE, DEMO_SILVER_RATE } from '../constants';
 import type { Transaction } from '../types';
+
+type Timeframe = '1D' | '1W' | '1M' | '1Y';
+
+const CHART_DATA: Record<Timeframe, { rate: string; change: string; isPositive: boolean; path: string; area: string }> = {
+  '1D': {
+    rate: 'AED 318.50',
+    change: '+0.75% today',
+    isPositive: true,
+    path: 'M0,65 C40,68 70,55 110,58 C150,62 180,42 220,40 C260,38 290,20 330,12',
+    area: 'M0,65 C40,68 70,55 110,58 C150,62 180,42 220,40 C260,38 290,20 330,12 L330,85 L0,85 Z',
+  },
+  '1W': {
+    rate: 'AED 318.50',
+    change: '+1.95% this week',
+    isPositive: true,
+    path: 'M0,72 C40,65 80,68 120,52 C160,54 200,38 240,32 C280,28 305,18 330,10',
+    area: 'M0,72 C40,65 80,68 120,52 C160,54 200,38 240,32 C280,28 305,18 330,10 L330,85 L0,85 Z',
+  },
+  '1M': {
+    rate: 'AED 318.50',
+    change: '+4.60% this month',
+    isPositive: true,
+    path: 'M0,78 C50,72 90,60 140,55 C190,50 230,36 270,25 C295,20 315,14 330,8',
+    area: 'M0,78 C50,72 90,60 140,55 C190,50 230,36 270,25 C295,20 315,14 330,8 L330,85 L0,85 Z',
+  },
+  '1Y': {
+    rate: 'AED 318.50',
+    change: '+21.56% past year',
+    isPositive: true,
+    path: 'M0,82 C45,76 90,68 135,54 C180,48 225,30 270,20 C295,15 315,10 330,6',
+    area: 'M0,82 C45,76 90,68 135,54 C180,48 225,30 270,20 C295,15 315,10 330,6 L330,85 L0,85 Z',
+  },
+};
 
 function formatCurrency(value: number): string {
   return (
@@ -58,6 +86,8 @@ function getInitials(name: string): string {
 
 export const DashboardScreen: React.FC = () => {
   const { state, navigate } = useApp();
+  const [timeframe, setTimeframe] = useState<Timeframe>('1D');
+
   const userName = state.user?.fullName || 'Tariq Al Mansoori';
   const firstName = userName.split(' ')[0];
 
@@ -72,27 +102,18 @@ export const DashboardScreen: React.FC = () => {
   );
 
   const totalVaultValue = totalGoldValuation + totalSilverValuation;
+  const goldRatio = Math.round((totalGoldValuation / totalVaultValue) * 100);
 
   const recentTransactions = useMemo(
     () => state.holdings.transactions.slice(0, 3),
     [state.holdings.transactions]
   );
 
-  const activeGoal = state.goals[0] || {
-    title: 'Dubai Property Bullion Reserve',
-    currentGrams: 18.5,
-    targetGrams: 50.0,
-  };
-  const goalPercent = Math.min(
-    100,
-    Math.round((activeGoal.currentGrams / activeGoal.targetGrams) * 100)
-  );
-
-  const activeSIP = state.sips.find((s) => s.status === 'active') || state.sips[0];
+  const activeChart = CHART_DATA[timeframe];
 
   return (
     <div className="screen-container">
-      {/* ── 1. Clean Mobile Header with Quick Tickers ───────────── */}
+      {/* ── 1. Top Header ─────────────────────────────────────── */}
       <div
         style={{
           display: 'flex',
@@ -100,46 +121,45 @@ export const DashboardScreen: React.FC = () => {
           justifyContent: 'space-between',
           padding: '12px 16px',
           background: '#FFFFFF',
-          borderBottom: '1px solid #E2E8F0',
+          borderBottom: '1px solid #E5E5EA',
           position: 'sticky',
           top: 0,
           zIndex: 40,
         }}
       >
-        {/* User Identity */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <button
             onClick={() => navigate('profile')}
             style={{
-              width: 38,
-              height: 38,
+              width: 36,
+              height: 36,
               borderRadius: '50%',
-              background: '#FEFBF2',
-              color: '#B8860B',
+              background: '#F8F5EE',
+              color: '#8A6718',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontWeight: 800,
+              fontWeight: 700,
               fontSize: 13,
-              border: '1.5px solid #EED8A1',
+              border: '1px solid #DCD2BE',
               cursor: 'pointer',
               flexShrink: 0,
-              transition: 'transform 0.15s ease',
             }}
+            aria-label="Profile"
           >
             {getInitials(userName)}
           </button>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <span style={{ fontSize: 14, fontWeight: 800, color: '#0F172A' }}>
-                Hi, {firstName} 👋
+              <span style={{ fontSize: 14, fontWeight: 700, color: '#1D1D1F' }}>
+                Hi, {firstName}
               </span>
               <span
                 style={{
                   background: '#ECFDF5',
                   color: '#059669',
                   fontSize: 9.5,
-                  fontWeight: 800,
+                  fontWeight: 700,
                   padding: '1px 6px',
                   borderRadius: 4,
                   border: '1px solid #A7F3D0',
@@ -148,26 +168,24 @@ export const DashboardScreen: React.FC = () => {
                 UAE PASS
               </span>
             </div>
-            <div style={{ fontSize: 11, color: '#64748B', fontWeight: 600 }}>
+            <div style={{ fontSize: 11, color: '#6E6E73', fontWeight: 500 }}>
               YASS Bullion Dubai
             </div>
           </div>
         </div>
 
-        {/* Live Dubai Souk Benchmark Pill & Alert Icon */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div
             onClick={() => navigate('goldPriceDetail')}
             style={{
-              background: '#FEFBF2',
-              border: '1px solid #EED8A1',
-              borderRadius: 20,
-              padding: '5px 10px',
+              background: '#F8F5EE',
+              border: '1px solid #DCD2BE',
+              borderRadius: 6,
+              padding: '4px 8px',
               display: 'flex',
               alignItems: 'center',
               gap: 5,
               cursor: 'pointer',
-              userSelect: 'none',
             }}
           >
             <span
@@ -179,7 +197,7 @@ export const DashboardScreen: React.FC = () => {
                 display: 'inline-block',
               }}
             />
-            <span style={{ fontSize: 11, fontWeight: 800, color: '#854D0E' }}>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#735510' }}>
               24K AED {DUBAI_MARKET_RATES.rate24K.toFixed(2)}
             </span>
           </div>
@@ -189,10 +207,10 @@ export const DashboardScreen: React.FC = () => {
             style={{
               width: 32,
               height: 32,
-              borderRadius: '50%',
-              background: '#F8FAFC',
-              border: '1px solid #E2E8F0',
-              color: '#64748B',
+              borderRadius: 6,
+              background: '#FFFFFF',
+              border: '1px solid #D2D2D7',
+              color: '#6E6E73',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -206,77 +224,76 @@ export const DashboardScreen: React.FC = () => {
       </div>
 
       <div className="screen-content" style={{ paddingTop: 14 }}>
-        {/* ── 2. Clean Executive Vault Wealth Hero Card ───────── */}
-        <div className="card-gold" style={{ marginBottom: 16 }}>
+        {/* ── 2. Focused Vault Wealth Card ─────────────────────── */}
+        <div
+          className="card"
+          style={{
+            marginBottom: 14,
+            padding: '18px',
+            border: '1px solid #DCD2BE',
+            background: 'linear-gradient(180deg, #FFFFFF 0%, #FBF9F4 100%)',
+          }}
+        >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: 11, color: '#854D0E', textTransform: 'uppercase', letterSpacing: 0.8, fontWeight: 800 }}>
+            <span style={{ fontSize: 11, color: '#735510', textTransform: 'uppercase', letterSpacing: 0.6, fontWeight: 700 }}>
               Total Vaulted Wealth
             </span>
             <span
               style={{
-                background: '#FFFFFF',
-                color: '#854D0E',
                 fontSize: 10,
-                fontWeight: 800,
-                padding: '2px 8px',
-                borderRadius: 6,
-                border: '1px solid #EED8A1',
+                fontWeight: 700,
+                color: '#059669',
+                background: '#ECFDF5',
+                padding: '2px 7px',
+                borderRadius: 4,
+                border: '1px solid #A7F3D0',
               }}
             >
-              24K 999.9 FINE GOLD
+              100% Backed at Brink's DMCC
             </span>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 10 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 8 }}>
             <div>
-              <div style={{ fontSize: 30, fontWeight: 900, color: '#0F172A', letterSpacing: -0.5 }}>
+              <div style={{ fontSize: 32, fontWeight: 700, color: '#1D1D1F', letterSpacing: -0.6 }}>
                 {formatCurrency(totalVaultValue)}
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
-                <span style={{ fontSize: 15, fontWeight: 800, color: '#B8860B' }}>
-                  {state.holdings.totalGrams.toFixed(4)} grams
+                <span style={{ fontSize: 14.5, fontWeight: 700, color: '#8A6718' }}>
+                  {state.holdings.totalGrams.toFixed(4)} g gold
                 </span>
-                <span style={{ color: '#CBD5E1' }}>•</span>
-                <span style={{ fontSize: 12, color: '#059669', fontWeight: 800, display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <TrendingUp size={13} />
+                <span style={{ color: '#D2D2D7' }}>&bull;</span>
+                <span style={{ fontSize: 12, color: '#059669', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <TrendingUp size={12} />
                   <span>+0.75% today</span>
                 </span>
               </div>
             </div>
 
-            <div style={{ width: 56, height: 56, flexShrink: 0 }}>
-              <GoldBarIllustration size={56} />
+            <div style={{ width: 52, height: 52, flexShrink: 0 }}>
+              <GoldBarIllustration size={50} />
             </div>
           </div>
 
-          {/* Metal Split Sub-Bar */}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginTop: 14,
-              paddingTop: 12,
-              borderTop: '1px solid #F1E1B8',
-              fontSize: 11.5,
-              color: '#64748B',
-            }}
-          >
-            <span>
-              24K Gold: <strong style={{ color: '#0F172A' }}>{state.holdings.totalGrams.toFixed(2)}g</strong> ({formatCurrency(totalGoldValuation)})
-            </span>
-            <span>
-              .999 Silver: <strong style={{ color: '#0F172A' }}>{state.holdings.silverGrams.toFixed(0)}g</strong> ({formatCurrency(totalSilverValuation)})
-            </span>
+          {/* Asset Allocation Segmented Bar */}
+          <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid #EBE4D5' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: '#6E6E73', marginBottom: 6 }}>
+              <span>24K Gold: <strong>{state.holdings.totalGrams.toFixed(2)}g</strong> ({goldRatio}%)</span>
+              <span>Silver: <strong>{state.holdings.silverGrams.toFixed(0)}g</strong> ({100 - goldRatio}%)</span>
+            </div>
+            <div style={{ width: '100%', height: 5, background: '#E5E5EA', borderRadius: 3, overflow: 'hidden', display: 'flex' }}>
+              <div style={{ width: `${goldRatio}%`, height: '100%', background: '#8A6718' }} />
+              <div style={{ width: `${100 - goldRatio}%`, height: '100%', background: '#8E8E93' }} />
+            </div>
           </div>
         </div>
 
-        {/* ── 3. Primary Action Trio (Instant Buy, Get Bullion, Sell) ── */}
+        {/* ── 3. Primary Action Trio ───────────────────────────── */}
         <div
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 10,
+            gap: 8,
             marginBottom: 16,
           }}
         >
@@ -284,50 +301,36 @@ export const DashboardScreen: React.FC = () => {
           <button
             onClick={() => navigate('buy')}
             className="feature-tile"
+            style={{ minHeight: 74, padding: '10px 6px' }}
           >
             <div
               className="feature-tile-icon"
-              style={{
-                background: '#ECFDF5',
-                color: '#059669',
-                border: '1px solid #A7F3D0',
-              }}
+              style={{ width: 34, height: 34, background: '#ECFDF5', color: '#059669', border: '1px solid #A7F3D0' }}
             >
-              <ArrowDownCircle size={22} />
+              <ArrowDownCircle size={18} />
             </div>
-            <div>
-              <div className="feature-tile-label">Buy Gold</div>
-              <div className="feature-tile-sub">From AED 10</div>
-            </div>
+            <div className="feature-tile-label" style={{ fontSize: 12 }}>Buy Gold</div>
           </button>
 
-          {/* Physical Delivery (Core Client Feature) */}
+          {/* Physical Delivery */}
           <button
             onClick={() => navigate('delivery')}
             className="feature-tile"
             style={{
-              background: '#FEFBF2',
-              borderColor: '#EED8A1',
-              boxShadow: '0 2px 8px rgba(197, 155, 39, 0.12)',
+              minHeight: 74,
+              padding: '10px 6px',
+              background: '#F8F5EE',
+              borderColor: '#DCD2BE',
             }}
           >
             <div
               className="feature-tile-icon"
-              style={{
-                background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)',
-                color: '#FFFFFF',
-                boxShadow: '0 2px 8px rgba(212, 175, 55, 0.35)',
-              }}
+              style={{ width: 34, height: 34, background: '#8A6718', color: '#FFFFFF' }}
             >
-              <Package size={22} />
+              <Package size={18} />
             </div>
-            <div>
-              <div className="feature-tile-label" style={{ color: '#854D0E', fontWeight: 800 }}>
-                Get Bullion
-              </div>
-              <div className="feature-tile-sub" style={{ color: '#B8860B' }}>
-                1g-1kg Bars
-              </div>
+            <div className="feature-tile-label" style={{ fontSize: 12, color: '#735510', fontWeight: 800 }}>
+              Get Bullion
             </div>
           </button>
 
@@ -335,384 +338,315 @@ export const DashboardScreen: React.FC = () => {
           <button
             onClick={() => navigate('sell')}
             className="feature-tile"
+            style={{ minHeight: 74, padding: '10px 6px' }}
           >
             <div
               className="feature-tile-icon"
-              style={{
-                background: '#FEF2F2',
-                color: '#DC2626',
-                border: '1px solid #FECACA',
-              }}
+              style={{ width: 34, height: 34, background: '#FEF2F2', color: '#DC2626', border: '1px solid #FECACA' }}
             >
-              <ArrowUpCircle size={22} />
+              <ArrowUpCircle size={18} />
             </div>
-            <div>
-              <div className="feature-tile-label">Sell to Cash</div>
-              <div className="feature-tile-sub" style={{ color: '#DC2626' }}>Instant Bank</div>
-            </div>
+            <div className="feature-tile-label" style={{ fontSize: 12 }}>Sell to Cash</div>
           </button>
         </div>
 
-        {/* ── 4. Gullak, SafeGold & OGold Signature Features Hub ── */}
-        <div style={{ marginBottom: 16 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-            <h3 style={{ fontSize: 13.5, fontWeight: 800, color: '#0F172A', margin: 0 }}>
-              Bullion Services & Wealth Hub
-            </h3>
-            <span style={{ fontSize: 11, color: '#B8860B', fontWeight: 700 }}>
-              Dubai DMCC Accredited
-            </span>
-          </div>
-
-          {/* 6-Grid Feature Tiles */}
-          <div className="feature-grid">
-            {/* 1. Daily Auto-Save (Gullak AutoPay / SafeGold SIP) */}
-            <div
-              className="feature-tile"
-              onClick={() => navigate('sip')}
-            >
-              <span className="feature-tile-badge">🔥 AUTO</span>
-              <div
-                className="feature-tile-icon"
-                style={{ background: '#FFF7ED', color: '#EA580C', border: '1px solid #FFEDD5' }}
-              >
-                <Calendar size={20} />
-              </div>
-              <div>
-                <div className="feature-tile-label">Daily Auto-Save</div>
-                <div className="feature-tile-sub">From AED 10/day</div>
-              </div>
-            </div>
-
-            {/* 2. Wakala Yield / Gold Lease (Gullak Gold+ / SafeGold Lease) */}
-            <div
-              className="feature-tile"
-              onClick={() => navigate('lease')}
-            >
-              <span className="feature-tile-badge" style={{ background: '#EEF2FF', color: '#4F46E5', borderColor: '#C7D2FE' }}>
-                +4.8% APR
-              </span>
-              <div
-                className="feature-tile-icon"
-                style={{ background: '#F5F3FF', color: '#7C3AED', border: '1px solid #DDD6FE' }}
-              >
-                <Percent size={20} />
-              </div>
-              <div>
-                <div className="feature-tile-label">Wakala Earn</div>
-                <div className="feature-tile-sub" style={{ color: '#7C3AED' }}>Pure Gold Yield</div>
-              </div>
-            </div>
-
-            {/* 3. Savings Goals (Gullak Goals / Piggy Bank) */}
-            <div
-              className="feature-tile"
-              onClick={() => navigate('goals')}
-            >
-              <div
-                className="feature-tile-icon"
-                style={{ background: '#EFF6FF', color: '#2563EB', border: '1px solid #BFDBFE' }}
-              >
-                <Target size={20} />
-              </div>
-              <div>
-                <div className="feature-tile-label">Savings Goals</div>
-                <div className="feature-tile-sub" style={{ color: '#2563EB' }}>Target Vault</div>
-              </div>
-            </div>
-
-            {/* 4. Gift 24K Gold (SafeGold Shagun / Luxury Gifting) */}
-            <div
-              className="feature-tile"
-              onClick={() => navigate('gift')}
-            >
-              <div
-                className="feature-tile-icon"
-                style={{ background: '#FEFBF2', color: '#B8860B', border: '1px solid #F3E8C8' }}
-              >
-                <Gift size={20} />
-              </div>
-              <div>
-                <div className="feature-tile-label">Gift 24K Gold</div>
-                <div className="feature-tile-sub">Occasion Cards</div>
-              </div>
-            </div>
-
-            {/* 5. Daily Spin & Win (OGold Daily Luck / Gullak Rewards) */}
-            <div
-              className="feature-tile"
-              onClick={() => navigate('rewards')}
-            >
-              <span className="feature-tile-badge" style={{ background: '#FEF2F2', color: '#DC2626', borderColor: '#FECACA' }}>
-                FREE
-              </span>
-              <div
-                className="feature-tile-icon"
-                style={{ background: '#FEF9C3', color: '#CA8A04', border: '1px solid #FEF08A' }}
-              >
-                <Sparkles size={20} />
-              </div>
-              <div>
-                <div className="feature-tile-label">Spin & Win</div>
-                <div className="feature-tile-sub" style={{ color: '#CA8A04' }}>Daily Milligrams</div>
-              </div>
-            </div>
-
-            {/* 6. Bullion Spending Card (OGold Visa/Mastercard) */}
-            <div
-              className="feature-tile"
-              onClick={() => navigate('card')}
-            >
-              <div
-                className="feature-tile-icon"
-                style={{ background: '#F8FAFC', color: '#334155', border: '1px solid #E2E8F0' }}
-              >
-                <CreditCard size={20} />
-              </div>
-              <div>
-                <div className="feature-tile-label">Bullion Card</div>
-                <div className="feature-tile-sub" style={{ color: '#334155' }}>Spend at POS</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* ── 5. Active Auto-Save & Goal Progress (Gullak Widget) ─ */}
+        {/* ── 4. Live Spot Performance & Visual Chart ──────────── */}
         <div
-          onClick={() => navigate('goals')}
-          className="card card-interactive"
-          style={{ marginBottom: 16, padding: '14px 16px' }}
+          className="card"
+          style={{
+            marginBottom: 16,
+            padding: '16px',
+            border: '1px solid #E5E5EA',
+          }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <div
-                style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: 8,
-                  background: '#EFF6FF',
-                  color: '#2563EB',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Target size={16} />
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+            <div>
+              <div style={{ fontSize: 11, color: '#6E6E73', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                24K Dubai Souk Benchmark
               </div>
-              <div>
-                <div style={{ fontSize: 13, fontWeight: 800, color: '#0F172A' }}>
-                  {activeGoal.title}
-                </div>
-                <div style={{ fontSize: 11, color: '#64748B' }}>
-                  {activeGoal.currentGrams.toFixed(1)}g of {activeGoal.targetGrams}g target reached
-                </div>
+              <div style={{ fontSize: 20, fontWeight: 700, color: '#1D1D1F', marginTop: 2 }}>
+                {activeChart.rate}
+                <span style={{ fontSize: 12, fontWeight: 500, color: '#6E6E73' }}> / gram</span>
+              </div>
+              <div style={{ fontSize: 11.5, color: '#059669', fontWeight: 600, marginTop: 1 }}>
+                {activeChart.change}
               </div>
             </div>
-            <span style={{ fontSize: 13, fontWeight: 900, color: '#2563EB' }}>
-              {goalPercent}%
-            </span>
+
+            {/* Timeframe Chips */}
+            <div style={{ display: 'flex', gap: 4 }}>
+              {(['1D', '1W', '1M', '1Y'] as Timeframe[]).map((tf) => (
+                <button
+                  key={tf}
+                  onClick={() => setTimeframe(tf)}
+                  style={{
+                    padding: '4px 8px',
+                    borderRadius: 4,
+                    border: 'none',
+                    background: timeframe === tf ? '#1D1D1F' : '#EDEDF0',
+                    color: timeframe === tf ? '#FFFFFF' : '#6E6E73',
+                    fontSize: 10.5,
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease',
+                  }}
+                >
+                  {tf}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Goal Progress bar */}
+          {/* SVG Area Chart */}
+          <div style={{ width: '100%', height: 95, position: 'relative' }}>
+            <svg
+              width="100%"
+              height="95"
+              viewBox="0 0 330 85"
+              preserveAspectRatio="none"
+              style={{ overflow: 'visible' }}
+            >
+              <defs>
+                <linearGradient id="chartGoldGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#8A6718" stopOpacity="0.22" />
+                  <stop offset="100%" stopColor="#8A6718" stopOpacity="0.0" />
+                </linearGradient>
+              </defs>
+
+              {/* Shaded Area Fill */}
+              <path d={activeChart.area} fill="url(#chartGoldGrad)" />
+
+              {/* Trend Line */}
+              <path
+                d={activeChart.path}
+                fill="none"
+                stroke="#8A6718"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+
+              {/* Final Benchmark Point */}
+              <circle cx="330" cy="12" r="3.5" fill="#8A6718" stroke="#FFFFFF" strokeWidth="1.5" />
+            </svg>
+          </div>
+
           <div
+            onClick={() => navigate('goldPriceDetail')}
             style={{
-              width: '100%',
-              height: 6,
-              background: '#F1F5F9',
-              borderRadius: 3,
-              overflow: 'hidden',
-              marginBottom: 8,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingTop: 10,
+              marginTop: 6,
+              borderTop: '1px solid #F2F2F7',
+              fontSize: 11,
+              color: '#8A6718',
+              fontWeight: 600,
+              cursor: 'pointer',
             }}
           >
-            <div
-              style={{
-                width: `${goalPercent}%`,
-                height: '100%',
-                background: 'linear-gradient(90deg, #3B82F6, #2563EB)',
-                borderRadius: 3,
-              }}
-            />
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 11, color: '#64748B' }}>
-            <span>
-              {activeSIP ? (
-                <>🔄 {activeSIP.nickname}: <strong>AED {activeSIP.amount}/{activeSIP.frequency}</strong></>
-              ) : (
-                'Set up Daily Micro-Savings'
-              )}
-            </span>
-            <span style={{ color: '#2563EB', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 2 }}>
-              <span>View Goal</span>
+            <span>Live DMCC International Feed &bull; 0% VAT</span>
+            <span style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <span>Full Market Depth</span>
               <ChevronRight size={12} />
             </span>
           </div>
         </div>
 
-        {/* ── 6. Doorstep Physical Bullion Delivery Banner ─────── */}
+        {/* ── 5. Compact Bullion Services Dock (1 Row) ─────────── */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: 8,
+            marginBottom: 16,
+          }}
+        >
+          {/* Daily Auto-Save (SIP) */}
+          <div
+            onClick={() => navigate('sip')}
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid #E5E5EA',
+              borderRadius: 10,
+              padding: '10px 4px',
+              textAlign: 'center',
+              cursor: 'pointer',
+            }}
+          >
+            <div
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: '50%',
+                background: '#FFF7ED',
+                color: '#EA580C',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 6px',
+              }}
+            >
+              <Calendar size={15} />
+            </div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#1D1D1F' }}>Auto-Save</div>
+            <div style={{ fontSize: 9.5, color: '#8A6718', fontWeight: 600 }}>AED 25/d</div>
+          </div>
+
+          {/* Wakala Yield / Gold Lease */}
+          <div
+            onClick={() => navigate('lease')}
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid #E5E5EA',
+              borderRadius: 10,
+              padding: '10px 4px',
+              textAlign: 'center',
+              cursor: 'pointer',
+            }}
+          >
+            <div
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: '50%',
+                background: '#F5F3FF',
+                color: '#7C3AED',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 6px',
+              }}
+            >
+              <Percent size={15} />
+            </div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#1D1D1F' }}>Earn Yield</div>
+            <div style={{ fontSize: 9.5, color: '#7C3AED', fontWeight: 600 }}>+4.8% APR</div>
+          </div>
+
+          {/* Savings Goals */}
+          <div
+            onClick={() => navigate('goals')}
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid #E5E5EA',
+              borderRadius: 10,
+              padding: '10px 4px',
+              textAlign: 'center',
+              cursor: 'pointer',
+            }}
+          >
+            <div
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: '50%',
+                background: '#EFF6FF',
+                color: '#2563EB',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 6px',
+              }}
+            >
+              <Target size={15} />
+            </div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#1D1D1F' }}>Goals</div>
+            <div style={{ fontSize: 9.5, color: '#2563EB', fontWeight: 600 }}>37% reached</div>
+          </div>
+
+          {/* Gift 24K Gold */}
+          <div
+            onClick={() => navigate('gift')}
+            style={{
+              background: '#FFFFFF',
+              border: '1px solid #E5E5EA',
+              borderRadius: 10,
+              padding: '10px 4px',
+              textAlign: 'center',
+              cursor: 'pointer',
+            }}
+          >
+            <div
+              style={{
+                width: 32,
+                height: 32,
+                borderRadius: '50%',
+                background: '#F8F5EE',
+                color: '#8A6718',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 6px',
+              }}
+            >
+              <Gift size={15} />
+            </div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#1D1D1F' }}>Gift Gold</div>
+            <div style={{ fontSize: 9.5, color: '#8A6718', fontWeight: 600 }}>Occasions</div>
+          </div>
+        </div>
+
+        {/* ── 6. Client Spotlight: Physical Bullion Delivery ───── */}
         <div
           onClick={() => navigate('delivery')}
           className="card card-interactive"
           style={{
-            border: '1.5px solid #EED8A1',
-            padding: '16px',
+            border: '1px solid #DCD2BE',
+            padding: '14px 16px',
             marginBottom: 16,
-            background: 'linear-gradient(135deg, #FFFFFF 0%, #FEFBF2 100%)',
+            background: '#FFFFFF',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', gap: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <div
                 style={{
-                  width: 44,
-                  height: 44,
-                  borderRadius: 12,
-                  background: '#FEFBF2',
-                  border: '1px solid #EED8A1',
-                  color: '#B8860B',
+                  width: 40,
+                  height: 40,
+                  borderRadius: 8,
+                  background: '#F8F5EE',
+                  border: '1px solid #DCD2BE',
+                  color: '#8A6718',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   flexShrink: 0,
                 }}
               >
-                <Truck size={22} />
+                <Truck size={20} />
               </div>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <h3 style={{ fontSize: 14, fontWeight: 800, color: '#0F172A', margin: 0 }}>
-                    Doorstep Physical Bullion Delivery
-                  </h3>
+                  <span style={{ fontSize: 13.5, fontWeight: 700, color: '#1D1D1F' }}>
+                    Doorstep Bullion Delivery
+                  </span>
                   <span
                     style={{
                       background: '#ECFDF5',
                       color: '#059669',
-                      fontSize: 9.5,
-                      fontWeight: 800,
-                      padding: '1px 6px',
+                      fontSize: 9,
+                      fontWeight: 700,
+                      padding: '1px 5px',
                       borderRadius: 4,
                     }}
                   >
-                    100% INSURED
+                    INSURED
                   </span>
                 </div>
-                <p style={{ fontSize: 11.5, color: '#64748B', lineHeight: 1.4, marginTop: 4 }}>
-                  Minted 24K 999.9 Good Delivery bars & coins in tamper-evident assay certicards. Insured courier across Dubai and all 7 Emirates.
-                </p>
+                <div style={{ fontSize: 11, color: '#6E6E73', marginTop: 2 }}>
+                  1g to 1kg minted bars in tamper-proof certicards via Transguard
+                </div>
               </div>
             </div>
-            <ChevronRight size={18} color="#B8860B" />
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              gap: 12,
-              marginTop: 12,
-              paddingTop: 10,
-              borderTop: '1px solid #F1F5F9',
-              fontSize: 11,
-              color: '#059669',
-              fontWeight: 700,
-            }}
-          >
-            <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-              <CheckCircle2 size={13} /> 1g to 1kg Bars
-            </span>
-            <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-              <CheckCircle2 size={13} /> Sealed Certicard
-            </span>
-            <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-              <CheckCircle2 size={13} /> Transguard Armoured
-            </span>
+            <ChevronRight size={16} color="#8A6718" />
           </div>
         </div>
 
-        {/* ── 7. Daily Savings Streak & Spin Reward Banner ────── */}
-        <div
-          onClick={() => navigate('rewards')}
-          className="card card-interactive"
-          style={{
-            padding: '12px 14px',
-            marginBottom: 16,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            background: '#FFF7ED',
-            border: '1px solid #FED7AA',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 10,
-                background: '#EA580C',
-                color: '#FFFFFF',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}
-            >
-              <Flame size={20} />
-            </div>
-            <div>
-              <div style={{ fontSize: 12.5, fontWeight: 800, color: '#9A3412' }}>
-                6-Day Bullion Savings Streak!
-              </div>
-              <div style={{ fontSize: 11, color: '#C2410C' }}>
-                +35mg Gold Earned • Tap to spin today’s free daily wheel
-              </div>
-            </div>
-          </div>
-          <ChevronRight size={16} color="#EA580C" />
-        </div>
-
-        {/* ── 8. Vault Custody & Certificate Verification ──────── */}
-        <div
-          onClick={() => navigate('vaultProof')}
-          className="card card-interactive"
-          style={{
-            padding: '12px 14px',
-            marginBottom: 16,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 8,
-                background: '#ECFDF5',
-                color: '#059669',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}
-            >
-              <ShieldCheck size={20} />
-            </div>
-            <div>
-              <div style={{ fontSize: 12.5, fontWeight: 700, color: '#0F172A' }}>
-                100% Backed at Brink's DMCC Dubai
-              </div>
-              <div style={{ fontSize: 10.5, color: '#64748B' }}>
-                Quarterly physical audit by BDO Dubai • Verified 1:1 allocated
-              </div>
-            </div>
-          </div>
-          <ChevronRight size={16} color="#64748B" />
-        </div>
-
-        {/* ── 9. Recent Activity ──────────────────────────────── */}
+        {/* ── 7. Recent Activity ──────────────────────────────── */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-          <h3 style={{ fontSize: 13.5, fontWeight: 800, color: '#0F172A', margin: 0 }}>
+          <h3 style={{ fontSize: 13.5, fontWeight: 700, color: '#1D1D1F', margin: 0 }}>
             Recent Activity
           </h3>
           <button
@@ -720,9 +654,9 @@ export const DashboardScreen: React.FC = () => {
             style={{
               background: 'none',
               border: 'none',
-              color: '#B8860B',
+              color: '#8A6718',
               fontSize: 12,
-              fontWeight: 800,
+              fontWeight: 600,
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
@@ -734,7 +668,7 @@ export const DashboardScreen: React.FC = () => {
           </button>
         </div>
 
-        <div className="card" style={{ padding: '4px 14px' }}>
+        <div className="card" style={{ padding: '2px 14px', marginBottom: 20 }}>
           {recentTransactions.map((txn) => (
             <TransactionRow key={txn.id} txn={txn} onClick={() => navigate('transactions')} />
           ))}
@@ -747,23 +681,6 @@ export const DashboardScreen: React.FC = () => {
 const TransactionRow: React.FC<{ txn: Transaction; onClick?: () => void }> = ({ txn, onClick }) => {
   const isCredit = txn.type === 'buy' || txn.type === 'sip' || txn.type === 'spin_reward';
 
-  const getIcon = () => {
-    switch (txn.type) {
-      case 'buy':
-        return ArrowDownCircle;
-      case 'sell':
-        return ArrowUpCircle;
-      case 'redemption':
-        return Package;
-      case 'spin_reward':
-        return Sparkles;
-      case 'card_spend':
-        return CreditCard;
-      default:
-        return ArrowDownCircle;
-    }
-  };
-
   const getLabel = () => {
     switch (txn.type) {
       case 'buy':
@@ -773,33 +690,44 @@ const TransactionRow: React.FC<{ txn: Transaction; onClick?: () => void }> = ({ 
       case 'redemption':
         return 'Physical Bullion Dispatched';
       case 'spin_reward':
-        return 'Spin & Win Free Gold';
-      case 'card_spend':
-        return 'Bullion Card Payment';
+        return 'Spin & Win Reward';
       default:
         return txn.meta || 'Transaction';
     }
   };
 
-  const Icon = getIcon();
-
   return (
-    <div className="txn-row" onClick={onClick}>
-      <div className={`txn-icon ${txn.type}`}>
-        <Icon size={17} />
+    <div className="txn-row" onClick={onClick} style={{ padding: '11px 0' }}>
+      <div className={`txn-icon ${txn.type}`} style={{ width: 34, height: 34 }}>
+        {txn.type === 'buy' ? (
+          <ArrowDownCircle size={17} />
+        ) : txn.type === 'sell' ? (
+          <ArrowUpCircle size={17} />
+        ) : (
+          <Package size={17} />
+        )}
       </div>
 
       <div className="txn-details">
-        <div className="txn-type">{getLabel()}</div>
-        <div className="txn-date">{formatDate(txn.date)}</div>
+        <div className="txn-type" style={{ fontSize: 13, fontWeight: 600, color: '#1D1D1F' }}>
+          {getLabel()}
+        </div>
+        <div className="txn-date" style={{ fontSize: 11, color: '#6E6E73' }}>
+          {formatDate(txn.date)}
+        </div>
       </div>
 
       <div className="txn-amounts">
-        <div className={`txn-grams ${isCredit ? 'positive' : 'negative'}`}>
-          {isCredit ? '+' : '−'}
+        <div
+          className={`txn-grams ${isCredit ? 'positive' : 'negative'}`}
+          style={{ fontSize: 13, fontWeight: 700, color: isCredit ? '#059669' : '#1D1D1F' }}
+        >
+          {isCredit ? '+' : '-'}
           {txn.goldGrams.toFixed(4)} g
         </div>
-        <div className="txn-rupees">{formatCurrency(txn.amount)}</div>
+        <div className="txn-rupees" style={{ fontSize: 11, color: '#6E6E73' }}>
+          {formatCurrency(txn.amount)}
+        </div>
       </div>
     </div>
   );
